@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1044639972810",
+    "project_id": "baylo-ecommerce-app",
+    "storage_bucket": "baylo-ecommerce-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044639972810:android:e36688542f0e32a370e333",
+        "android_client_info": {
+          "package_name": "com.example.my_ecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlrJUesnmbh9d2s61lR_x0KpUjqT1Mgvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

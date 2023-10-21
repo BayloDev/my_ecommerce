@@ -1,0 +1,43 @@
+name: my_ecommerce
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.1.4 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  get: ^4.6.5
+  shared_preferences: ^2.0.18
+  flutter_otp_text_field: ^1.1.1
+  lottie: ^2.6.0
+  dartz: ^0.10.1
+  http: ^1.1.0
+  flutter_svg: ^2.0.3
+  firebase_core: ^2.19.0
+  firebase_messaging: ^14.7.1
+  crypto: ^3.0.3
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/lottie/
+  fonts:
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo/Cairo-Regular.ttf
+    - family: PlayfairDisplay
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf
