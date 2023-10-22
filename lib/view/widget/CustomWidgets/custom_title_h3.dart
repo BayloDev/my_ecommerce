@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CustomTitleH2 extends StatelessWidget {
+class CustomTitleH3 extends StatelessWidget {
   final String text;
   final Color color;
-  const CustomTitleH2({
+
+  const CustomTitleH3({
     super.key,
     required this.text,
-    this.color = Colors.black45,
+    this.color = Colors.white,
   });
 
   @override
@@ -14,8 +15,8 @@ class CustomTitleH2 extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
         color: color,
       ),
     );

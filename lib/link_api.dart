@@ -1,7 +1,7 @@
 class AppLink {
-  static const String server = 
-  //'https://localhost/ecommerce';
-   'https://bilal-ecommerce-app.000webhostapp.com/ecommerce';
+  static const String server =
+      //'https://localhost/ecommerce';
+      'https://bilal-ecommerce-app.000webhostapp.com/ecommerce';
   static const String test = '$server/test.php';
   // =========== Auth ========== //
 
@@ -16,4 +16,8 @@ class AppLink {
       '$server/forgetPassword/verify_code_reset_password.php';
   static const String resetPassword =
       '$server/forgetPassword/reset_password.php';
+
+  // =========== Forget Password ========== //
+
+  static const String home = '$server/home.php';
 }

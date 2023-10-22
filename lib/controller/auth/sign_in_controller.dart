@@ -67,6 +67,7 @@ class SignInControllerImpl extends SignInController {
               : null;
           Get.offAllNamed(AppRoutes.homePage);
         } else {
+          statusRequest = StatusRequest.failure;
           if (response['message'] == 'user not found') {
             statusRequest = StatusRequest.failure;
             customDialog(
@@ -75,21 +76,18 @@ class SignInControllerImpl extends SignInController {
               'Please, Sign Up Instead',
             );
           } else if (response['message'] == 'wrong password') {
-            statusRequest = StatusRequest.failure;
             customDialog(
               Colors.red,
               'Wrong Password',
               'The Password You Entered Is Incorrect',
             );
           } else if (response['message'] == 'code not sent') {
-            statusRequest = StatusRequest.failure;
             customDialog(
               Colors.red,
               'Verification Code Error',
               'We Couldn\'t Send A Verification Code To Your Email Address, Please Try Again Later',
             );
           } else {
-            statusRequest = StatusRequest.failure;
             customSnackBar(
               title: 'Email Verification',
               message:

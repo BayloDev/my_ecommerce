@@ -60,10 +60,11 @@ class CustomTextFormField extends StatelessWidget {
         suffixIcon: suffixIcon,
         hintText: hintText,
         errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.orange,
-            ),
-            borderRadius: BorderRadius.circular(20)),
+          borderSide: const BorderSide(
+            color: Colors.orange,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
         filled: true,
         enabled: true,
         fillColor: fillColor,

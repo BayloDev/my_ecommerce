@@ -34,7 +34,7 @@ class CheckEmailScreen extends StatelessWidget {
                       child: const Icon(Icons.arrow_back_rounded),
                     ),
                     const SizedBox(width: 10),
-                    const CustomTitleH1(text: 'Check Email'),
+                     const CustomTitleH1(text: 'Check Email',),
                   ],
                 ),
                 const SizedBox(height: 40),
