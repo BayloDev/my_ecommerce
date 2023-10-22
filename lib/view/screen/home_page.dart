@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_ecommerce/core/class/handling_loading.dart';
 import 'package:my_ecommerce/core/constant/colors.dart';
+import 'package:my_ecommerce/link_api.dart';
 import 'package:my_ecommerce/view/widget/Auth/custom_text_form_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../controller/home_controller.dart';
 import '../widget/CustomWidgets/custom_title_h1.dart';
+import '../widget/CustomWidgets/custom_title_h2.dart';
 import '../widget/CustomWidgets/custom_title_h3.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,103 +15,187 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeControllerImpl controller = Get.put(HomeControllerImpl());
+    Get.put(HomeControllerImpl());
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: ListView(
-          children: [
-            Stack(
+      body: GetBuilder<HomeControllerImpl>(
+        builder: (controller) => HandlingLoading(
+          statusRequest: controller.statusRequest,
+          widget: Container(
+            color: Colors.orange.withOpacity(0.15),
+            child: ListView(
               children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: 120,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 58, 134, 118),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30),
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20, top: 6),
+                      child: CustomTitleH1(
+                        text: 'Shop Dlala',
+                        color: Colors.orange,
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        const SizedBox(height: 35),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: CustomTextFormField(
+                            hintText: 'Search Product',
+                            borderSideColor: AppColor.black6,
+                            fillColor: Colors.white.withOpacity(0.6),
+                            prefixIcon: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.notes_outlined),
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.notifications_outlined),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: CustomTitleH2(
+                    text: 'Categories',
+                    color: Colors.orange,
+                  ),
+                ),
+                SizedBox(
+                  height: 120,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 10),
+                      itemCount: controller.categories.length,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => Column(
+                        children: [
+                          Container(
+                            height: 90,
+                            width: 90,
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.9),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: SvgPicture.network(
+                              '${AppLink.categoriesImages}/${controller.categories[index]['categories_image']}',
+                            ),
+                          ),
+                          Text(
+                            '${controller.categories[index]['categories_name_en']}',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.6),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
                 Container(
-                  height: 150,
+                  height: 120,
+                  padding: const EdgeInsets.all(20.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 14.0),
                   decoration: BoxDecoration(
-                    color: AppColor.secondaryColor,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50),
-                    ),
+                    color: const Color.fromARGB(255, 58, 134, 118),
+                    borderRadius: BorderRadius.circular(14),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: CustomTextFormField(
-                    hintText: 'Search Product',
-                    borderSideColor: AppColor.black6,
-                    fillColor: Colors.white.withOpacity(0.9),
-                    prefixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.notes_outlined),
-                    ),
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.notifications_outlined),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 200,
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(height: 100),
-                      // ListView.builder(
-                      //   itemCount: 3,
-                      //   shrinkWrap: true,
-                      //   scrollDirection: Axis.horizontal,
-                      //   itemBuilder: (context, index) => Container(
-                      //     height: 150,
-                      //     width: 100,
-                      //     decoration: BoxDecoration(
-                      //       color: Colors.orange.withOpacity(0.5),
-                      //       borderRadius: BorderRadius.circular(20),
-                      //     ),
-                      //   ),
-                      // ),
+                      const Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomTitleH3(
+                              text: 'Ramadan Surprise', color: Colors.orange),
+                          CustomTitleH1(
+                            text: 'Discount 30%',
+                            color: Colors.orange,
+                          ),
+                        ],
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        width: 80,
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset(
+                          'assets/images/discount.svg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ],
+                  ),
+                ),
+                 const Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: CustomTitleH2(
+                    text: 'Products for you',
+                    color: Colors.orange,
+                  ),
+                ),
+              
+                SizedBox(
+                  height: 120,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 10),
+                      itemCount: controller.categories.length,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => Column(
+                        children: [
+                          Container(
+                            height: 90,
+                            width: 90,
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.9),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: SvgPicture.network(
+                              '${AppLink.categoriesImages}/${controller.categories[index]['categories_image']}',
+                            ),
+                          ),
+                          Text(
+                            '${controller.categories[index]['categories_name_en']}',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.6),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
-            Container(
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.orange.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomTitleH3(text: 'Ramadan Surprise'),
-                        SizedBox(height: 10),
-                        CustomTitleH1(
-                          text: 'Discount Up To 30%',
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.8),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      width: 80,
-                      padding: const EdgeInsets.all(10),
-                      child: SvgPicture.asset(
-                        'assets/images/discount.svg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

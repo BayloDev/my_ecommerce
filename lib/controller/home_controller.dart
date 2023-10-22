@@ -36,8 +36,9 @@ class HomeControllerImpl extends HomeController {
       statusRequest = StatusRequest.success;
       if (response["status"] == 'success') {
         categories.addAll(response["categories"]);
-        print(categories);
-      } else {}
+      } else {
+        statusRequest = StatusRequest.failure;
+      }
     } else {
       statusRequest = response;
     }
