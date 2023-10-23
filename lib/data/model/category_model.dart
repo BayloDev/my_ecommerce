@@ -1,4 +1,4 @@
-class CategoriesModel {
+class CategoryModel {
   int? categoriesId;
   String? categoriesNameEn;
   String? categoriesNameAr;
@@ -6,7 +6,7 @@ class CategoriesModel {
   String? categoriesImage;
   String? categoriesDateTime;
 
-  CategoriesModel(
+  CategoryModel(
       {this.categoriesId,
       this.categoriesNameEn,
       this.categoriesNameAr,
@@ -14,7 +14,7 @@ class CategoriesModel {
       this.categoriesImage,
       this.categoriesDateTime});
 
-  CategoriesModel.fromJson(Map<String, dynamic> json) {
+  CategoryModel.fromJson(Map<String, dynamic> json) {
     categoriesId = json['categories_id'];
     categoriesNameEn = json['categories_name_en'];
     categoriesNameAr = json['categories_name_ar'];

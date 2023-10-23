@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
         builder: (controller) => HandlingLoading(
           statusRequest: controller.statusRequest,
           widget: Container(
-            color: Colors.orange.withOpacity(0.15),
+            color: Colors.white.withOpacity(0.4),
             child: ListView(
               children: [
                 Stack(
@@ -86,17 +86,18 @@ class HomePage extends StatelessWidget {
                       itemBuilder: (context, index) => Column(
                         children: [
                           Container(
-                            height: 90,
+                            height: 80,
                             width: 90,
                             padding: const EdgeInsets.all(14),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.grey.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: SvgPicture.network(
                               '${AppLink.categoriesImages}/${controller.categories[index]['categories_image']}',
                             ),
                           ),
+                          const SizedBox(height: 6),
                           Text(
                             '${controller.categories[index]['categories_name_en']}',
                             style: TextStyle(
@@ -148,46 +149,63 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                 const Padding(
+                const Padding(
                   padding: EdgeInsets.all(12.0),
                   child: CustomTitleH2(
                     text: 'Products for you',
                     color: Colors.orange,
                   ),
                 ),
-              
                 SizedBox(
-                  height: 120,
+                  height: 100,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: ListView.separated(
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 10),
-                      itemCount: controller.categories.length,
+                      itemCount: controller.items.length,
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => Column(
+                      itemBuilder: (context, index) => Stack(
+                        alignment: Alignment.center,
                         children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 100,
+                                width: 120,
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.9),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Image.network(
+                                  '${AppLink.itemsImages}/${controller.items[index]['items_image']}',
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ],
+                          ),
                           Container(
-                            height: 90,
-                            width: 90,
-                            padding: const EdgeInsets.all(14),
+                            height: 180,
+                            width: 120,
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.9),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: SvgPicture.network(
-                              '${AppLink.categoriesImages}/${controller.categories[index]['categories_image']}',
+                              color: Colors.black.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          Text(
-                            '${controller.categories[index]['categories_name_en']}',
-                            style: TextStyle(
-                              color: Colors.black.withOpacity(0.6),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                          Positioned(
+                            bottom: 3,
+                            child: Text(
+                              '${controller.items[index]['items_name_en']}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

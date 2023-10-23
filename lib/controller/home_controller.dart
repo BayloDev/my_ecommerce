@@ -17,6 +17,7 @@ class HomeControllerImpl extends HomeController {
   String? email;
   String? token;
   List categories = [];
+  List items = [];
   @override
   void onInit() {
     id = myServices.sharedPreferences.getString('id');
@@ -36,6 +37,7 @@ class HomeControllerImpl extends HomeController {
       statusRequest = StatusRequest.success;
       if (response["status"] == 'success') {
         categories.addAll(response["categories"]);
+        items.addAll(response["items"]);
       } else {
         statusRequest = StatusRequest.failure;
       }
