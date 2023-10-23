@@ -65,7 +65,7 @@ class SignInControllerImpl extends SignInController {
               ? myServices.sharedPreferences
                   .setString('token', token.toString())
               : null;
-          Get.offAllNamed(AppRoutes.homePage);
+          Get.offAllNamed(AppRoutes.homeScreen);
         } else {
           statusRequest = StatusRequest.failure;
           if (response['message'] == 'user not found') {

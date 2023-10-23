@@ -44,7 +44,7 @@ class VerifyCodeControllerImpl extends VerifyCodeController {
         token != null
             ? myServices.sharedPreferences.setString('token', token.toString())
             : null;
-        Get.offAllNamed(AppRoutes.homePage);
+        Get.offAllNamed(AppRoutes.homeScreen);
         customSnackBar(
           title: 'SignUp Success',
           message: 'Welcome To Our Community',

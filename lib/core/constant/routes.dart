@@ -1,7 +1,7 @@
 class AppRoutes {
   static const String language = '/';
   static const String onBoarding = "/onBoarding";
-  static const String homePage = "/homePage";
+  static const String homeScreen = "/homeScreen";
   // ========== Auth ========= //
   static const String signIn = "/signIn";
   static const String signUp = "/signUp";

@@ -16,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
   final Color borderSideColor;
   final Color fillColor;
   final bool obscureText;
+  final double? borderRadius;
 
   const CustomTextFormField({
     super.key,
@@ -27,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.maxLength,
     this.validator,
+    this.borderRadius,
     required this.hintText,
     required this.borderSideColor,
     required this.fillColor,
@@ -53,7 +55,7 @@ class CustomTextFormField extends StatelessWidget {
             color: AppColor.primaryColor,
             width: 2,
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(borderRadius ?? 20),
         ),
         contentPadding: const EdgeInsets.all(20),
         prefixIcon: prefixIcon,
@@ -63,7 +65,7 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: const BorderSide(
             color: Colors.orange,
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(borderRadius ?? 20),
         ),
         filled: true,
         enabled: true,
@@ -72,7 +74,7 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: BorderSide(
             color: borderSideColor,
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(borderRadius ?? 20),
         ),
         border: OutlineInputBorder(
           borderSide: const BorderSide(color: AppColor.primaryColor, width: 2),

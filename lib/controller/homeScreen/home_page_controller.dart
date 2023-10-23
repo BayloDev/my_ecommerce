@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:my_ecommerce/core/class/status_request.dart';
 import 'package:my_ecommerce/data/data_source/remote/home_data.dart';
 
-import '../core/services/services.dart';
+import '../../core/services/services.dart';
 
 abstract class HomeController extends GetxController {
   getData();

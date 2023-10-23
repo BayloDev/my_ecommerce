@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:my_ecommerce/view/screen/home/home_screen.dart';
 import 'core/constant/routes.dart';
 import 'core/middleware/middleware.dart';
 import 'view/screen/forgetPassword/check_email_screen.dart';
@@ -7,7 +8,6 @@ import 'view/screen/auth/sign_up_screen.dart';
 import 'view/screen/auth/verify_code_screen.dart';
 import 'view/screen/forgetPassword/reset_password_screen.dart';
 import 'view/screen/forgetPassword/verify_code_reset_password_screen.dart';
-import 'view/screen/home_page.dart';
 import 'view/screen/language_screen.dart';
 import 'view/screen/onboarding_screen.dart';
 
@@ -22,8 +22,8 @@ List<GetPage<dynamic>>? pages = [
     page: () => const OnBoardingScreen(),
   ),
   GetPage(
-    name: AppRoutes.homePage,
-    page: () => const HomePage(),
+    name: AppRoutes.homeScreen,
+    page: () => const HomeScreen(),
   ),
 
   // ========== Auth ========= //
