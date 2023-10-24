@@ -8,6 +8,7 @@ import 'view/screen/auth/sign_up_screen.dart';
 import 'view/screen/auth/verify_code_screen.dart';
 import 'view/screen/forgetPassword/reset_password_screen.dart';
 import 'view/screen/forgetPassword/verify_code_reset_password_screen.dart';
+import 'view/screen/home/items.dart';
 import 'view/screen/language_screen.dart';
 import 'view/screen/onboarding_screen.dart';
 
@@ -54,5 +55,9 @@ List<GetPage<dynamic>>? pages = [
   GetPage(
     name: AppRoutes.resetPassword,
     page: () => const ResetPasswordScreen(),
+  ),
+  GetPage(
+    name: AppRoutes.items,
+    page: () => const Items(),
   ),
 ];

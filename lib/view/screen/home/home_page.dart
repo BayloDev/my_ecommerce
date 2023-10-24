@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_ecommerce/core/class/handling_loading.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:my_ecommerce/link_api.dart';
 import 'package:my_ecommerce/view/widget/Auth/custom_text_form_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -40,7 +41,6 @@ class HomePage extends StatelessWidget {
                         Colors.orange.withOpacity(0.5),
                         Colors.orange.withOpacity(0.4),
                         Colors.orange.withOpacity(0.3),
-                        Colors.orange.withOpacity(0.2),
                       ],
                     ),
                   ),
@@ -74,90 +74,7 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                ClipPath(
-                  clipper: WaveClipper(),
-                  child: Container(
-                    height: 170,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Colors.orange.withOpacity(0.9),
-                          Colors.orange.withOpacity(0.8),
-                          Colors.orange.withOpacity(0.7),
-                          Colors.orange.withOpacity(0.6),
-                          Colors.orange.withOpacity(0.5),
-                          Colors.orange.withOpacity(0.4),
-                          Colors.orange.withOpacity(0.3),
-                          Colors.orange.withOpacity(0.2),
-                        ],
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const CustomTitleH1(
-                              text: 'Soug',
-                              color: Colors.white,
-                              fontSize: 26,
-                            ),
-                            const Spacer(),
-                            GestureDetector(
-                              onTap: () {},
-                              child: const Icon(
-                                Icons.shopping_cart_outlined,
-                                color: Colors.white,
-                                size: 30,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        SizedBox(
-                          height: 48,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: CustomTextFormField(
-                                  borderRadius: 12,
-                                  hintText: 'Search Product',
-                                  borderSideColor:
-                                      Colors.white.withOpacity(0.9),
-                                  fillColor: Colors.white.withOpacity(0.9),
-                                  prefixIcon: IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.search_outlined),
-                                    color: Colors.black.withOpacity(0.5),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  width: 50,
-                                  height: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.9),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Icon(
-                                    Icons.notifications_active,
-                                    color: Colors.black.withOpacity(0.5),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                const CustomContainterTitle(title: 'Soug'),
               ],
             ),
             ListView(
@@ -180,30 +97,34 @@ class HomePage extends StatelessWidget {
                       itemCount: controller.categories.length,
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => Column(
-                        children: [
-                          Container(
-                            height: 80,
-                            width: 90,
-                            padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () =>
+                            controller.goToItems(controller.items, index),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 80,
+                              width: 90,
+                              padding: const EdgeInsets.all(14),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: SvgPicture.network(
+                                '${AppLink.categoriesImages}/${controller.categories[index]['categories_image']}',
+                              ),
                             ),
-                            child: SvgPicture.network(
-                              '${AppLink.categoriesImages}/${controller.categories[index]['categories_image']}',
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            '${controller.categories[index]['categories_name_en']}',
-                            style: TextStyle(
-                              color: Colors.black.withOpacity(0.8),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          )
-                        ],
+                            const SizedBox(height: 6),
+                            Text(
+                              '${controller.categories[index]['categories_name_en']}',
+                              style: TextStyle(
+                                color: Colors.black.withOpacity(0.8),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -252,8 +173,9 @@ class HomePage extends StatelessWidget {
                                         topLeft: Radius.circular(10),
                                         topRight: Radius.circular(10),
                                       ),
-                                      child: Image.network(
-                                        '${AppLink.itemsImages}/${controller.items[index]['items_image']}',
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            '${AppLink.itemsImages}/${controller.items[index]['items_image']}',
                                         fit: BoxFit.fill,
                                       ),
                                     ),
@@ -340,8 +262,116 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 500),
+                const SizedBox(height: 10),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomContainterTitle extends StatelessWidget {
+  final String title;
+  const CustomContainterTitle({
+    super.key,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: WaveClipper(),
+      child: Container(
+        height: 170,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Colors.orange.withOpacity(0.9),
+              Colors.orange.withOpacity(0.8),
+              Colors.orange.withOpacity(0.7),
+              Colors.orange.withOpacity(0.6),
+              Colors.orange.withOpacity(0.5),
+              Colors.orange.withOpacity(0.4),
+              Colors.orange.withOpacity(0.3),
+            ],
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                title == 'Categories'
+                    ? Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () => Get.back(),
+                            child: const Icon(
+                              Icons.arrow_back_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                      )
+                    : Container(),
+                CustomTitleH1(
+                  text: title,
+                  color: Colors.white,
+                  fontSize: 26,
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            SizedBox(
+              height: 48,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CustomTextFormField(
+                      borderRadius: 12,
+                      hintText: 'Search Product',
+                      borderSideColor: Colors.white.withOpacity(0.9),
+                      fillColor: Colors.white.withOpacity(0.9),
+                      prefixIcon: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.search_outlined),
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: 50,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.9),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        Icons.notifications_active,
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),

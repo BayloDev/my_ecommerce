@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
 import 'package:my_ecommerce/core/class/status_request.dart';
+import 'package:my_ecommerce/core/constant/routes.dart';
 import 'package:my_ecommerce/data/data_source/remote/home_data.dart';
 
 import '../../core/services/services.dart';
 
 abstract class HomeController extends GetxController {
   getData();
+  goToItems(List items, int selectedIndex);
 }
 
 class HomeControllerImpl extends HomeController {
@@ -46,5 +48,14 @@ class HomeControllerImpl extends HomeController {
       statusRequest = response;
     }
     update();
+  }
+
+  @override
+  goToItems(List items, int selectedIndex) {
+    Get.toNamed(AppRoutes.items, arguments: {
+      'items': items,
+      'categories_name': categories,
+      'selectedIndex': selectedIndex,
+    });
   }
 }

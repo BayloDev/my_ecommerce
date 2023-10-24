@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
           ),
           bottomNavigationBar: Container(
             decoration: BoxDecoration(
-              color: Colors.teal.withOpacity(0.5),
+              color: Colors.teal.shade400,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -29,19 +29,21 @@ class HomeScreen extends StatelessWidget {
                 rippleColor: Colors.white,
                 hoverColor: Colors.orange,
                 gap: 8,
-                activeColor: Colors.teal,
+                activeColor: Colors.white,
                 iconSize: 24,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 duration: const Duration(seconds: 1),
                 tabBackgroundColor: Colors.grey[100]!,
                 color: Colors.white,
                 tabBorderRadius: 20,
                 tabBackgroundGradient: LinearGradient(
                   colors: [
-                    Colors.orange.shade100,
-                    Colors.orange.shade200,
-                    Colors.orange.shade300,
-                    Colors.orange.shade300,
+                    Colors.orange.shade800,
+                    Colors.orange.shade700,
+                    Colors.orange.shade600,
+                    Colors.orange.shade500,
+                    Colors.orange.shade400,
                     Colors.orange.shade300,
                     Colors.orange.shade200,
                     Colors.orange.shade100,
