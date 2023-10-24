@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class CustomTitleH1 extends StatelessWidget {
   final String text;
   final Color color;
+  final double? fontSize;
 
   const CustomTitleH1({
     super.key,
     required this.text,
     this.color = Colors.black54,
+    this.fontSize,
   });
 
   @override
@@ -15,7 +17,7 @@ class CustomTitleH1 extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 24,
+        fontSize: fontSize ?? 24,
         fontWeight: FontWeight.bold,
         color: color,
       ),

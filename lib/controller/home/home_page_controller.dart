@@ -33,9 +33,10 @@ class HomeControllerImpl extends HomeController {
     statusRequest = StatusRequest.loading;
     update();
     var response = await homeData.getAllData();
-    if (response != StatusRequest) {
+    if (response is! StatusRequest) {
       statusRequest = StatusRequest.success;
       if (response["status"] == 'success') {
+        statusRequest = StatusRequest.success;
         categories.addAll(response["categories"]);
         items.addAll(response["items"]);
       } else {

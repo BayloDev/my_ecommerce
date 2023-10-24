@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_ecommerce/view/screen/home/home_screen.dart';
 import 'bindings/initial_binding.dart';
 import 'controller/language_controller.dart';
 import 'core/constant/theme.dart';
 import 'core/localization/translation.dart';
 import 'core/services/services.dart';
+import 'routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,8 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Ecommerce',
       locale: controller.language,
       theme: appTheme,
-      //getPages: pages,
-      home: const HomeScreen(),
+      getPages: pages,
       initialBinding: InitialBindigs(),
     );
   }
