@@ -52,10 +52,12 @@ class HomeControllerImpl extends HomeController {
 
   @override
   goToItems(List items, int selectedIndex) {
-    Get.toNamed(AppRoutes.items, arguments: {
-      'items': items,
-      'categories_name': categories,
-      'selectedIndex': selectedIndex,
-    });
+    Get.toNamed(
+      AppRoutes.items,
+      arguments: {
+        'categories_name': categories,
+        'selected_index': selectedIndex,
+      },
+    );
   }
 }

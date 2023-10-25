@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/constant/colors.dart';
-import '../../../core/constant/theme.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String hintText;
@@ -17,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
   final Color fillColor;
   final bool obscureText;
   final double? borderRadius;
+  final double? fontSize;
 
   const CustomTextFormField({
     super.key,
@@ -29,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLength,
     this.validator,
     this.borderRadius,
+    this.fontSize,
     required this.hintText,
     required this.borderSideColor,
     required this.fillColor,
@@ -48,7 +49,11 @@ class CustomTextFormField extends StatelessWidget {
       validator: validator,
       controller: controller,
       keyboardType: keyboardType,
-      style: appTheme.textTheme.bodySmall,
+      style: TextStyle(
+        fontSize: 14,
+        color: AppColor.black1,
+        fontWeight: FontWeight.normal,
+      ),
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(
@@ -80,8 +85,9 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: const BorderSide(color: AppColor.primaryColor, width: 2),
           borderRadius: BorderRadius.circular(20),
         ),
-        hintStyle: appTheme.textTheme.bodySmall!.copyWith(
-          color: Colors.black54,
+        hintStyle: TextStyle(
+          fontSize: fontSize ?? 14,
+          color: AppColor.black1,
           fontWeight: FontWeight.normal,
         ),
       ),

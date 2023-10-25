@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:my_ecommerce/view/widget/CustomWidgets/custom_title_h1.dart';
 
 import '../constant/images.dart';
 import 'status_request.dart';
@@ -18,16 +20,15 @@ class HandlingDataView extends StatelessWidget {
     return statusRequest == StatusRequest.loading
         ? Center(
             child: Lottie.asset(AppImageAsset.loading, height: 200, width: 300))
-        : statusRequest == StatusRequest.offlineFailure
-            ? Center(
-                child: Lottie.asset(AppImageAsset.offline,
-                    height: 100, repeat: false))
-            : statusRequest == StatusRequest.serverFailure
-                ? Center(
-                    child: Lottie.asset(AppImageAsset.server, repeat: true))
-                : statusRequest == StatusRequest.failure
-                    ? Center(
-                        child: Lottie.asset(AppImageAsset.noData, height: 200))
-                    : widget;
+        : statusRequest == StatusRequest.failure ||
+                statusRequest == StatusRequest.serverException ||
+                statusRequest == StatusRequest.serverFailure ||
+                statusRequest == StatusRequest.offlineFailure
+            ? SizedBox(
+                height: Get.height/2,
+                width: Get.width,
+                child: const Center(child: CustomTitleH1(text: 'No Data')),
+              )
+            : widget;
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_ecommerce/core/class/handling_loading.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:my_ecommerce/link_api.dart';
 import 'package:my_ecommerce/view/widget/Auth/custom_text_form_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../controller/home/home_page_controller.dart';
+import '../../../core/class/handling_data_view.dart';
 import '../../../core/class/wave_clipper.dart';
 import '../../widget/CustomWidgets/custom_title_h1.dart';
 import '../../widget/CustomWidgets/custom_title_h2.dart';
@@ -17,67 +17,67 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(HomeControllerImpl());
     return GetBuilder<HomeControllerImpl>(
-      builder: (controller) => HandlingLoading(
-        statusRequest: controller.statusRequest,
-        widget: ListView(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 190,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(40),
-                      bottomRight: Radius.circular(40),
-                    ),
-                    gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [
-                        Colors.orange.withOpacity(0.9),
-                        Colors.orange.withOpacity(0.8),
-                        Colors.orange.withOpacity(0.7),
-                        Colors.orange.withOpacity(0.6),
-                        Colors.orange.withOpacity(0.5),
-                        Colors.orange.withOpacity(0.4),
-                        Colors.orange.withOpacity(0.3),
-                      ],
-                    ),
+      builder: (controller) => ListView(
+        children: [
+          Stack(
+            children: [
+              Container(
+                height: 190,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(40),
+                    bottomRight: Radius.circular(40),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 16.0, left: 30),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Spacer(),
-                            CustomTitleH1(
-                              text: 'New Year\'s Discount',
-                              color: Colors.white,
-                              fontSize: 24,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 70,
-                        height: 70,
-                        margin: const EdgeInsets.only(right: 20),
-                        child: SvgPicture.asset(
-                          'assets/images/discount.svg',
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Colors.orange.withOpacity(0.9),
+                      Colors.orange.withOpacity(0.8),
+                      Colors.orange.withOpacity(0.7),
+                      Colors.orange.withOpacity(0.6),
+                      Colors.orange.withOpacity(0.5),
+                      Colors.orange.withOpacity(0.4),
+                      Colors.orange.withOpacity(0.3),
                     ],
                   ),
                 ),
-                const CustomContainterTitle(title: 'Soug'),
-              ],
-            ),
-            ListView(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 16.0, left: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Spacer(),
+                          CustomTitleH1(
+                            text: 'New Year\'s Discount',
+                            color: Colors.white,
+                            fontSize: 24,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 70,
+                      height: 70,
+                      margin: const EdgeInsets.only(right: 20),
+                      child: SvgPicture.asset(
+                        'assets/images/discount.svg',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const CustomContainterTitle(title: 'Soug'),
+            ],
+          ),
+          HandlingDataView(
+            statusRequest: controller.statusRequest,
+            widget: ListView(
               shrinkWrap: true,
               children: [
                 Padding(
@@ -265,8 +265,8 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 10),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -343,6 +343,7 @@ class CustomContainterTitle extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomTextFormField(
+                      fontSize: 16,
                       borderRadius: 12,
                       hintText: 'Search Product',
                       borderSideColor: Colors.white.withOpacity(0.9),

@@ -20,6 +20,7 @@ class AppLink {
   // =========== Home Page ========== //
 
   static const String home = '$server/home.php';
+  static const String items = '$server/items.php';
   static const String categoriesImages = '$server/upload/categories';
   static const String itemsImages = '$server/upload/items';
 }
