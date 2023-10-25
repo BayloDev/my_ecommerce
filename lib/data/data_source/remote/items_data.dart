@@ -10,7 +10,7 @@ class ItemsData {
   getItems(String id) async {
     Either<StatusRequest, Map> response = await crud.postData(
       AppLink.items,
-      {'categories_id': id},
+      {'category_id': id},
     );
     return response.fold((l) => l, (r) => r);
   }

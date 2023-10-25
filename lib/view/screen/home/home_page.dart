@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:my_ecommerce/core/functions/translate_database.dart';
 import 'package:my_ecommerce/link_api.dart';
 import 'package:my_ecommerce/view/widget/Auth/custom_text_form_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -116,7 +117,14 @@ class HomePage extends StatelessWidget {
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              '${controller.categories[index]['categories_name_en']}',
+                              translateDatabase(
+                                controller.categories[index]
+                                    ['categories_name_ar'],
+                                controller.categories[index]
+                                    ['categories_name_en'],
+                                controller.categories[index]
+                                    ['categories_name_fr'],
+                              ),
                               style: TextStyle(
                                 color: Colors.black.withOpacity(0.8),
                                 fontSize: 14,
@@ -184,7 +192,11 @@ class HomePage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 6),
                                   child: Text(
-                                    '${controller.items[index]['items_name_en']}',
+                                    translateDatabase(
+                                      controller.items[index]['items_name_ar'],
+                                      controller.items[index]['items_name_en'],
+                                      controller.items[index]['items_name_fr'],
+                                    ),
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,

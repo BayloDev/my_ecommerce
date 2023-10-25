@@ -1,16 +1,19 @@
 import 'package:get/get.dart';
 import 'package:my_ecommerce/data/data_source/remote/items_data.dart';
+import 'package:my_ecommerce/data/model/item_model.dart';
 
 import '../core/class/status_request.dart';
 
 abstract class ItemsController extends GetxController {
   getItems();
+  changeIndex(int newVal);
 }
 
 class ItemsControllerImpl extends ItemsController {
   late List categories;
   List items = [];
   late int selectedIndex;
+  ItemModel itemModel = ItemModel();
   StatusRequest statusRequest = StatusRequest.none;
   ItemsData itemsData = ItemsData(crud: Get.find());
   @override
@@ -25,10 +28,10 @@ class ItemsControllerImpl extends ItemsController {
   getItems() async {
     statusRequest = StatusRequest.loading;
     update();
-    var response = await itemsData.getItems(selectedIndex.toString());
+    var response = await itemsData.getItems((selectedIndex + 1).toString());
     if (response is! StatusRequest) {
-      statusRequest = StatusRequest.success;
       if (response["status"] == 'success') {
+        items = [];
         statusRequest = StatusRequest.success;
         items.addAll(response["data"]);
       } else {
@@ -36,8 +39,13 @@ class ItemsControllerImpl extends ItemsController {
       }
     } else {
       statusRequest = response;
-      update();
     }
+    update();
+  }
+
+  @override
+  changeIndex(int newVal) {
+    selectedIndex = newVal;
     update();
   }
 }
