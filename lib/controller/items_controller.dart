@@ -8,7 +8,7 @@ import '../core/class/status_request.dart';
 abstract class ItemsController extends GetxController {
   getItems();
   changeIndex(int newVal);
-  goToItemDetails();
+  goToItemDetails(Map itemsDetails);
 }
 
 class ItemsControllerImpl extends ItemsController {
@@ -50,9 +50,9 @@ class ItemsControllerImpl extends ItemsController {
     selectedIndex = newVal;
     update();
   }
-  
+
   @override
-  goToItemDetails() {
-    Get.toNamed(AppRoutes.itemDetails);
+  goToItemDetails(itemsDetails) {
+    Get.toNamed(AppRoutes.itemDetails, arguments: {'item': itemsDetails});
   }
 }

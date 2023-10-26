@@ -1,55 +1,55 @@
 import 'package:get/get.dart';
-import 'package:my_ecommerce/data/data_source/remote/items_data.dart';
-import 'package:my_ecommerce/data/model/item_model.dart';
-
-import '../core/class/status_request.dart';
+import 'package:my_ecommerce/core/constant/routes.dart';
 
 abstract class ItemsDetailsController extends GetxController {
-  getItemsDetails();
-  changeIndex(int newVal);
+  addToCart();
+  changeSelectedColor(int index);
+  minProductCount();
+  addProductCount();
 }
 
 class ItemsDetailsControllerImpl extends ItemsDetailsController {
-  late List categories;
-  List items = [];
-  late int selectedIndex;
-  ItemModel itemModel = ItemModel();
-  StatusRequest statusRequest = StatusRequest.none;
-  ItemsData itemsData = ItemsData(crud: Get.find());
+  Map itemDetails = {};
+  int productCount = 1;
+  int selectedColor = 1;
   @override
   void onInit() {
-    getItems();
+    itemDetails = Get.arguments['item'];
+    itemDetails['items_color'] = [
+      'Yellow',
+      'Black',
+      'Green',
+      'White',
+      'red',
+      'orange'
+    ];
     super.onInit();
   }
 
   @override
-  getItems() async {
-    statusRequest = StatusRequest.loading;
-    update();
-    var response = await itemsData.getItems((selectedIndex + 1).toString());
-    if (response is! StatusRequest) {
-      if (response["status"] == 'success') {
-        items = [];
-        statusRequest = StatusRequest.success;
-        items.addAll(response["data"]);
-      } else {
-        statusRequest = StatusRequest.failure;
-      }
-    } else {
-      statusRequest = response;
-    }
+  addToCart() async {
+    Get.toNamed(AppRoutes.favorite);
+  }
+
+  @override
+  changeSelectedColor(int index) {
+    selectedColor = index;
     update();
   }
 
   @override
-  changeIndex(int newVal) {
-    selectedIndex = newVal;
-    update();
+  addProductCount() {
+    if (itemDetails['items_count'] > productCount) {
+      productCount++;
+      update();
+    }
   }
-  
+
   @override
-  getItemsDetails() {
-    // TODO: implement getItemsDetails
-    throw UnimplementedError();
+  minProductCount() {
+    if (productCount > 1) {
+      productCount--;
+      update();
+    }
   }
 }
