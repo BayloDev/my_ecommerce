@@ -1,17 +1,15 @@
 import 'package:get/get.dart';
-import 'package:my_ecommerce/core/constant/routes.dart';
 import 'package:my_ecommerce/data/data_source/remote/items_data.dart';
 import 'package:my_ecommerce/data/model/item_model.dart';
 
 import '../core/class/status_request.dart';
 
-abstract class ItemsController extends GetxController {
-  getItems();
+abstract class ItemsDetailsController extends GetxController {
+  getItemsDetails();
   changeIndex(int newVal);
-  goToItemDetails();
 }
 
-class ItemsControllerImpl extends ItemsController {
+class ItemsDetailsControllerImpl extends ItemsDetailsController {
   late List categories;
   List items = [];
   late int selectedIndex;
@@ -20,8 +18,6 @@ class ItemsControllerImpl extends ItemsController {
   ItemsData itemsData = ItemsData(crud: Get.find());
   @override
   void onInit() {
-    categories = Get.arguments['categories_name'];
-    selectedIndex = Get.arguments['selected_index'];
     getItems();
     super.onInit();
   }
@@ -52,7 +48,8 @@ class ItemsControllerImpl extends ItemsController {
   }
   
   @override
-  goToItemDetails() {
-    Get.toNamed(AppRoutes.itemDetails);
+  getItemsDetails() {
+    // TODO: implement getItemsDetails
+    throw UnimplementedError();
   }
 }

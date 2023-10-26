@@ -5,7 +5,7 @@ import 'package:my_ecommerce/controller/items_controller.dart';
 import 'package:my_ecommerce/core/class/handling_data_view.dart';
 import 'package:my_ecommerce/view/screen/home/home_page.dart';
 
-import '../../../link_api.dart';
+import '../../link_api.dart';
 
 class Items extends StatelessWidget {
   const Items({super.key});
