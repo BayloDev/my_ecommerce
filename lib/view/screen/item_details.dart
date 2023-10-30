@@ -167,11 +167,12 @@ class ItemsDetails extends StatelessWidget {
                               Text(
                                 '${controller.itemDetails['items_count']}',
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black.withOpacity(0.5),
-                                    inherit: false,
-                                    height: 1.4),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black.withOpacity(0.5),
+                                  inherit: false,
+                                  height: 1.4,
+                                ),
                               ),
                             ],
                           ),

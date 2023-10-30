@@ -3,6 +3,7 @@ class AppLink {
       //'https://localhost/ecommerce';
       'https://bilal-ecommerce-app.000webhostapp.com/ecommerce';
   static const String test = '$server/test.php';
+
   // =========== Auth ========== //
 
   static const String signUp = '$server/auth/sign_up.php';
@@ -23,4 +24,9 @@ class AppLink {
   static const String items = '$server/items.php';
   static const String categoriesImages = '$server/upload/categories';
   static const String itemsImages = '$server/upload/items';
+
+  // =========== Favorite ========== //
+
+  static const String addFavorite = '$server/favorite/add_favorite.php';
+  static const String removeFavorite = '$server/favorite/remove_favorite.php';
 }

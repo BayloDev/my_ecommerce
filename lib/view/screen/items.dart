@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_ecommerce/controller/items_controller.dart';
 import 'package:my_ecommerce/core/class/handling_data_view.dart';
+import 'package:my_ecommerce/core/functions/translate_database.dart';
 import 'package:my_ecommerce/view/screen/home/home_page.dart';
 
 import '../../link_api.dart';
 
 class Items extends StatelessWidget {
   const Items({super.key});
-
   @override
   Widget build(BuildContext context) {
     Get.put(ItemsControllerImpl());
@@ -35,7 +35,10 @@ class Items extends StatelessWidget {
                       (element) => Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          element['categories_name_en'],
+                          translateDatabase(
+                              element['categories_name_ar'],
+                              element['categories_name_en'],
+                              element['categories_name_fr']),
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.6),
                             fontSize: 16,
@@ -50,226 +53,280 @@ class Items extends StatelessWidget {
             body: HandlingDataView(
               statusRequest: controller.statusRequest,
               widget: TabBarView(
-                  children: controller.categories
-                      .map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GridView(
-                            shrinkWrap: true,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.85,
-                              crossAxisSpacing: 0,
-                              mainAxisSpacing: 0,
-                            ),
-                            children: controller.items
-                                .where(
-                                  (element) =>
-                                      element["categories_name_en"] ==
-                                      controller.categories[controller
-                                          .selectedIndex]["categories_name_en"],
-                                )
-                                .map(
-                                  (element) => GestureDetector(
-                                    onTap: () => controller
-                                        .goToItemDetails(element),
-                                    child: Card(
-                                      color: Colors.orange.withOpacity(0.7),
-                                      elevation: 2,
-                                      margin: const EdgeInsets.all(4),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
+                physics: const ScrollPhysics(
+                  parent: NeverScrollableScrollPhysics(),
+                ),
+                children: controller.categories
+                    .map(
+                      (e) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GridView.builder(
+                          itemCount: controller.items.length,
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.8,
+                          ),
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () => controller
+                                .goToItemDetails(controller.items[index]),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(12),
+                                              topRight: Radius.circular(12),
+                                            ),
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(12),
+                                              topRight: Radius.circular(12),
+                                            ),
+                                            child: Hero(
+                                              tag: controller.items[index]
+                                                  ['items_id'],
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    '${AppLink.itemsImages}/${controller.items[index]['items_image']}',
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      child: Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(10),
-                                                      topRight:
-                                                          Radius.circular(10),
-                                                    ),
-                                                  ),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(10),
-                                                      topRight:
-                                                          Radius.circular(10),
-                                                    ),
-                                                    child: Hero(
-                                                      tag: element['items_id'],
-                                                      child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            '${AppLink.itemsImages}/${element['items_image']}',
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 6),
-                                                child: Text(
-                                                  '${element['items_name_en']}',
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 6, bottom: 2),
-                                                child: Text(
-                                                  'Sold: ${element['items_count']}',
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                      const SizedBox(height: 20),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(12),
+                                            bottomRight: Radius.circular(12),
                                           ),
-                                          Positioned(
-                                            top: 0,
-                                            left: 0,
-                                            child: element['items_discount'] !=
-                                                    0
-                                                ? Container(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                      horizontal: 4,
-                                                      vertical: 1,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.red
-                                                          .withOpacity(0.9),
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .only(
-                                                        bottomRight:
-                                                            Radius.circular(10),
-                                                        topLeft:
-                                                            Radius.circular(10),
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                      '-${element['items_discount']}%',
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 14,
-                                                      ),
-                                                    ),
-                                                  )
-                                                : Container(),
-                                          ),
-                                          Positioned(
-                                            bottom: 0,
-                                            right: 0,
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 4,
-                                                vertical: 1,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    Colors.red.withOpacity(0.9),
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  bottomRight:
-                                                      Radius.circular(10),
-                                                  topLeft: Radius.circular(10),
-                                                ),
-                                              ),
+                                          color: Colors.orange.shade500,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 6),
                                               child: Text(
-                                                '${element['items_price']} \$',
+                                                translateDatabase(
+                                                  controller.items[index]
+                                                      ['items_name_ar'],
+                                                  controller.items[index]
+                                                      ['items_name_en'],
+                                                  controller.items[index]
+                                                      ['items_name_fr'],
+                                                ),
                                                 style: const TextStyle(
                                                   color: Colors.white,
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Positioned(
-                                            top: 0,
-                                            right: 0,
-                                            child: GestureDetector(
-                                              onTap: () {},
-                                              child: Icon(
-                                                Icons.favorite_border_outlined,
-                                                color:
-                                                    Colors.red.withOpacity(0.9),
-                                                size: 30,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            bottom: 42,
-                                            child: SizedBox(
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 6, bottom: 2),
                                               child: Row(
                                                 children: [
-                                                  Icon(Icons.star,
-                                                      size: 18,
-                                                      color: Colors.black
-                                                          .withOpacity(0.8)),
-                                                  Icon(Icons.star,
-                                                      size: 18,
-                                                      color: Colors.black
-                                                          .withOpacity(0.8)),
-                                                  Icon(Icons.star,
-                                                      size: 18,
-                                                      color: Colors.black
-                                                          .withOpacity(0.8)),
-                                                  Icon(Icons.star_half,
-                                                      size: 18,
-                                                      color: Colors.black
-                                                          .withOpacity(0.8)),
-                                                  Icon(
-                                                      Icons
-                                                          .star_border_outlined,
-                                                      size: 18,
-                                                      color: Colors.black
-                                                          .withOpacity(0.8)),
+                                                  const Text(
+                                                    'Sold : ',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '${controller.items[index]['items_count']}',
+                                                    style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white,
+                                                        height: 1.2),
+                                                  ),
                                                 ],
                                               ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Positioned(
+                                    top: 0,
+                                    left: 0,
+                                    child: controller.items[index]
+                                                ['items_discount'] !=
+                                            0
+                                        ? Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 4,
+                                              vertical: 1,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.red.withOpacity(0.9),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                bottomRight:
+                                                    Radius.circular(10),
+                                                topLeft: Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  '-${controller.items[index]['items_discount']}',
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 18,
+                                                      height: 1),
+                                                ),
+                                                const Text(
+                                                  '%',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ))
+                                        : Container(),
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 4,
+                                        vertical: 1,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red.withOpacity(0.9),
+                                        borderRadius: const BorderRadius.only(
+                                          bottomRight: Radius.circular(10),
+                                          topLeft: Radius.circular(10),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            '${controller.items[index]['items_price']}',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                              height: 1,
+                                            ),
+                                          ),
+                                          const Text(
+                                            '\$',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                              inherit: false,
+                                              height: 1.4,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
                                   ),
-                                )
-                                .toList(),
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(12),
+                                        ),
+                                      ),
+                                      child: GestureDetector(
+                                        onTap: () => controller.changeFavorite(
+                                          index + 1,
+                                          controller.items[index]['items_id']
+                                              .toString(),
+                                        ),
+                                        child: Icon(
+                                          controller.favorites[index + 1] == 1
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: Colors.red.withOpacity(0.9),
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 48,
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.star,
+                                          size: 18,
+                                          color: Colors.black.withOpacity(0.7),
+                                        ),
+                                        Icon(
+                                          Icons.star,
+                                          size: 18,
+                                          color: Colors.black.withOpacity(0.7),
+                                        ),
+                                        Icon(
+                                          Icons.star,
+                                          size: 18,
+                                          color: Colors.black.withOpacity(0.7),
+                                        ),
+                                        Icon(
+                                          Icons.star_half,
+                                          size: 18,
+                                          color: Colors.black.withOpacity(0.7),
+                                        ),
+                                        Icon(
+                                          Icons.star_border_outlined,
+                                          size: 18,
+                                          color: Colors.black.withOpacity(0.7),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      )
-                      .toList()),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           ),
         ),
