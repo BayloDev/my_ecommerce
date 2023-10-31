@@ -22,14 +22,22 @@ Future<dynamic> customDialog(Color color, String title, String content) {
     backgroundColor: Colors.white.withOpacity(0.92),
     barrierDismissible: false,
     actions: [
-      TextButton(
-        onPressed: () => Get.back(),
-        child: const Text(
-          'Close',
-          style: TextStyle(
-            color: AppColor.primaryColor,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
+      Container(
+        color: Colors.white,
+        height: 27,
+        margin: const EdgeInsets.only(bottom: 10),
+        child: ElevatedButton(
+          onPressed: () => Get.back(),
+          style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(Colors.teal.shade500),
+          ),
+          child: const Text(
+            'Close',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),

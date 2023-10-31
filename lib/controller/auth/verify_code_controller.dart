@@ -34,8 +34,7 @@ class VerifyCodeControllerImpl extends VerifyCodeController {
     if (response is! StatusRequest) {
       if (response['status'] == 'success') {
         statusRequest = StatusRequest.success;
-        myServices.sharedPreferences
-            .setString('id', response['data']['user_id'].toString());
+        myServices.sharedPreferences.setInt('id', response['data']['user_id']);
         myServices.sharedPreferences
             .setString('username', response['data']['user_name']);
         myServices.sharedPreferences

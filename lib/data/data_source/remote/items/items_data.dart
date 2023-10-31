@@ -7,12 +7,12 @@ class ItemsData {
   final Crud crud;
 
   ItemsData({required this.crud});
-  getItems(String categoryId, String userId) async {
+  getItems(int categoryId, int userId) async {
     Either<StatusRequest, Map> response = await crud.postData(
       AppLink.items,
       {
-        'category_id': categoryId,
-        'user_id': userId,
+        'category_id': categoryId.toString(),
+        'user_id': userId.toString(),
       },
     );
     return response.fold((l) => l, (r) => r);

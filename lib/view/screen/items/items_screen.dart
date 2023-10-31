@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_ecommerce/controller/items_controller.dart';
+import 'package:my_ecommerce/controller/items/items_controller.dart';
 import 'package:my_ecommerce/core/class/handling_data_view.dart';
 import 'package:my_ecommerce/core/functions/translate_database.dart';
-import 'package:my_ecommerce/view/screen/home/home_page.dart';
 
-import '../../link_api.dart';
+import '../../../link_api.dart';
+import '../../widget/CustomWidgets/custom_appbar.dart';
 
 class Items extends StatelessWidget {
   const Items({super.key});
@@ -21,9 +21,9 @@ class Items extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               leading: Container(),
-              backgroundColor: Colors.white.withOpacity(0.9),
+              backgroundColor: Colors.white.withOpacity(0.85),
               toolbarHeight: 120,
-              flexibleSpace: const CustomContainterTitle(title: 'Categories'),
+              flexibleSpace: const CustomAppBar(title: 'Categories'),
               bottom: TabBar(
                 isScrollable: true,
                 onTap: (value) {
@@ -33,7 +33,7 @@ class Items extends StatelessWidget {
                 tabs: controller.categories
                     .map(
                       (element) => Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(bottom: 4),
                         child: Text(
                           translateDatabase(
                               element['categories_name_ar'],
@@ -58,8 +58,9 @@ class Items extends StatelessWidget {
                 ),
                 children: controller.categories
                     .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      (e) => Container(
+                        color: Colors.black.withOpacity(0.02),
+                        padding: const EdgeInsets.all(12.0),
                         child: GridView.builder(
                           itemCount: controller.items.length,
                           shrinkWrap: true,
@@ -117,7 +118,7 @@ class Items extends StatelessWidget {
                                             bottomLeft: Radius.circular(12),
                                             bottomRight: Radius.circular(12),
                                           ),
-                                          color: Colors.orange.shade500,
+                                          color: Colors.orange.shade400,
                                         ),
                                         child: Column(
                                           mainAxisAlignment:
@@ -272,16 +273,15 @@ class Items extends StatelessWidget {
                                       ),
                                       child: GestureDetector(
                                         onTap: () => controller.changeFavorite(
-                                          index + 1,
-                                          controller.items[index]['items_id']
-                                              .toString(),
+                                          index,
+                                          controller.items[index]['items_id'],
                                         ),
                                         child: Icon(
-                                          controller.favorites[index + 1] == 1
+                                          controller.favorites[index] == 1
                                               ? Icons.favorite
                                               : Icons.favorite_border,
                                           color: Colors.red.withOpacity(0.9),
-                                          size: 30,
+                                          size: 28,
                                         ),
                                       ),
                                     ),

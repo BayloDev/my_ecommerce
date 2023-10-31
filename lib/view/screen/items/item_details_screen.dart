@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_ecommerce/controller/item_details_controller.dart';
+import 'package:my_ecommerce/controller/items/item_details_controller.dart';
 import 'package:my_ecommerce/core/functions/translate_database.dart';
 
-import '../../link_api.dart';
-import '../widget/CustomWidgets/custom_title_h1.dart';
+import '../../../link_api.dart';
+import '../../widget/CustomWidgets/custom_title_h1.dart';
 
 class ItemsDetails extends StatelessWidget {
   const ItemsDetails({super.key});

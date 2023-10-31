@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
+import 'package:my_ecommerce/view/screen/favorites/my_favorites_screen.dart';
 import 'package:my_ecommerce/view/screen/home/home_screen.dart';
-import 'package:my_ecommerce/view/screen/item_details.dart';
+import 'package:my_ecommerce/view/screen/items/item_details_screen.dart';
 import 'core/constant/routes.dart';
 import 'core/middleware/middleware.dart';
 import 'view/screen/forgetPassword/check_email_screen.dart';
@@ -9,7 +10,7 @@ import 'view/screen/auth/sign_up_screen.dart';
 import 'view/screen/auth/verify_code_screen.dart';
 import 'view/screen/forgetPassword/reset_password_screen.dart';
 import 'view/screen/forgetPassword/verify_code_reset_password_screen.dart';
-import 'view/screen/items.dart';
+import 'view/screen/items/items_screen.dart';
 import 'view/screen/language_screen.dart';
 import 'view/screen/onboarding_screen.dart';
 
@@ -64,5 +65,9 @@ List<GetPage<dynamic>>? pages = [
   GetPage(
     name: AppRoutes.itemDetails,
     page: () => const ItemsDetails(),
+  ),
+  GetPage(
+    name: AppRoutes.myFavoritesScreen,
+    page: () => const MyFavoritesScreen(),
   ),
 ];

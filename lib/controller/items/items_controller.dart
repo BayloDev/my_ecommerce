@@ -2,17 +2,17 @@ import 'package:get/get.dart';
 import 'package:my_ecommerce/core/constant/routes.dart';
 import 'package:my_ecommerce/core/functions/custom_snackbar.dart';
 import 'package:my_ecommerce/core/services/services.dart';
-import 'package:my_ecommerce/data/data_source/remote/favorite_data.dart';
-import 'package:my_ecommerce/data/data_source/remote/items_data.dart';
+import 'package:my_ecommerce/data/data_source/remote/favorites/add_remove_favorite_data.dart';
+import 'package:my_ecommerce/data/data_source/remote/items/items_data.dart';
 import 'package:my_ecommerce/data/model/item_model.dart';
 
-import '../core/class/status_request.dart';
+import '../../core/class/status_request.dart';
 
 abstract class ItemsController extends GetxController {
   getItems();
   changeIndex(int newVal);
   goToItemDetails(Map itemsDetails);
-  changeFavorite(int id, String itemId);
+  changeFavorite(int id, int itemId);
 }
 
 class ItemsControllerImpl extends ItemsController {
@@ -22,13 +22,13 @@ class ItemsControllerImpl extends ItemsController {
   ItemModel itemModel = ItemModel();
   StatusRequest statusRequest = StatusRequest.none;
   ItemsData itemsData = ItemsData(crud: Get.find());
-  FavoriteData favoriteData = FavoriteData(crud: Get.find());
+  AddRemoveFavoriteData favoriteData = AddRemoveFavoriteData(crud: Get.find());
   MyServices myServices = Get.find();
   Map<int, int> favorites = {};
-  late String userId;
+  late int userId;
   @override
   void onInit() {
-    userId = myServices.sharedPreferences.getString('id')!;
+    userId = myServices.sharedPreferences.getInt('id')!;
     categories = Get.arguments['categories_name'];
     selectedIndex = Get.arguments['selected_index'];
     getItems();
@@ -65,8 +65,8 @@ class ItemsControllerImpl extends ItemsController {
       customSnackBar(
         title: 'Somthig Went Wrong',
         message: favorites[id] == 1
-              ? 'This Product has not been added to favorites List'
-              : 'This Product has not been removed from favorites List',
+            ? 'This Product has not been added to favorites List'
+            : 'This Product has not been removed from favorites List',
         success: false,
       );
     }
@@ -77,19 +77,17 @@ class ItemsControllerImpl extends ItemsController {
   getItems() async {
     statusRequest = StatusRequest.loading;
     update();
-    var response =
-        await itemsData.getItems((selectedIndex + 1).toString(), userId);
+    var response = await itemsData.getItems((selectedIndex + 1), userId);
     if (response is! StatusRequest) {
       if (response["status"] == 'success') {
-        items = [];
-        favorites = {};
+        items.clear();
+        favorites.clear();
         statusRequest = StatusRequest.success;
         items.addAll(response["data"]);
-        for (var element in items) {
-          favorites.addAll({
-            element['items_id']: element['favorite'],
-          });
+        for (var i = 0; i < response["data"].length; i++) {
+          favorites[i] = items[i]['favorite'];
         }
+        update();
       } else {
         statusRequest = StatusRequest.failure;
       }

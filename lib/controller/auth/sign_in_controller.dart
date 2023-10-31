@@ -55,7 +55,7 @@ class SignInControllerImpl extends SignInController {
         if (response['status'] == 'sign in success') {
           statusRequest = StatusRequest.success;
           myServices.sharedPreferences
-              .setString('id', response['data']['user_id'].toString());
+              .setInt('id', response['data']['user_id']);
           myServices.sharedPreferences
               .setString('username', response['data']['user_name']);
           myServices.sharedPreferences
