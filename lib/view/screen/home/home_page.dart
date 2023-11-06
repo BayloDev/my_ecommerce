@@ -74,7 +74,10 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const CustomAppBar(title: 'Shop'),
+                CustomAppBar(
+                  title: 'Shop',
+                  back: () {},
+                ),
               ],
             ),
             HandlingDataView(

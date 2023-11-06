@@ -12,11 +12,11 @@ import '../../data/data_source/remote/favorites/remove_favorite_cart_data.dart';
 abstract class MyFavoritesController extends GetxController {
   getMyFavorites();
   removeFavoriteCart(int favoritesId);
+  goToItemDetails(Map itemsDetails);
 }
 
 class MyFavoritesControllerImpl extends MyFavoritesController {
   List myFavoritesList = [];
-
   StatusRequest statusRequest = StatusRequest.none;
   MyFavoritesData myFavoritesData = MyFavoritesData(crud: Get.find());
   RemoveFavoriteCartData removeFavoriteCartData =
@@ -38,7 +38,10 @@ class MyFavoritesControllerImpl extends MyFavoritesController {
         statusRequest = StatusRequest.success;
         myFavoritesList.clear();
         myFavoritesList = response["data"];
-        Get.toNamed(AppRoutes.myFavoritesScreen);
+        Get.toNamed(
+          AppRoutes.myFavoritesScreen,
+          arguments: {'previous_route': Get.previousRoute},
+        );
       } else {
         customDialog(
           Colors.red,
@@ -63,11 +66,6 @@ class MyFavoritesControllerImpl extends MyFavoritesController {
           },
         );
         update();
-        customSnackBar(
-          title: 'success',
-          message: 'This Product has been removed from favorites List',
-          success: true,
-        );
       } else {
         customSnackBar(
           title: 'Somthig Went Wrong',
@@ -84,5 +82,10 @@ class MyFavoritesControllerImpl extends MyFavoritesController {
       );
     }
     update();
+  }
+
+  @override
+  goToItemDetails(itemsDetails) {
+    Get.toNamed(AppRoutes.itemDetails, arguments: {'item': itemsDetails});
   }
 }

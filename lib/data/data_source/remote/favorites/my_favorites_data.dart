@@ -9,7 +9,7 @@ class MyFavoritesData {
   MyFavoritesData({required this.crud});
   myFavorite(int userId) async {
     Either<StatusRequest, Map> response = await crud.postData(
-      AppLink.myFavorite,
+      AppLink.myFavorites,
       {
         'user_id': userId.toString(),
       },

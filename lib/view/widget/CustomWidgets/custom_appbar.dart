@@ -7,9 +7,11 @@ import '../Auth/custom_text_form_field.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String title;
+  final void Function()? back;
   const CustomAppBar({
     super.key,
     required this.title,
+    required this.back,
   });
 
   @override
@@ -43,7 +45,7 @@ class CustomAppBar extends StatelessWidget {
                 children: [
                   title != 'Shop'
                       ? GestureDetector(
-                          onTap: () => Get.back(),
+                          onTap: back,
                           child: const Icon(
                             Icons.arrow_back_outlined,
                             color: Colors.white,

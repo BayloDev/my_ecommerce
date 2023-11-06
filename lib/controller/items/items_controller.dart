@@ -18,7 +18,7 @@ abstract class ItemsController extends GetxController {
 class ItemsControllerImpl extends ItemsController {
   late List categories;
   List items = [];
-  late int selectedIndex;
+  int selectedIndex = 0;
   ItemModel itemModel = ItemModel();
   StatusRequest statusRequest = StatusRequest.none;
   ItemsData itemsData = ItemsData(crud: Get.find());
@@ -31,8 +31,8 @@ class ItemsControllerImpl extends ItemsController {
     userId = myServices.sharedPreferences.getInt('id')!;
     categories = Get.arguments['categories_name'];
     selectedIndex = Get.arguments['selected_index'];
-    getItems();
 
+    getItems();
     super.onInit();
   }
 
@@ -45,13 +45,6 @@ class ItemsControllerImpl extends ItemsController {
         : await favoriteData.removeFavorite(itemId, userId);
     if (response is! StatusRequest) {
       if (response["status"] == 'success') {
-        customSnackBar(
-          title: 'success',
-          message: favorites[id] == 1
-              ? 'This Product has been added to favorites List'
-              : 'This Product has been removed from favorites List',
-          success: true,
-        );
       } else {
         customSnackBar(
           title: 'Somthig Went Wrong',
