@@ -9,6 +9,7 @@ import '../../data/data_source/remote/auth/verify_code_sign_up_data.dart';
 
 abstract class VerifyCodeController extends GetxController {
   verifyCode(String code);
+  resendCode();
 }
 
 class VerifyCodeControllerImpl extends VerifyCodeController {
@@ -61,5 +62,25 @@ class VerifyCodeControllerImpl extends VerifyCodeController {
       statusRequest = response;
     }
     update();
+  }
+
+  @override
+  resendCode() async {
+    var response = await verifyCodeSignUpData.resendCode(email!);
+    if (response is! StatusRequest) {
+      if (response['status'] == 'success') {
+        customSnackBar(
+          title: 'Success',
+          message: 'The code has been successfully re-sent to you email address',
+          success: true,
+        );
+      } else {
+        customSnackBar(
+          title: 'Failed',
+          message: 'We Couldn\'t resend the code due an error',
+          success: false,
+        );
+      }
+    }
   }
 }
