@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_ecommerce/core/functions/alert_exit_app.dart';
 import '../../../controller/auth/sign_up_controller.dart';
 import '../../../core/class/handling_loading.dart';
 import '../../../core/constant/colors.dart';
 import '../../../core/constant/images.dart';
-import '../../../core/functions/alert_exit_app.dart';
 import '../../widget/Auth/custom_elevated_button.dart';
 import '../../widget/Auth/custom_text_form_field.dart';
 import '../../widget/CustomWidgets/custom_text_body_medium_black.dart';
@@ -17,8 +17,9 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(SignUpControllerImpl());
     return Scaffold(
-      body: WillPopScope(
-        onWillPop: alertExitApp,
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: alertExitApp,
         child: SafeArea(
           child: Container(
             color: AppColor.black7,
@@ -54,7 +55,8 @@ class SignUpScreen extends StatelessWidget {
                                 },
                                 hintText: 'Username',
                                 keyboardType: TextInputType.emailAddress,
-                                prefixIcon: const Icon(Icons.person_2_outlined),
+                                prefixIcon: Icon(Icons.person_2_outlined,
+                                    color: AppColor.black3),
                               ),
                             ),
                             const SizedBox(height: 14),
@@ -73,7 +75,8 @@ class SignUpScreen extends StatelessWidget {
                                 },
                                 hintText: 'Email',
                                 keyboardType: TextInputType.emailAddress,
-                                prefixIcon: const Icon(Icons.email_outlined),
+                                prefixIcon: Icon(Icons.email_outlined,
+                                    color: AppColor.black3),
                               ),
                             ),
                             const SizedBox(height: 14),
@@ -94,7 +97,8 @@ class SignUpScreen extends StatelessWidget {
                                 },
                                 hintText: 'Password',
                                 keyboardType: TextInputType.visiblePassword,
-                                prefixIcon: const Icon(Icons.lock_outlined),
+                                prefixIcon: Icon(Icons.lock_outlined,
+                                    color: AppColor.black3),
                                 suffixIcon: GestureDetector(
                                   onTap: () => controller.showPass.value =
                                       !controller.showPass.value,
@@ -102,6 +106,7 @@ class SignUpScreen extends StatelessWidget {
                                     controller.showPass.value
                                         ? Icons.visibility_off_outlined
                                         : Icons.visibility_outlined,
+                                    color: AppColor.black3,
                                   ),
                                 ),
                               ),

@@ -20,8 +20,9 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(SignInControllerImpl());
     return Scaffold(
-      body: WillPopScope(
-        onWillPop: alertExitApp,
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: alertExitApp,
         child: SafeArea(
           child: Container(
             color: Colors.black.withOpacity(0.02),
@@ -56,7 +57,8 @@ class SignInScreen extends StatelessWidget {
                                 },
                                 hintText: 'Email',
                                 keyboardType: TextInputType.emailAddress,
-                                prefixIcon: const Icon(Icons.email_outlined),
+                                prefixIcon: Icon(Icons.email_outlined,
+                                    color: AppColor.black3),
                               ),
                             ),
                             const SizedBox(height: 14),
@@ -77,15 +79,16 @@ class SignInScreen extends StatelessWidget {
                                 },
                                 hintText: 'Password',
                                 keyboardType: TextInputType.visiblePassword,
-                                prefixIcon: const Icon(Icons.lock_outlined),
+                                prefixIcon: Icon(Icons.lock_outlined,
+                                    color: AppColor.black3),
                                 suffixIcon: GestureDetector(
                                   onTap: () => controller.showPass.value =
                                       !controller.showPass.value,
                                   child: Icon(
-                                    controller.showPass.value
-                                        ? Icons.visibility_off_outlined
-                                        : Icons.visibility_outlined,
-                                  ),
+                                      controller.showPass.value
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility_outlined,
+                                      color: AppColor.black3),
                                 ),
                               ),
                             ),

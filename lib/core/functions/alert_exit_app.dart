@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../constant/colors.dart';
 
-Future<bool> alertExitApp() {
+void alertExitApp(bool didPop) {
   Get.defaultDialog(
       title: "Alert",
       titleStyle: const TextStyle(
@@ -28,5 +28,4 @@ Future<bool> alertExitApp() {
             },
             child: const Text("Cansel"))
       ]);
-  return Future.value(true);
 }

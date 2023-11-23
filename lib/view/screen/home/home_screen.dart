@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:my_ecommerce/controller/favorites/my_favorites_controller.dart';
 import 'package:my_ecommerce/controller/home/home_screen_controller.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,6 +10,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeScreenControllerImpl controller = Get.put(HomeScreenControllerImpl());
+    MyFavoritesControllerImpl controllerWish =
+        Get.put(MyFavoritesControllerImpl());
     return Obx(
       () => SafeArea(
         child: Scaffold(
@@ -49,11 +52,16 @@ class HomeScreen extends StatelessWidget {
                     Colors.orange.shade100,
                   ],
                 ),
-                tabs: const [
-                  GButton(icon: Icons.home_outlined, text: 'Home'),
-                  GButton(icon: Icons.favorite_outline_rounded, text: 'Wish'),
-                  GButton(icon: Icons.settings_outlined, text: 'Settings'),
-                  GButton(icon: Icons.account_circle_outlined, text: 'Profile'),
+                tabs: [
+                  const GButton(icon: Icons.home_outlined, text: 'Home'),
+                  GButton(
+                      icon: Icons.favorite_outline_rounded,
+                      text: 'Wish',
+                      onPressed: () => controllerWish.getMyFavorites()),
+                  const GButton(
+                      icon: Icons.settings_outlined, text: 'Settings'),
+                  const GButton(
+                      icon: Icons.shopping_cart_outlined, text: 'Cart'),
                 ],
                 selectedIndex: controller.selectedIndex.value,
                 onTabChange: (index) => controller.selectedIndex.value = index,

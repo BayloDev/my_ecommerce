@@ -11,7 +11,7 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     super.key,
     required this.title,
-    required this.back,
+    this.back,
   });
 
   @override
@@ -43,7 +43,7 @@ class CustomAppBar extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  title != 'Shop'
+                  title == 'Categories'
                       ? GestureDetector(
                           onTap: back,
                           child: const Icon(
@@ -98,26 +98,6 @@ class CustomAppBar extends StatelessWidget {
                         ),
                       ),
                     ),
-                    title != 'Favorites'
-                        ? Padding(
-                            padding: const EdgeInsets.only(left: 6),
-                            child: GestureDetector(
-                              onTap: () => controller.getMyFavorites(),
-                              child: Container(
-                                width: 45,
-                                height: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.9),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Icon(
-                                  Icons.favorite_border_outlined,
-                                  color: Colors.black.withOpacity(0.5),
-                                ),
-                              ),
-                            ),
-                          )
-                        : Container(),
                   ],
                 ),
               ),

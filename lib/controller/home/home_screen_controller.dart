@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_ecommerce/data/data_source/remote/home_data.dart';
-import 'package:my_ecommerce/view/screen/home/profile_page.dart';
+import 'package:my_ecommerce/view/screen/home/cart_page.dart';
 import 'package:my_ecommerce/view/screen/home/settings_page.dart';
 import 'package:my_ecommerce/view/screen/home/wish_page.dart';
 
@@ -17,8 +17,7 @@ class HomeScreenControllerImpl extends HomeScreenController {
   List<Widget> widgetOptions = <Widget>[
     const HomePage(),
     const WishPage(),
-
     const SettingsPage(),
-    const ProfilePage(),
+    const CartPage(),
   ];
 }

@@ -62,7 +62,7 @@ class CheckEmailScreen extends StatelessWidget {
                       },
                       hintText: 'Email',
                       keyboardType: TextInputType.emailAddress,
-                      prefixIcon: const Icon(Icons.email_outlined),
+                      prefixIcon:  Icon(Icons.email_outlined,color: AppColor.black3),
                     ),
                   ),
                 ),

@@ -9,14 +9,18 @@ import '../../core/constant/routes.dart';
 import '../../core/functions/custom_snackbar.dart';
 import '../../data/data_source/remote/favorites/remove_favorite_cart_data.dart';
 
-abstract class MyFavoritesController extends GetxController {
+abstract class CartController extends GetxController {
   getMyFavorites();
   removeFavoriteCart(int favoritesId);
   goToItemDetails(Map itemsDetails);
+  minProductCount();
+  addProductCount();
 }
 
-class MyFavoritesControllerImpl extends MyFavoritesController {
-  List myFavoritesList = [];
+class CartControllerImpl extends CartController {
+  List cart = [];
+  int productCount = 1;
+  Map itemDetails = {};
   StatusRequest statusRequest = StatusRequest.none;
   MyFavoritesData myFavoritesData = MyFavoritesData(crud: Get.find());
   RemoveFavoriteCartData removeFavoriteCartData =
@@ -31,6 +35,22 @@ class MyFavoritesControllerImpl extends MyFavoritesController {
   }
 
   @override
+  addProductCount() {
+    if (true) {
+      productCount++;
+      update();
+    }
+  }
+
+  @override
+  minProductCount() {
+    if (productCount > 1) {
+      productCount--;
+      update();
+    }
+  }
+
+  @override
   getMyFavorites() async {
     statusRequest = StatusRequest.loading;
     update();
@@ -38,8 +58,8 @@ class MyFavoritesControllerImpl extends MyFavoritesController {
     if (response is! StatusRequest) {
       if (response["status"] == "success") {
         statusRequest = StatusRequest.success;
-        myFavoritesList.clear();
-        myFavoritesList = response["data"];
+        cart.clear();
+        cart = response["data"];
       } else {
         statusRequest = StatusRequest.failure;
         customDialog(
@@ -59,7 +79,7 @@ class MyFavoritesControllerImpl extends MyFavoritesController {
     var response = await removeFavoriteCartData.removeFavoriteCart(favoritesId);
     if (response is! StatusRequest) {
       if (response["status"] == 'success') {
-        myFavoritesList.removeWhere(
+        cart.removeWhere(
           (element) {
             return element['favorites_id'] == favoritesId;
           },

@@ -62,15 +62,18 @@ class ResetPasswordScreen extends StatelessWidget {
                           },
                           hintText: 'New Password',
                           keyboardType: TextInputType.visiblePassword,
-                          prefixIcon: const Icon(Icons.lock_reset_outlined),
+                          prefixIcon: Icon(
+                            Icons.lock_reset_outlined,
+                            color: AppColor.black3,
+                          ),
                           suffixIcon: GestureDetector(
                             onTap: () => controller.showPass.value =
                                 !controller.showPass.value,
                             child: Icon(
-                              controller.showPass.value
-                                  ? Icons.visibility_off_outlined
-                                  : Icons.visibility_outlined,
-                            ),
+                                controller.showPass.value
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                color: AppColor.black3),
                           ),
                         ),
                       ),
@@ -92,7 +95,10 @@ class ResetPasswordScreen extends StatelessWidget {
                           },
                           hintText: 'Confirm New Password',
                           keyboardType: TextInputType.visiblePassword,
-                          prefixIcon: const Icon(Icons.lock_outline_rounded),
+                          prefixIcon: Icon(
+                            Icons.lock_outline_rounded,
+                            color: AppColor.black3,
+                          ),
                         ),
                       ),
                     ],
