@@ -70,4 +70,8 @@ List<GetPage<dynamic>>? pages = [
     name: AppRoutes.myFavoritesScreen,
     page: () => const WishPage(),
   ),
+  GetPage(
+    name: AppRoutes.cart,
+    page: () => const WishPage(),
+  ),
 ];

@@ -27,6 +27,7 @@ class Crud {
         return const Left(StatusRequest.offlineFailure);
       }
     } catch (e) {
+      print(e.toString());
       customDialog(Colors.red, 'Server Exception', 'Please Try Again later');
       return const Left(StatusRequest.serverException);
     }

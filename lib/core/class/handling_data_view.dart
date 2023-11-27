@@ -25,9 +25,13 @@ class HandlingDataView extends StatelessWidget {
                 statusRequest == StatusRequest.serverFailure ||
                 statusRequest == StatusRequest.offlineFailure
             ? SizedBox(
-                height: Get.height/2,
+                height: Get.height / 2,
                 width: Get.width,
-                child: const Center(child: CustomTitleH1(text: 'No Data')),
+                child: const Center(
+                    child: CustomTitleH1(
+                  text: 'No items yet',
+                  fontSize: 18,
+                )),
               )
             : widget;
   }

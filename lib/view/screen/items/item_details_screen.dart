@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_ecommerce/controller/cart/cart_controller.dart';
 import 'package:my_ecommerce/controller/items/item_details_controller.dart';
 import 'package:my_ecommerce/core/functions/translate_database.dart';
 
@@ -13,6 +14,7 @@ class ItemsDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(ItemsDetailsControllerImpl());
+    Get.put(CartControllerImpl());
     return SafeArea(
       child: Scaffold(
         body: GetBuilder<ItemsDetailsControllerImpl>(
@@ -274,69 +276,78 @@ class ItemsDetails extends StatelessWidget {
                           const SizedBox(height: 20),
                           SizedBox(
                             height: 35,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  onPressed: () => controller.minProductCount(),
-                                  icon: Icon(
-                                    Icons.remove,
-                                    color: Colors.black.withOpacity(0.5),
-                                    size: 22,
-                                  ),
-                                ),
-                                Text(
-                                  '${controller.productCount}',
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.orange,
-                                    fontWeight: FontWeight.bold,
-                                    textBaseline: TextBaseline.ideographic,
-                                    inherit: false,
-                                    height: 1.4,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () => controller.addProductCount(),
-                                  icon: Icon(
-                                    Icons.add,
-                                    color: Colors.black.withOpacity(0.5),
-                                    size: 22,
-                                  ),
-                                ),
-                                const Spacer(),
-                                SizedBox(
-                                  height: 40,
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.orange.shade400),
-                                    ),
-                                    onPressed: () {},
-                                    child: const Row(
-                                      children: [
-                                        Text(
-                                          'Add To Cart',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        SizedBox(width: 2),
-                                        Icon(
-                                          size: 20,
-                                          Icons.arrow_forward_rounded,
-                                          color: Colors.white,
-                                        ),
-                                      ],
+                            child: GetBuilder<CartControllerImpl>(
+                              builder: (cartController) => Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () =>
+                                        cartController.countMinus(),
+                                    icon: Icon(
+                                      Icons.remove,
+                                      color: Colors.black.withOpacity(0.5),
+                                      size: 22,
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    '${cartController.count}',
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.orange,
+                                      fontWeight: FontWeight.bold,
+                                      textBaseline: TextBaseline.ideographic,
+                                      inherit: false,
+                                      height: 1.4,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () => cartController.countPlus(),
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: Colors.black.withOpacity(0.5),
+                                      size: 22,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  SizedBox(
+                                    height: 40,
+                                    child: GetBuilder<CartControllerImpl>(
+                                      builder: (cartController) =>
+                                          ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.orange.shade400),
+                                        ),
+                                        onPressed: () =>
+                                            cartController.addItemToCart(
+                                          controller.itemDetails['items_id'],
+                                        ),
+                                        child: const Row(
+                                          children: [
+                                            Text(
+                                              'Add To Cart',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            SizedBox(width: 2),
+                                            Icon(
+                                              size: 20,
+                                              Icons.arrow_forward_rounded,
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

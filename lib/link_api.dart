@@ -23,6 +23,8 @@ class AppLink {
 
   static const String home = '$server/home.php';
   static const String items = '$server/items.php';
+  // =========== Images ========== //
+
   static const String categoriesImages = '$server/upload/categories';
   static const String itemsImages = '$server/upload/items';
 
@@ -31,5 +33,14 @@ class AppLink {
   static const String addFavorite = '$server/favorite/add_favorite.php';
   static const String removeFavorite = '$server/favorite/remove_favorite.php';
   static const String myFavorites = '$server/favorite/my_favorites.php';
-  static const String removeFavoriteCart = '$server/favorite/remove_favorite_from_cart.php';
+  static const String removeFromFavorites =
+      '$server/favorite/remove_from_favorites.php';
+
+  // =========== cart ========== //
+
+  static const String addToCart = '$server/cart/add.php';
+  static const String removeFromCart = '$server/cart/remove.php';
+  static const String count = '$server/cart/count.php';
+  static const String updateCount = '$server/cart/update_count.php';
+  static const String getCartItems = '$server/cart/get_cart_items.php';
 }

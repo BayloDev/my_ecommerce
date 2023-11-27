@@ -7,7 +7,7 @@ import 'package:my_ecommerce/data/data_source/remote/favorites/my_favorites_data
 import '../../core/class/status_request.dart';
 import '../../core/constant/routes.dart';
 import '../../core/functions/custom_snackbar.dart';
-import '../../data/data_source/remote/favorites/remove_favorite_cart_data.dart';
+import '../../data/data_source/remote/favorites/remove_from_favorites_data.dart';
 
 abstract class MyFavoritesController extends GetxController {
   getMyFavorites();
@@ -19,8 +19,8 @@ class MyFavoritesControllerImpl extends MyFavoritesController {
   List myFavoritesList = [];
   StatusRequest statusRequest = StatusRequest.none;
   MyFavoritesData myFavoritesData = MyFavoritesData(crud: Get.find());
-  RemoveFavoriteCartData removeFavoriteCartData =
-      RemoveFavoriteCartData(crud: Get.find());
+  RemoveFromFavoritesData removeFromFavorites =
+      RemoveFromFavoritesData(crud: Get.find());
   MyServices myServices = Get.find();
 
   int? userId;
@@ -56,7 +56,7 @@ class MyFavoritesControllerImpl extends MyFavoritesController {
 
   @override
   removeFavoriteCart(int favoritesId) async {
-    var response = await removeFavoriteCartData.removeFavoriteCart(favoritesId);
+    var response = await removeFromFavorites.removeFromFavorites(favoritesId);
     if (response is! StatusRequest) {
       if (response["status"] == 'success') {
         myFavoritesList.removeWhere(

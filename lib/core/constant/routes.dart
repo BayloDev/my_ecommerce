@@ -15,5 +15,6 @@ class AppRoutes {
   static const String itemDetails = "/itemDetails";
   static const String favorite = "/favorite";
   static const String myFavoritesScreen = "/myFavoritesScreen";
-
+  // ========== Cart ========= //
+  static const String cart = "/cart";
 }
