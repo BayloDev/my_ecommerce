@@ -8,15 +8,14 @@ import 'package:my_ecommerce/view/screen/home/wish_page.dart';
 import '../../core/services/services.dart';
 import '../../view/screen/home/home_page.dart';
 
-
 class HomeScreenControllerImpl extends GetxController {
   MyServices myServices = Get.find();
   HomeData homeData = HomeData(Get.find());
   RxInt selectedIndex = 0.obs;
   List<Widget> widgetOptions = <Widget>[
     const HomePage(),
+    const CartPage(),
     const WishPage(),
     const SettingsPage(),
-    const CartPage(),
   ];
 }

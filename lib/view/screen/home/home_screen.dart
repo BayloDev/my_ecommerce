@@ -54,14 +54,20 @@ class HomeScreen extends StatelessWidget {
                 ),
                 tabs: [
                   const GButton(icon: Icons.home_outlined, text: 'Home'),
+                  const GButton(
+                    icon: Icons.shopping_cart_outlined,
+                    text: 'Cart',
+                  ),
                   GButton(
-                      icon: Icons.favorite_outline_rounded,
-                      text: 'Wish',
-                      onPressed: () => controllerWish.getMyFavorites()),
+                    
+                    icon: Icons.favorite_outline_rounded,
+                    text: 'Wish',
+                    onPressed: () => controllerWish.getMyFavorites(),
+                  ),
                   const GButton(
-                      icon: Icons.settings_outlined, text: 'Settings'),
-                  const GButton(
-                      icon: Icons.shopping_cart_outlined, text: 'Cart'),
+                    icon: Icons.settings_outlined,
+                    text: 'Settings',
+                  ),
                 ],
                 selectedIndex: controller.selectedIndex.value,
                 onTabChange: (index) => controller.selectedIndex.value = index,

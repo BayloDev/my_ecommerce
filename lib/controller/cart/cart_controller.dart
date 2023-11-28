@@ -16,6 +16,7 @@ abstract class CartController extends GetxController {
   countPlus();
   countMinus();
   goToItemDetails(Map itemsDetails);
+  changeOnDown();
 }
 
 class CartControllerImpl extends CartController {
@@ -25,21 +26,16 @@ class CartControllerImpl extends CartController {
   CartData cartData = CartData(crud: Get.find());
   MyServices myServices = Get.find();
   int? userId;
-  int totalPrice = 0;
-  int shipping = 100;
-  // @override
-  // void onInit() {
-  //   userId = myServices.sharedPreferences.getInt('id')!;
-  //   getCartItems();
-  //   super.onInit();
-  // }
-
+  double totalPrice = 0.0;
+  double shipping = 100.0;
+  int totalItems = 0;
+  int selectedItems = 0;
+  bool onDown = false;
   @override
-  InternalFinalCallback<void> get onDelete {
+  void onInit() {
     userId = myServices.sharedPreferences.getInt('id')!;
     getCartItems();
-    update();
-    return super.onDelete;
+    super.onInit();
   }
 
   @override
@@ -54,19 +50,10 @@ class CartControllerImpl extends CartController {
         totalPrice = 0;
         List dataResponse = response['data'];
         cartItems.addAll(dataResponse.map((e) {
-          print('--------------');
-
-          print(totalPrice);
-          totalPrice = totalPrice + e['total_price'] as int;
+          totalPrice = totalPrice + e['total_price'];
           return CartModel.fromJson(e);
         }));
-        print('==========');
-        print(totalPrice);
-        update();
-        // for (var i = 0; i < cartItems.length - 1; i++) {
-        //   totalPrice = totalPrice + cartItems[i].totalPrice!;
-        // }
-        // update();
+        totalItems = cartItems.length;
       }
     } else {
       statusRequest = response;
@@ -162,5 +149,11 @@ class CartControllerImpl extends CartController {
       count--;
       update();
     }
+  }
+
+  @override
+  changeOnDown() {
+    onDown = !onDown;
+    update();
   }
 }
