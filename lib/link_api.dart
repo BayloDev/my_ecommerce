@@ -28,7 +28,7 @@ class AppLink {
   static const String categoriesImages = '$server/upload/categories';
   static const String itemsImages = '$server/upload/items';
 
-  // =========== Favorite ========== //
+  // =========== Favorites ========== //
 
   static const String addFavorite = '$server/favorite/add_favorite.php';
   static const String removeFavorite = '$server/favorite/remove_favorite.php';
