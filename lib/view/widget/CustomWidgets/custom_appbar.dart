@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_ecommerce/controller/favorites/my_favorites_controller.dart';
+import 'package:my_ecommerce/controller/homeScreen/favorites_controller.dart';
 
 import '../../../core/class/wave_clipper.dart';
 import '../Auth/custom_text_form_field.dart';
@@ -16,10 +16,10 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MyFavoritesControllerImpl());
+    Get.put(FavoritesControllerImpl());
     return ClipPath(
       clipper: WaveClipper(),
-      child: GetBuilder<MyFavoritesControllerImpl>(
+      child: GetBuilder<FavoritesControllerImpl>(
         builder: (controller) => Container(
           height: 140,
           padding: const EdgeInsets.all(12),

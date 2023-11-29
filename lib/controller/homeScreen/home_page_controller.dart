@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:my_ecommerce/core/class/status_request.dart';
 import 'package:my_ecommerce/core/constant/routes.dart';
-import 'package:my_ecommerce/data/data_source/remote/home_data.dart';
+import 'package:my_ecommerce/data/data_source/remote/homeScreen/home_data.dart';
 
 import '../../core/services/services.dart';
 
@@ -20,6 +20,7 @@ class HomeControllerImpl extends HomeController {
   String? token;
   List categories = [];
   List items = [];
+
   @override
   void onInit() {
     userId = myServices.sharedPreferences.getInt('id');
@@ -38,11 +39,12 @@ class HomeControllerImpl extends HomeController {
     if (response is! StatusRequest) {
       statusRequest = StatusRequest.success;
       if (response["status"] == 'success') {
-        statusRequest = StatusRequest.success;
         if (response["categories"] != null) {
+          categories.clear();
           categories.addAll(response["categories"]);
         }
         if (response["items"] != null) {
+          items.clear();
           items.addAll(response["items"]);
         }
       } else {

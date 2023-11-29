@@ -5,7 +5,7 @@ import 'package:my_ecommerce/data/model/cart_model.dart';
 import '../../../core/class/status_request.dart';
 import '../../../core/constant/routes.dart';
 import '../../../core/functions/custom_snackbar.dart';
-import '../../data/data_source/remote/cart/cart_data.dart';
+import '../../data/data_source/remote/homeScreen/cart_data.dart';
 
 abstract class CartController extends GetxController {
   getCartItems();
@@ -21,15 +21,15 @@ abstract class CartController extends GetxController {
 
 class CartControllerImpl extends CartController {
   List<CartModel> cartItems = [];
-  int count = 1;
   StatusRequest statusRequest = StatusRequest.none;
   CartData cartData = CartData(crud: Get.find());
   MyServices myServices = Get.find();
   int? userId;
+  int count = 1;
   double totalPrice = 0.0;
   double shipping = 100.0;
   int totalItems = 0;
-  int selectedItems = 0;
+  int placeOrderCount = 0;
   bool onDown = false;
   @override
   void onInit() {
@@ -43,9 +43,10 @@ class CartControllerImpl extends CartController {
     statusRequest = StatusRequest.loading;
     update();
     var response = await cartData.getCartItems(userId!);
+
     if (response is! StatusRequest) {
+      statusRequest = StatusRequest.success;
       if (response["data"] != null) {
-        statusRequest = StatusRequest.success;
         cartItems.clear();
         totalPrice = 0;
         List dataResponse = response['data'];
@@ -54,6 +55,8 @@ class CartControllerImpl extends CartController {
           return CartModel.fromJson(e);
         }));
         totalItems = cartItems.length;
+      } else {
+        statusRequest = StatusRequest.failure;
       }
     } else {
       statusRequest = response;

@@ -5,15 +5,13 @@ import 'package:my_ecommerce/core/class/handling_data_view.dart';
 import 'package:my_ecommerce/core/functions/translate_database.dart';
 import 'package:my_ecommerce/link_api.dart';
 import 'package:my_ecommerce/view/widget/CustomWidgets/custom_appbar.dart';
-import '../../../controller/cart/cart_controller.dart';
+import '../../../controller/homeScreen/cart_controller.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.delete<CartControllerImpl>();
-
     Get.put(CartControllerImpl());
     return SafeArea(
       child: GetBuilder<CartControllerImpl>(
@@ -52,10 +50,8 @@ class CartPage extends StatelessWidget {
                             'All Items',
                             style: TextStyle(
                               fontSize: 18,
-                              
                             ),
                             overflow: TextOverflow.ellipsis,
-                            
                           ),
                           const Spacer(),
                           const Text(
@@ -164,11 +160,10 @@ class CartPage extends StatelessWidget {
                                             const Text(
                                               '\$',
                                               style: TextStyle(
-                                                fontSize: 15,
-                                                inherit: false,
-                                                height: 1.2,
-                                                color: Colors.teal
-                                              ),
+                                                  fontSize: 15,
+                                                  inherit: false,
+                                                  height: 1.2,
+                                                  color: Colors.teal),
                                             ),
                                             const Spacer(),
                                             SizedBox(
@@ -365,7 +360,7 @@ class CartPage extends StatelessWidget {
                                     ),
                                   ),
                                   child: Text(
-                                    'Place Order (${controller.count})',
+                                    'Place Order (${controller.placeOrderCount})',
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,

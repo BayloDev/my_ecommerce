@@ -2,25 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_ecommerce/core/functions/custom_dialog.dart';
 import 'package:my_ecommerce/core/services/services.dart';
-import 'package:my_ecommerce/data/data_source/remote/favorites/my_favorites_data.dart';
+import 'package:my_ecommerce/data/data_source/remote/homeScreen/favorites_data.dart';
 
 import '../../core/class/status_request.dart';
 import '../../core/constant/routes.dart';
 import '../../core/functions/custom_snackbar.dart';
-import '../../data/data_source/remote/favorites/remove_from_favorites_data.dart';
 
-abstract class MyFavoritesController extends GetxController {
+abstract class FavoritesController extends GetxController {
   getMyFavorites();
   removeFavoriteCart(int favoritesId);
   goToItemDetails(Map itemsDetails);
 }
 
-class MyFavoritesControllerImpl extends MyFavoritesController {
+class FavoritesControllerImpl extends FavoritesController {
   List myFavoritesList = [];
   StatusRequest statusRequest = StatusRequest.none;
-  MyFavoritesData myFavoritesData = MyFavoritesData(crud: Get.find());
-  RemoveFromFavoritesData removeFromFavorites =
-      RemoveFromFavoritesData(crud: Get.find());
+  FavoritesData favoritesData = FavoritesData(crud: Get.find());
   MyServices myServices = Get.find();
 
   int? userId;
@@ -34,7 +31,7 @@ class MyFavoritesControllerImpl extends MyFavoritesController {
   getMyFavorites() async {
     statusRequest = StatusRequest.loading;
     update();
-    var response = await myFavoritesData.myFavorite(userId!);
+    var response = await favoritesData.myFavorites(userId!);
     if (response is! StatusRequest) {
       if (response["status"] == "success") {
         statusRequest = StatusRequest.success;
@@ -56,7 +53,7 @@ class MyFavoritesControllerImpl extends MyFavoritesController {
 
   @override
   removeFavoriteCart(int favoritesId) async {
-    var response = await removeFromFavorites.removeFromFavorites(favoritesId);
+    var response = await favoritesData.removeFromFavorites(favoritesId);
     if (response is! StatusRequest) {
       if (response["status"] == 'success') {
         myFavoritesList.removeWhere(

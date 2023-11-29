@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:my_ecommerce/controller/cart/cart_controller.dart';
+import 'package:my_ecommerce/controller/homeScreen/cart_controller.dart';
 import 'package:my_ecommerce/core/constant/routes.dart';
 
 abstract class ItemsDetailsController extends GetxController {

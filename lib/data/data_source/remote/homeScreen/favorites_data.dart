@@ -3,10 +3,20 @@ import 'package:my_ecommerce/core/class/crud.dart';
 import 'package:my_ecommerce/core/class/status_request.dart';
 import 'package:my_ecommerce/link_api.dart';
 
-class AddRemoveFavoriteData {
+class FavoritesData {
   final Crud crud;
 
-  AddRemoveFavoriteData({required this.crud});
+  FavoritesData({required this.crud});
+  removeFromFavorites(int favoritesId) async {
+    Either<StatusRequest, Map> response = await crud.postData(
+      AppLink.removeFromFavorites,
+      {
+        'favorites_id': favoritesId.toString(),
+      },
+    );
+    return response.fold((l) => l, (r) => r);
+  }
+
   addFavorite(int itemId, int userId) async {
     Either<StatusRequest, Map> response = await crud.postData(
       AppLink.addFavorite,
@@ -23,6 +33,16 @@ class AddRemoveFavoriteData {
       AppLink.removeFavorite,
       {
         'item_id': itemId.toString(),
+        'user_id': userId.toString(),
+      },
+    );
+    return response.fold((l) => l, (r) => r);
+  }
+
+  myFavorites(int userId) async {
+    Either<StatusRequest, Map> response = await crud.postData(
+      AppLink.myFavorites,
+      {
         'user_id': userId.toString(),
       },
     );

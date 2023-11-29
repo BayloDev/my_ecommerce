@@ -2,11 +2,11 @@ import 'package:get/get.dart';
 import 'package:my_ecommerce/core/constant/routes.dart';
 import 'package:my_ecommerce/core/functions/custom_snackbar.dart';
 import 'package:my_ecommerce/core/services/services.dart';
-import 'package:my_ecommerce/data/data_source/remote/favorites/add_remove_favorite_data.dart';
 import 'package:my_ecommerce/data/data_source/remote/items/items_data.dart';
 import 'package:my_ecommerce/data/model/item_model.dart';
 
 import '../../core/class/status_request.dart';
+import '../../data/data_source/remote/homeScreen/favorites_data.dart';
 
 abstract class ItemsController extends GetxController {
   getItems();
@@ -22,7 +22,7 @@ class ItemsControllerImpl extends ItemsController {
   ItemModel itemModel = ItemModel();
   StatusRequest statusRequest = StatusRequest.none;
   ItemsData itemsData = ItemsData(crud: Get.find());
-  AddRemoveFavoriteData favoriteData = AddRemoveFavoriteData(crud: Get.find());
+  FavoritesData favoriteData = FavoritesData(crud: Get.find());
   MyServices myServices = Get.find();
   Map<int, int> favorites = {};
   late int userId;

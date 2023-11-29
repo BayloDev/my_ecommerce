@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:my_ecommerce/controller/settings_controller.dart';
+import 'package:my_ecommerce/controller/homeScreen/settings_controller.dart';
 import '../../widget/CustomWidgets/custom_title_h1.dart';
 
 class SettingsPage extends StatelessWidget {

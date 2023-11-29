@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_ecommerce/controller/favorites/my_favorites_controller.dart';
+import 'package:my_ecommerce/controller/homeScreen/favorites_controller.dart';
 import 'package:my_ecommerce/core/class/handling_data_view.dart';
 import 'package:my_ecommerce/view/widget/CustomWidgets/custom_appbar.dart';
 import '../../widget/CustomWidgets/custom_item_card.dart';
 import '../../widget/CustomWidgets/custom_title_h1.dart';
 
-class WishPage extends StatelessWidget {
-  const WishPage({super.key});
+class FavoritesPage extends StatelessWidget {
+  const FavoritesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MyFavoritesControllerImpl());
+    Get.put(FavoritesControllerImpl());
     return SafeArea(
-      child: GetBuilder<MyFavoritesControllerImpl>(
+      child: GetBuilder<FavoritesControllerImpl>(
         builder: (controller) => Scaffold(
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.black.withOpacity(0.01),
             leading: Container(),
             toolbarHeight: 140,
-            flexibleSpace: const CustomAppBar(title: 'Wish'),
+            flexibleSpace: CustomAppBar(
+              title: 'Wish(${controller.myFavoritesList.length})',
+            ),
           ),
           body: HandlingDataView(
             statusRequest: controller.statusRequest,

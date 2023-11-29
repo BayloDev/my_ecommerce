@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:my_ecommerce/controller/favorites/my_favorites_controller.dart';
-import 'package:my_ecommerce/controller/home/home_screen_controller.dart';
+import 'package:my_ecommerce/controller/homeScreen/cart_controller.dart';
+import 'package:my_ecommerce/controller/homeScreen/favorites_controller.dart';
+import 'package:my_ecommerce/controller/homeScreen/home_page_controller.dart';
+import 'package:my_ecommerce/controller/homeScreen/home_screen_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    HomeScreenControllerImpl controller = Get.put(HomeScreenControllerImpl());
-    MyFavoritesControllerImpl controllerWish =
-        Get.put(MyFavoritesControllerImpl());
+    HomeScreenControllerImpl homeScreenController = Get.put(
+      HomeScreenControllerImpl(),
+    );
+
     return Obx(
       () => SafeArea(
         child: Scaffold(
           body: Center(
-            child: controller.widgetOptions[controller.selectedIndex.value],
+            child: homeScreenController
+                .widgetOptions[homeScreenController.selectedIndex.value],
           ),
           bottomNavigationBar: Container(
             decoration: BoxDecoration(
@@ -48,29 +52,60 @@ class HomeScreen extends StatelessWidget {
                     Colors.orange.shade500,
                     Colors.orange.shade400,
                     Colors.orange.shade300,
-                    Colors.orange.shade200,
                     Colors.orange.shade100,
                   ],
                 ),
                 tabs: [
-                  const GButton(icon: Icons.home_outlined, text: 'Home'),
-                  const GButton(
-                    icon: Icons.shopping_cart_outlined,
-                    text: 'Cart',
+                  GButton(
+                    icon: Icons.home_outlined,
+                    text: 'Home',
+                    onPressed: () {
+                      Get.delete<CartControllerImpl>();
+                      Get.delete<FavoritesControllerImpl>();
+                      HomeControllerImpl homePageController = Get.put(
+                        HomeControllerImpl(),
+                      );
+                      return homePageController.getData();
+                    },
                   ),
                   GButton(
-                    
+                    icon: Icons.shopping_cart_outlined,
+                    text: 'Cart',
+                    onPressed: () {
+                      Get.delete<HomeControllerImpl>();
+                      Get.delete<FavoritesControllerImpl>();
+                      CartControllerImpl cartController = Get.put(
+                        CartControllerImpl(),
+                      );
+                      return cartController.getCartItems();
+                    },
+                  ),
+                  GButton(
                     icon: Icons.favorite_outline_rounded,
                     text: 'Wish',
-                    onPressed: () => controllerWish.getMyFavorites(),
+                    onPressed: () {
+                      Get.delete<HomeControllerImpl>();
+                      Get.delete<CartControllerImpl>();
+                      Get.delete<FavoritesControllerImpl>();
+                      FavoritesControllerImpl wishController = Get.put(
+                        FavoritesControllerImpl(),
+                      );
+                      return wishController.getMyFavorites();
+                    },
                   ),
-                  const GButton(
+                  GButton(
                     icon: Icons.settings_outlined,
                     text: 'Settings',
+                    onPressed: () {
+                      Get.delete<HomeControllerImpl>();
+                      Get.delete<CartControllerImpl>();
+                      Get.delete<FavoritesControllerImpl>();
+                    },
                   ),
                 ],
-                selectedIndex: controller.selectedIndex.value,
-                onTabChange: (index) => controller.selectedIndex.value = index,
+                selectedIndex: homeScreenController.selectedIndex.value,
+                onTabChange: (index) =>
+                    homeScreenController.selectedIndex.value = index,
               ),
             ),
           ),
