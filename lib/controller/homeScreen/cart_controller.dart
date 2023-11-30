@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:my_ecommerce/core/functions/custom_dialog_question.dart';
 import 'package:my_ecommerce/core/services/services.dart';
 import 'package:my_ecommerce/data/model/cart_model.dart';
 
@@ -9,14 +10,13 @@ import '../../data/data_source/remote/homeScreen/cart_data.dart';
 
 abstract class CartController extends GetxController {
   getCartItems();
-  removeItemFromCart(int itemId);
-  addItemToCart(int itemId);
-  itemCount(int itemId);
-  updateCount(int itemId);
-  countPlus();
-  countMinus();
+  countPlus(int cartId);
+  countMinus(int cartId);
   goToItemDetails(Map itemsDetails);
   changeOnDown();
+  onCheckBoxtap(int index);
+  checkAll();
+  updateValues();
 }
 
 class CartControllerImpl extends CartController {
@@ -25,12 +25,12 @@ class CartControllerImpl extends CartController {
   CartData cartData = CartData(crud: Get.find());
   MyServices myServices = Get.find();
   int? userId;
-  int count = 1;
-  double totalPrice = 0.0;
+  double price = 0.0;
   double shipping = 100.0;
-  int totalItems = 0;
   int placeOrderCount = 0;
   bool onDown = false;
+  bool onAllCheck = true;
+  List<bool> checkBoxList = [];
   @override
   void onInit() {
     userId = myServices.sharedPreferences.getInt('id')!;
@@ -43,61 +43,21 @@ class CartControllerImpl extends CartController {
     statusRequest = StatusRequest.loading;
     update();
     var response = await cartData.getCartItems(userId!);
-
     if (response is! StatusRequest) {
-      statusRequest = StatusRequest.success;
       if (response["data"] != null) {
+        statusRequest = StatusRequest.success;
         cartItems.clear();
-        totalPrice = 0;
+        checkBoxList.clear();
+        price = 0;
         List dataResponse = response['data'];
         cartItems.addAll(dataResponse.map((e) {
-          totalPrice = totalPrice + e['total_price'];
+          checkBoxList.add(true);
+          price = price + e['total_price'];
           return CartModel.fromJson(e);
         }));
-        totalItems = cartItems.length;
+        placeOrderCount = checkBoxList.length;
       } else {
         statusRequest = StatusRequest.failure;
-      }
-    } else {
-      statusRequest = response;
-    }
-    update();
-  }
-
-  @override
-  addItemToCart(int itemId) async {
-    var response = await cartData.addToCart(userId!, itemId, count);
-    if (response is! StatusRequest) {
-      if (response["status"] == 'success') {
-        customSnackBar(
-          title: 'Success',
-          message: 'Item added to cart',
-          success: true,
-        );
-      }
-    } else {
-      statusRequest = response;
-    }
-    update();
-  }
-
-  @override
-  removeItemFromCart(int itemId) async {
-    var response = await cartData.removeFromCart(userId!, itemId);
-    if (response is! StatusRequest) {
-      if (response["status"] == 'success') {
-        // cart.removeWhere(
-        //   (element) {
-        //     return element['favorites_id'] == favoritesId;
-        //   },
-        // );
-        update();
-      } else {
-        customSnackBar(
-          title: 'Failed',
-          message: 'Somthig Went Wrong',
-          success: false,
-        );
       }
     } else {
       statusRequest = response;
@@ -111,46 +71,81 @@ class CartControllerImpl extends CartController {
   }
 
   @override
-  itemCount(int itemId) async {
-    var response = await cartData.countItem(userId!, itemId);
-    if (response is! StatusRequest) {
-      count = response["count"];
-    } else {
-      statusRequest = response;
-    }
+  countPlus(int cartId) async {
+    statusRequest = StatusRequest.loading;
     update();
-  }
-
-  @override
-  updateCount(int itemId) async {
-    var response = await cartData.updateCount(userId!, itemId);
+    var response = await cartData.countPlus(cartId);
     if (response is! StatusRequest) {
-      if (response["count"] == 0) {
-        count = 0;
-        update();
+      if (response["status"] == 'success') {
+        statusRequest = StatusRequest.success;
+        int position =
+            cartItems.indexWhere((element) => element.cartId == cartId);
+        cartItems[position].cartItemNumber =
+            cartItems[position].cartItemNumber! + 1;
+        price += cartItems[position].itemsPrice!;
       } else {
-        count = response["count"];
-        update();
+        statusRequest = StatusRequest.failure;
       }
     } else {
       statusRequest = response;
-      count = 0;
-      update();
     }
     update();
   }
 
   @override
-  countPlus() {
-    count++;
-    update();
-  }
-
-  @override
-  countMinus() {
-    if (count > 1) {
-      count--;
+  countMinus(int cartId) async {
+    int position = cartItems.indexWhere((element) => element.cartId == cartId);
+    if (cartItems[position].cartItemNumber! > 1) {
+      statusRequest = StatusRequest.loading;
       update();
+      var response = await cartData.countMinus(cartId);
+      if (response is! StatusRequest) {
+        if (response["status"] == 'success') {
+          statusRequest = StatusRequest.success;
+          cartItems[position].cartItemNumber =
+              cartItems[position].cartItemNumber! - 1;
+          price -= cartItems[position].itemsPrice!;
+        } else {
+          statusRequest = StatusRequest.failure;
+        }
+      } else {
+        statusRequest = response;
+      }
+      update();
+    } else {
+      customDialogQuestion(
+        () async {
+          Get.back();
+          statusRequest = StatusRequest.loading;
+          update();
+          var response = await cartData.removeFromCart(cartId);
+          if (response is! StatusRequest) {
+            if (response["status"] == 'success') {
+              statusRequest = StatusRequest.success;
+              placeOrderCount--;
+              price -= cartItems[position].itemsPrice!;
+              cartItems.removeWhere(
+                (element) {
+                  return element.cartId == cartId;
+                },
+              );
+              if (cartItems.isEmpty) {
+                statusRequest = StatusRequest.failure;
+              }
+            } else {
+              statusRequest = StatusRequest.failure;
+              customSnackBar(
+                title: 'Failed',
+                message: 'Somthig Went Wrong',
+                success: false,
+              );
+            }
+          } else {
+            statusRequest = response;
+          }
+          update();
+        },
+      );
     }
   }
 
@@ -158,5 +153,55 @@ class CartControllerImpl extends CartController {
   changeOnDown() {
     onDown = !onDown;
     update();
+  }
+
+  @override
+  onCheckBoxtap(int index) {
+    checkBoxList[index] = checkBoxList[index] == false ? true : false;
+    updateValues();
+    update();
+  }
+
+  @override
+  checkAll() {
+    onAllCheck = onAllCheck == true ? false : true;
+    if (onAllCheck == true) {
+      price = 0;
+      shipping = 100.0;
+      for (var i = 0; i < checkBoxList.length; i++) {
+        checkBoxList[i] = true;
+        price += cartItems[i].itemsPrice! * cartItems[i].cartItemNumber!;
+      }
+      placeOrderCount = checkBoxList.length;
+    } else {
+      shipping = 0.0;
+      price = 0;
+      for (var i = 0; i < cartItems.length; i++) {
+        checkBoxList[i] = false;
+      }
+      placeOrderCount = 0;
+    }
+    update();
+  }
+
+  @override
+  updateValues() {
+    price = 0.0;
+    shipping = 100.0;
+    placeOrderCount = 0;
+    for (var i = 0; i < cartItems.length; i++) {
+      if (checkBoxList[i] == true) {
+        price += cartItems[i].itemsPrice! * cartItems[i].cartItemNumber!;
+        placeOrderCount++;
+      }
+    }
+    if (placeOrderCount == cartItems.length) {
+      onAllCheck = true;
+    } else {
+      onAllCheck = false;
+    }
+    if (price == 0.0) {
+      shipping = 0.0;
+    }
   }
 }

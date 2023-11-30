@@ -14,7 +14,6 @@ class HomeScreen extends StatelessWidget {
     HomeScreenControllerImpl homeScreenController = Get.put(
       HomeScreenControllerImpl(),
     );
-
     return Obx(
       () => SafeArea(
         child: Scaffold(
@@ -62,6 +61,7 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () {
                       Get.delete<CartControllerImpl>();
                       Get.delete<FavoritesControllerImpl>();
+                      Get.delete<Card>();
                       HomeControllerImpl homePageController = Get.put(
                         HomeControllerImpl(),
                       );
@@ -72,6 +72,8 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.shopping_cart_outlined,
                     text: 'Cart',
                     onPressed: () {
+                      Get.delete<Card>();
+
                       Get.delete<HomeControllerImpl>();
                       Get.delete<FavoritesControllerImpl>();
                       CartControllerImpl cartController = Get.put(
@@ -84,6 +86,8 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.favorite_outline_rounded,
                     text: 'Wish',
                     onPressed: () {
+                      Get.delete<Card>();
+
                       Get.delete<HomeControllerImpl>();
                       Get.delete<CartControllerImpl>();
                       Get.delete<FavoritesControllerImpl>();

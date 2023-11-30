@@ -7,46 +7,32 @@ class CartData {
   final Crud crud;
 
   CartData({required this.crud});
-  addToCart(int userId, int itemId, int count) async {
-    Either<StatusRequest, Map> response = await crud.postData(
-      AppLink.addToCart,
-      {
-        'user_id': userId.toString(),
-        'item_id': itemId.toString(),
-        'item_count': count.toString(),
-      },
-    );
-    return response.fold((l) => l, (r) => r);
-  }
 
-  removeFromCart(int userId, int itemId) async {
+  removeFromCart(int cartId) async {
     Either<StatusRequest, Map> response = await crud.postData(
       AppLink.removeFromCart,
       {
-        'user_id': userId.toString(),
-        'item_id': itemId.toString(),
+        'cart_id': cartId.toString(),
       },
     );
     return response.fold((l) => l, (r) => r);
   }
 
-  countItem(int userId, int itemId) async {
+  countPlus(int cartId) async {
     Either<StatusRequest, Map> response = await crud.postData(
-      AppLink.count,
+      AppLink.countPlus,
       {
-        'user_id': userId.toString(),
-        'item_id': itemId.toString(),
+        'cart_id': cartId.toString(),
       },
     );
     return response.fold((l) => l, (r) => r);
   }
 
-  updateCount(int userId, int itemId) async {
+  countMinus(int cartId) async {
     Either<StatusRequest, Map> response = await crud.postData(
-      AppLink.updateCount,
+      AppLink.countMinus,
       {
-        'user_id': userId.toString(),
-        'item_id': itemId.toString(),
+        'cart_id': cartId.toString(),
       },
     );
     return response.fold((l) => l, (r) => r);

@@ -18,18 +18,19 @@ class AppLink {
       '$server/forgetPassword/verify_code_reset_password.php';
   static const String resetPassword =
       '$server/forgetPassword/reset_password.php';
-
-  // =========== Home Page ========== //
-
-  static const String home = '$server/home.php';
-  static const String items = '$server/items.php';
   // =========== Images ========== //
 
   static const String categoriesImages = '$server/upload/categories';
   static const String itemsImages = '$server/upload/items';
 
-  // =========== Favorites ========== //
+  // =========== Home Page ========== //
+  static const String home = '$server/home.php';
 
+  // =========== Items ========== //
+  static const String items = '$server/items/items.php';
+  static const String addToCart = '$server/items/add_to_cart.php';
+
+  // =========== Favorites ========== //
   static const String addFavorite = '$server/favorite/add_favorite.php';
   static const String removeFavorite = '$server/favorite/remove_favorite.php';
   static const String myFavorites = '$server/favorite/my_favorites.php';
@@ -37,10 +38,8 @@ class AppLink {
       '$server/favorite/remove_from_favorites.php';
 
   // =========== cart ========== //
-
-  static const String addToCart = '$server/cart/add.php';
   static const String removeFromCart = '$server/cart/remove.php';
-  static const String count = '$server/cart/count.php';
-  static const String updateCount = '$server/cart/update_count.php';
+  static const String countPlus = '$server/cart/count_plus.php';
+  static const String countMinus = '$server/cart/count_minus.php';
   static const String getCartItems = '$server/cart/get_cart_items.php';
 }

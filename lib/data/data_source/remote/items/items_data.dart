@@ -17,4 +17,16 @@ class ItemsData {
     );
     return response.fold((l) => l, (r) => r);
   }
+
+  addToCart(int userId, int itemId, int count) async {
+    Either<StatusRequest, Map> response = await crud.postData(
+      AppLink.addToCart,
+      {
+        'user_id': userId.toString(),
+        'item_id': itemId.toString(),
+        'item_count': count.toString(),
+      },
+    );
+    return response.fold((l) => l, (r) => r);
+  }
 }
