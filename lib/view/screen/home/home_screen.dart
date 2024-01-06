@@ -61,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () {
                       HomeControllerImpl homeControllerImpl =
                           Get.put(HomeControllerImpl());
-                      homeControllerImpl.getData();    
+                      homeControllerImpl.getData();
                     },
                   ),
                   GButton(
@@ -86,11 +86,7 @@ class HomeScreen extends StatelessWidget {
                   GButton(
                     icon: Icons.settings_outlined,
                     text: 'Settings',
-                    onPressed: () {
-                      // Get.delete<HomeControllerImpl>();
-                      // Get.delete<CartControllerImpl>();
-                      // Get.delete<FavoritesControllerImpl>();
-                    },
+                    onPressed: () {},
                   ),
                 ],
                 selectedIndex: homeScreenController.selectedIndex,

@@ -40,10 +40,10 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       inputFormatters: [
-        FilteringTextInputFormatter.deny(RegExp(" ")),
+        FilteringTextInputFormatter.deny(RegExp("  ")),
       ],
       obscureText: obscureText,
-      strutStyle: const StrutStyle(height: 1),
+      cursorHeight: 22,
       cursorColor: AppColor.primaryColor,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLength: maxLength,

@@ -33,64 +33,61 @@ class CartPage extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    SizedBox(
-                      //     height: 30,
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            value: controller.onAllCheck,
-                            checkColor: Colors.white,
-                            fillColor: MaterialStatePropertyAll(
-                              controller.onAllCheck
-                                  ? Colors.teal
-                                  : Colors.white,
-                            ),
-                            onChanged: (newVal) => controller.checkAll(),
+                    Row(
+                      children: [
+                        Checkbox(
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          value: controller.onAllCheck,
+                          checkColor: Colors.white,
+                          fillColor: MaterialStatePropertyAll(
+                            controller.onAllCheck
+                                ? Colors.teal
+                                : Colors.white,
                           ),
-                          const Text(
-                            'All Items',
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
-                            overflow: TextOverflow.ellipsis,
+                          onChanged: (newVal) => controller.checkAll(),
+                        ),
+                        const Text(
+                          'All Items',
+                          style: TextStyle(
+                            fontSize: 18,
                           ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () => controller.delete(),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.red.withOpacity(0.9),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Delete',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.delete,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const Spacer(),
+                        GestureDetector(
+                          onTap: () => controller.delete(),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.red.withOpacity(0.9),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Delete',
+                                  style: TextStyle(
+                                    fontSize: 16,
                                     color: Colors.white,
-                                    size: 18,
                                   ),
-                                ],
-                              ),
+                                ),
+                                Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(width: 4),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(width: 4),
+                      ],
                     ),
                     const SizedBox(height: 10),
                     Expanded(

@@ -6,7 +6,6 @@ import 'package:my_ecommerce/controller/homeController/search_controller.dart';
 import 'package:my_ecommerce/core/constant/routes.dart';
 
 import '../../../core/class/wave_clipper.dart';
-import '../Auth/custom_text_form_field.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String title;
@@ -70,24 +69,38 @@ class CustomAppBar extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 48,
+                height: 45,
                 child: Row(
                   children: [
                     Expanded(
                       child: GetBuilder<SearchControllerImpl>(
-                        builder: (controller) => CustomTextFormField(
+                        builder: (controller) => GestureDetector(
                           onTap: () => Get.toNamed(AppRoutes.search),
-                          fontSize: 16,
-                          borderRadius: 12,
-                          hintText: 'Search Product',
-                          borderSideColor: const Color.fromARGB(255, 44, 39, 39)
-                              .withOpacity(0.9),
-                          fillColor: Colors.white.withOpacity(0.9),
-                          prefixIcon: IconButton(
-                            onPressed: () =>
-                                controller.search(controller.keyword.text),
-                            icon: const Icon(Icons.search_outlined),
-                            color: Colors.black.withOpacity(0.5),
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.9),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  const SizedBox(width: 10),
+                                  Icon(
+                                    Icons.search_outlined,
+                                    color: Colors.black.withOpacity(0.5),
+                                    size: 18,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'Search Products',
+                                    style: TextStyle(
+                                      color: Colors.black.withOpacity(0.5),
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),

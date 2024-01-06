@@ -55,7 +55,6 @@ class HomeControllerImpl extends HomeController {
     }
     
     update();
-    print('==============getDat');
   }
 
   @override
