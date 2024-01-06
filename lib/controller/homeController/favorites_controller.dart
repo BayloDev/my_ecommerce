@@ -31,11 +31,11 @@ class FavoritesControllerImpl extends FavoritesController {
   getMyFavorites() async {
     statusRequest = StatusRequest.loading;
     update();
+    myFavoritesList.clear();
     var response = await favoritesData.myFavorites(userId!);
     if (response is! StatusRequest) {
       if (response["status"] == "success") {
         statusRequest = StatusRequest.success;
-        myFavoritesList.clear();
         myFavoritesList = response["data"];
       } else {
         statusRequest = StatusRequest.failure;

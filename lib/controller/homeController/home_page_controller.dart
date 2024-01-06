@@ -53,7 +53,9 @@ class HomeControllerImpl extends HomeController {
     } else {
       statusRequest = response;
     }
+    
     update();
+    print('==============getDat');
   }
 
   @override

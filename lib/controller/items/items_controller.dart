@@ -3,7 +3,6 @@ import 'package:my_ecommerce/core/constant/routes.dart';
 import 'package:my_ecommerce/core/functions/custom_snackbar.dart';
 import 'package:my_ecommerce/core/services/services.dart';
 import 'package:my_ecommerce/data/data_source/remote/items/items_data.dart';
-import 'package:my_ecommerce/data/model/item_model.dart';
 
 import '../../core/class/status_request.dart';
 import '../../data/data_source/remote/homeScreen/favorites_data.dart';
@@ -19,7 +18,6 @@ class ItemsControllerImpl extends ItemsController {
   late List categories;
   List items = [];
   int selectedIndex = 0;
-  ItemModel itemModel = ItemModel();
   StatusRequest statusRequest = StatusRequest.none;
   ItemsData itemsData = ItemsData(crud: Get.find());
   FavoritesData favoriteData = FavoritesData(crud: Get.find());
@@ -31,8 +29,8 @@ class ItemsControllerImpl extends ItemsController {
     userId = myServices.sharedPreferences.getInt('id')!;
     categories = Get.arguments['categories_name'];
     selectedIndex = Get.arguments['selected_index'];
-
     getItems();
+
     super.onInit();
   }
 
@@ -73,14 +71,15 @@ class ItemsControllerImpl extends ItemsController {
     var response = await itemsData.getItems((selectedIndex + 1), userId);
     if (response is! StatusRequest) {
       if (response["status"] == 'success') {
+        statusRequest = StatusRequest.success;
         items.clear();
         favorites.clear();
-        statusRequest = StatusRequest.success;
-        items.addAll(response["data"]);
-        for (var i = 0; i < response["data"].length; i++) {
-          favorites[i] = items[i]['favorite'];
+        List data = response["data"];
+        items.addAll(data);
+      //  items.addAll(data.map((e) => ItemModel.fromJson(e)));
+        for (var i = 0; i < items.length; i++) {
+          favorites[i] = items[i]['favorite']!;
         }
-        update();
       } else {
         statusRequest = StatusRequest.failure;
       }

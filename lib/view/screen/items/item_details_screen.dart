@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_ecommerce/controller/homeScreen/cart_controller.dart';
+import 'package:my_ecommerce/controller/homeController/cart_controller.dart';
 import 'package:my_ecommerce/controller/items/item_details_controller.dart';
 import 'package:my_ecommerce/core/class/handling_data_view.dart';
 import 'package:my_ecommerce/core/functions/translate_database.dart';

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:my_ecommerce/controller/homeScreen/cart_controller.dart';
+import 'package:my_ecommerce/controller/homeController/cart_controller.dart';
 import 'package:my_ecommerce/data/data_source/remote/items/items_data.dart';
 
 import '../../core/class/status_request.dart';
@@ -43,6 +43,7 @@ class ItemsDetailsControllerImpl extends ItemsDetailsController {
     update();
     var response = await itemsData.addToCart(userId!, itemId, count);
     if (response is! StatusRequest) {
+      Get.back();
       statusRequest = StatusRequest.success;
       if (response["status"] == 'success') {
         customSnackBar(

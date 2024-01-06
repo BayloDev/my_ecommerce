@@ -1,3 +1,4 @@
+
 import 'package:dartz/dartz.dart';
 import 'package:my_ecommerce/core/class/crud.dart';
 import 'package:my_ecommerce/core/class/status_request.dart';
@@ -8,11 +9,11 @@ class CartData {
 
   CartData({required this.crud});
 
-  removeFromCart(int cartId) async {
+  removeFromCart(String cartIds) async {
     Either<StatusRequest, Map> response = await crud.postData(
       AppLink.removeFromCart,
       {
-        'cart_id': cartId.toString(),
+        'cart_ids': cartIds,
       },
     );
     return response.fold((l) => l, (r) => r);

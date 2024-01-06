@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_ecommerce/controller/homeScreen/favorites_controller.dart';
+import 'package:my_ecommerce/controller/homeController/favorites_controller.dart';
 import 'package:my_ecommerce/core/class/handling_data_view.dart';
 import 'package:my_ecommerce/view/widget/CustomWidgets/custom_appbar.dart';
 import '../../widget/CustomWidgets/custom_item_card.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:my_ecommerce/controller/homeScreen/cart_controller.dart';
-import 'package:my_ecommerce/controller/homeScreen/favorites_controller.dart';
-import 'package:my_ecommerce/controller/homeScreen/home_page_controller.dart';
-import 'package:my_ecommerce/controller/homeScreen/home_screen_controller.dart';
+import 'package:my_ecommerce/controller/homeController/cart_controller.dart';
+import 'package:my_ecommerce/controller/homeController/favorites_controller.dart';
+import 'package:my_ecommerce/controller/homeController/home_page_controller.dart';
+import 'package:my_ecommerce/controller/homeController/home_screen_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,12 +14,12 @@ class HomeScreen extends StatelessWidget {
     HomeScreenControllerImpl homeScreenController = Get.put(
       HomeScreenControllerImpl(),
     );
-    return Obx(
-      () => SafeArea(
+    return GetBuilder<HomeScreenControllerImpl>(
+      builder: (controller) => SafeArea(
         child: Scaffold(
           body: Center(
             child: homeScreenController
-                .widgetOptions[homeScreenController.selectedIndex.value],
+                .widgetOptions[homeScreenController.selectedIndex],
           ),
           bottomNavigationBar: Container(
             decoration: BoxDecoration(
@@ -59,57 +59,42 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.home_outlined,
                     text: 'Home',
                     onPressed: () {
-                      Get.delete<CartControllerImpl>();
-                      Get.delete<FavoritesControllerImpl>();
-                      Get.delete<Card>();
-                      HomeControllerImpl homePageController = Get.put(
-                        HomeControllerImpl(),
-                      );
-                      return homePageController.getData();
+                      HomeControllerImpl homeControllerImpl =
+                          Get.put(HomeControllerImpl());
+                      homeControllerImpl.getData();    
                     },
                   ),
                   GButton(
                     icon: Icons.shopping_cart_outlined,
                     text: 'Cart',
                     onPressed: () {
-                      Get.delete<Card>();
-
-                      Get.delete<HomeControllerImpl>();
-                      Get.delete<FavoritesControllerImpl>();
-                      CartControllerImpl cartController = Get.put(
-                        CartControllerImpl(),
-                      );
-                      return cartController.getCartItems();
+                      CartControllerImpl cartControllerImpl =
+                          Get.put(CartControllerImpl());
+                      cartControllerImpl.getCartItems();
                     },
                   ),
                   GButton(
                     icon: Icons.favorite_outline_rounded,
                     text: 'Wish',
                     onPressed: () {
-                      Get.delete<Card>();
-
-                      Get.delete<HomeControllerImpl>();
-                      Get.delete<CartControllerImpl>();
-                      Get.delete<FavoritesControllerImpl>();
                       FavoritesControllerImpl wishController = Get.put(
                         FavoritesControllerImpl(),
                       );
-                      return wishController.getMyFavorites();
+                      wishController.getMyFavorites();
                     },
                   ),
                   GButton(
                     icon: Icons.settings_outlined,
                     text: 'Settings',
                     onPressed: () {
-                      Get.delete<HomeControllerImpl>();
-                      Get.delete<CartControllerImpl>();
-                      Get.delete<FavoritesControllerImpl>();
+                      // Get.delete<HomeControllerImpl>();
+                      // Get.delete<CartControllerImpl>();
+                      // Get.delete<FavoritesControllerImpl>();
                     },
                   ),
                 ],
-                selectedIndex: homeScreenController.selectedIndex.value,
-                onTabChange: (index) =>
-                    homeScreenController.selectedIndex.value = index,
+                selectedIndex: homeScreenController.selectedIndex,
+                onTabChange: (index) => controller.changeIndex(index),
               ),
             ),
           ),

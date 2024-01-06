@@ -5,6 +5,7 @@ import '../../../core/constant/colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String hintText;
+  final void Function(String)? onChanged;
   final void Function()? onTap;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -21,7 +22,7 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     this.obscureText = false,
-    this.onTap,
+    this.onChanged,
     this.controller,
     this.keyboardType,
     this.prefixIcon,
@@ -33,6 +34,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.hintText,
     required this.borderSideColor,
     required this.fillColor,
+    this.onTap,
   });
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class CustomTextFormField extends StatelessWidget {
       cursorColor: AppColor.primaryColor,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLength: maxLength,
+      onChanged: onChanged,
       onTap: onTap,
       validator: validator,
       controller: controller,

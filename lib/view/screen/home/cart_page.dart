@@ -5,7 +5,8 @@ import 'package:my_ecommerce/core/class/handling_data_view.dart';
 import 'package:my_ecommerce/core/functions/translate_database.dart';
 import 'package:my_ecommerce/link_api.dart';
 import 'package:my_ecommerce/view/widget/CustomWidgets/custom_appbar.dart';
-import '../../../controller/homeScreen/cart_controller.dart';
+
+import '../../../controller/homeController/cart_controller.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -33,7 +34,7 @@ class CartPage extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 30,
+                      //     height: 30,
                       child: Row(
                         children: [
                           Checkbox(
@@ -43,7 +44,7 @@ class CartPage extends StatelessWidget {
                             checkColor: Colors.white,
                             fillColor: MaterialStatePropertyAll(
                               controller.onAllCheck
-                                  ? Colors.orange
+                                  ? Colors.teal
                                   : Colors.white,
                             ),
                             onChanged: (newVal) => controller.checkAll(),
@@ -56,19 +57,35 @@ class CartPage extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           const Spacer(),
-                          const Text(
-                            'Delete',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.red,
-                            ),
-                          ),
                           GestureDetector(
-                            onTap: () {},
-                            child: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                              size: 18,
+                            onTap: () => controller.delete(),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.red.withOpacity(0.9),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Delete',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           const SizedBox(width: 4),
@@ -159,7 +176,7 @@ class CartPage extends StatelessWidget {
                                                                   index] ==
                                                               false
                                                           ? Colors.white
-                                                          : Colors.orange,
+                                                          : Colors.teal,
                                                     ),
                                                     onChanged: (newVal) =>
                                                         controller
@@ -191,17 +208,18 @@ class CartPage extends StatelessWidget {
                                                       .toString(),
                                                   style: const TextStyle(
                                                     fontSize: 16,
-                                                    color: Colors.teal,
+                                                    color: Colors.orange,
                                                     inherit: false,
                                                   ),
                                                 ),
                                                 const Text(
                                                   '\$',
                                                   style: TextStyle(
-                                                      fontSize: 15,
-                                                      inherit: false,
-                                                      height: 1.2,
-                                                      color: Colors.teal),
+                                                    fontSize: 15,
+                                                    inherit: false,
+                                                    height: 1.2,
+                                                    color: Colors.orange,
+                                                  ),
                                                 ),
                                                 const Spacer(),
                                                 SizedBox(
@@ -238,8 +256,8 @@ class CartPage extends StatelessWidget {
                                                   '${controller.cartItems[index].cartItemNumber}',
                                                   style: const TextStyle(
                                                     fontSize: 18,
-                                                    color: Colors.teal,
-                                                    fontWeight: FontWeight.w400,
+                                                    color: Colors.orange,
+                                                    fontWeight: FontWeight.w500,
                                                     inherit: false,
                                                     height: 1.3,
                                                   ),

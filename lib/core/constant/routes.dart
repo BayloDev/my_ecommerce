@@ -9,6 +9,8 @@ class AppRoutes {
   static const String checkEmail = "/checkEmail";
   static const String verifyCodeResPass = "/verifyCodeResPass";
   static const String resetPassword = "/resetPassword";
+  // ========== Search ========= //
+  static const String search = "/search";
   // ========== Home ========= //
   static const String homeScreen = "/homeScreen";
   static const String items = "/items";

@@ -26,6 +26,9 @@ class AppLink {
   // =========== Home Page ========== //
   static const String home = '$server/home.php';
 
+  // =========== Search ========== //
+  static const String search = '$server/search/search.php';
+
   // =========== Items ========== //
   static const String items = '$server/items/items.php';
   static const String addToCart = '$server/items/add_to_cart.php';

@@ -7,8 +7,8 @@ import 'package:my_ecommerce/core/functions/translate_database.dart';
 import '../../widget/CustomWidgets/custom_appbar.dart';
 import '../../widget/CustomWidgets/custom_item_card.dart';
 
-class Items extends StatelessWidget {
-  const Items({super.key});
+class ItemsScreen extends StatelessWidget {
+  const ItemsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     Get.put(ItemsControllerImpl());
@@ -28,6 +28,7 @@ class Items extends StatelessWidget {
               ),
               bottom: TabBar(
                 isScrollable: true,
+                tabAlignment: TabAlignment.start,
                 onTap: (value) {
                   controller.changeIndex(value);
                   controller.getItems();
@@ -86,10 +87,12 @@ class Items extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               child: GestureDetector(
-                                onTap: () => controller.changeFavorite(
-                                  index,
-                                  controller.items[index]['items_id'],
-                                ),
+                                onTap: () {
+                                  controller.changeFavorite(
+                                    index,
+                                    controller.items[index]['items_id']!,
+                                  );
+                                },
                                 child: Icon(
                                   controller.favorites[index] == 1
                                       ? Icons.favorite

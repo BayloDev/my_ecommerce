@@ -45,7 +45,7 @@ Future<dynamic> customDialogQuestion(void Function()? onDelete) {
         child: ElevatedButton(
           onPressed: onDelete,
           style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red.shade300),
+            backgroundColor: MaterialStatePropertyAll(Colors.red.withOpacity(0.9)),
           ),
           child: const Text(
             'Delete',

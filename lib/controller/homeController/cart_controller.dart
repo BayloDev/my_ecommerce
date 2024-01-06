@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_ecommerce/core/functions/custom_dialog.dart';
 import 'package:my_ecommerce/core/functions/custom_dialog_question.dart';
 import 'package:my_ecommerce/core/services/services.dart';
 import 'package:my_ecommerce/data/model/cart_model.dart';
@@ -17,6 +19,7 @@ abstract class CartController extends GetxController {
   onCheckBoxtap(int index);
   checkAll();
   updateValues();
+  delete();
 }
 
 class CartControllerImpl extends CartController {
@@ -31,10 +34,10 @@ class CartControllerImpl extends CartController {
   bool onDown = false;
   bool onAllCheck = true;
   List<bool> checkBoxList = [];
+  List<int> cartIds = [];
   @override
   void onInit() {
     userId = myServices.sharedPreferences.getInt('id')!;
-    getCartItems();
     super.onInit();
   }
 
@@ -43,15 +46,17 @@ class CartControllerImpl extends CartController {
     statusRequest = StatusRequest.loading;
     update();
     var response = await cartData.getCartItems(userId!);
+    cartItems.clear();
+    checkBoxList.clear();
+    price = 0;
     if (response is! StatusRequest) {
       if (response["data"] != null) {
         statusRequest = StatusRequest.success;
-        cartItems.clear();
-        checkBoxList.clear();
-        price = 0;
+
         List dataResponse = response['data'];
         cartItems.addAll(dataResponse.map((e) {
           checkBoxList.add(true);
+          //  cartIds.add(e['cart_id']);
           price = price + e['total_price'];
           return CartModel.fromJson(e);
         }));
@@ -82,7 +87,9 @@ class CartControllerImpl extends CartController {
             cartItems.indexWhere((element) => element.cartId == cartId);
         cartItems[position].cartItemNumber =
             cartItems[position].cartItemNumber! + 1;
-        price += cartItems[position].itemsPrice!;
+        if (checkBoxList[position] == true) {
+          price += cartItems[position].itemsPrice!;
+        }
       } else {
         statusRequest = StatusRequest.failure;
       }
@@ -104,7 +111,9 @@ class CartControllerImpl extends CartController {
           statusRequest = StatusRequest.success;
           cartItems[position].cartItemNumber =
               cartItems[position].cartItemNumber! - 1;
-          price -= cartItems[position].itemsPrice!;
+          if (checkBoxList[position] == true) {
+            price -= cartItems[position].itemsPrice!;
+          }
         } else {
           statusRequest = StatusRequest.failure;
         }
@@ -116,19 +125,25 @@ class CartControllerImpl extends CartController {
       customDialogQuestion(
         () async {
           Get.back();
+          cartIds.clear();
+          cartIds.add(cartId);
+          String idsString = cartIds.toString();
+          idsString = idsString.substring(0, idsString.length - 1);
+          idsString = idsString.substring(1, idsString.length);
           statusRequest = StatusRequest.loading;
           update();
-          var response = await cartData.removeFromCart(cartId);
+          var response = await cartData.removeFromCart(idsString);
           if (response is! StatusRequest) {
             if (response["status"] == 'success') {
               statusRequest = StatusRequest.success;
               placeOrderCount--;
-              price -= cartItems[position].itemsPrice!;
+              price = price - cartItems[position].itemsPrice!;
               cartItems.removeWhere(
                 (element) {
                   return element.cartId == cartId;
                 },
               );
+              checkBoxList.removeAt(position);
               if (cartItems.isEmpty) {
                 statusRequest = StatusRequest.failure;
               }
@@ -157,8 +172,13 @@ class CartControllerImpl extends CartController {
 
   @override
   onCheckBoxtap(int index) {
-    checkBoxList[index] = checkBoxList[index] == false ? true : false;
+    if (checkBoxList[index] == true) {
+      checkBoxList[index] = false;
+    } else {
+      checkBoxList[index] = true;
+    }
     updateValues();
+
     update();
   }
 
@@ -203,5 +223,63 @@ class CartControllerImpl extends CartController {
     if (price == 0.0) {
       shipping = 0.0;
     }
+  }
+
+  @override
+  delete() async {
+    customDialogQuestion(checkBoxList.contains(true)
+        ? () async {
+            Get.back();
+            cartIds.clear();
+            for (var i = 0; i < checkBoxList.length; i++) {
+              if (checkBoxList[i] == true) {
+                cartIds.add(cartItems[i].cartId!);
+              }
+            }
+            String idsString = cartIds.toString();
+            idsString = idsString.substring(0, idsString.length - 1);
+            idsString = idsString.substring(1, idsString.length);
+            statusRequest = StatusRequest.loading;
+            update();
+
+            var response = await cartData.removeFromCart(idsString);
+            if (response is! StatusRequest) {
+              if (response["status"] == 'success') {
+                statusRequest = StatusRequest.success;
+                for (var i = 0; i < checkBoxList.length; i++) {
+                  if (checkBoxList[i] == true) {
+                    price = price -
+                        cartItems[i].itemsPrice! * cartItems[i].cartItemNumber!;
+                    placeOrderCount--;
+                  }
+                }
+                shipping = 0.0;
+
+                for (var i = 0; i < cartIds.length; i++) {
+                  cartItems.removeWhere((element) {
+                    return cartIds[i] == element.cartId;
+                  });
+                  checkBoxList.remove(true);
+                }
+                if (cartItems.isEmpty || checkBoxList.isEmpty) {
+                  statusRequest = StatusRequest.failure;
+                }
+              } else {
+                statusRequest = StatusRequest.failure;
+                customSnackBar(
+                  title: 'Failed',
+                  message: 'Somthig Went Wrong',
+                  success: false,
+                );
+              }
+            } else {
+              statusRequest = response;
+            }
+            update();
+          }
+        : () {
+            Get.back();
+            customDialog(Colors.orange, 'Warnnig', 'No item selected');
+          });
   }
 }

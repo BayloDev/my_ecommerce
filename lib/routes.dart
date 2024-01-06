@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:my_ecommerce/view/screen/home/cart_page.dart';
 import 'package:my_ecommerce/view/screen/home/home_screen.dart';
 import 'package:my_ecommerce/view/screen/items/item_details_screen.dart';
+import 'package:my_ecommerce/view/screen/search_screen.dart';
 import 'core/constant/routes.dart';
 import 'core/middleware/middleware.dart';
 import 'view/screen/forgetPassword/check_email_screen.dart';
@@ -61,7 +62,7 @@ List<GetPage<dynamic>>? pages = [
   ),
   GetPage(
     name: AppRoutes.items,
-    page: () => const Items(),
+    page: () => const ItemsScreen(),
   ),
   GetPage(
     name: AppRoutes.itemDetails,
@@ -74,5 +75,9 @@ List<GetPage<dynamic>>? pages = [
   GetPage(
     name: AppRoutes.cart,
     page: () => const CartPage(),
+  ),
+   GetPage(
+    name: AppRoutes.search,
+    page: () => const SearchPage(),
   ),
 ];

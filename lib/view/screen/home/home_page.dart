@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:my_ecommerce/core/functions/translate_database.dart';
 import 'package:my_ecommerce/link_api.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../controller/homeScreen/home_page_controller.dart';
+import '../../../controller/homeController/home_page_controller.dart';
 import '../../../core/class/handling_data_view.dart';
 import '../../widget/CustomWidgets/custom_appbar.dart';
 import '../../widget/CustomWidgets/custom_title_h1.dart';
@@ -107,7 +107,9 @@ class HomePage extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) => GestureDetector(
                                 onTap: () => controller.goToItems(
-                                    controller.items, index),
+                                  controller.items,
+                                  index,
+                                ),
                                 child: Column(
                                   children: [
                                     Container(
