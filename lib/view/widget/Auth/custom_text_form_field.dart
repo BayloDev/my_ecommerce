@@ -38,6 +38,7 @@ class CustomTextFormField extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    controller!.text = controller!.text.trimLeft();
     return TextFormField(
       inputFormatters: [
         FilteringTextInputFormatter.deny(RegExp("  ")),

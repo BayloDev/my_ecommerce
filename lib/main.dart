@@ -6,7 +6,7 @@ import 'core/constant/theme.dart';
 import 'core/localization/translation.dart';
 import 'core/services/services.dart';
 import 'routes.dart';
-
+    
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialServices();

@@ -14,14 +14,17 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(SearchControllerImpl());
+
     return SafeArea(
       child: GetBuilder<SearchControllerImpl>(
         builder: (controller) => Scaffold(
           body: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             child: ListView(
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     GestureDetector(
                       onTap: () => Get.back(),
@@ -48,42 +51,144 @@ class SearchPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
                   ],
                 ),
                 const SizedBox(height: 20),
-                controller.statusRequest == StatusRequest.loading
-                    ? const Center(child: Text('Loading...'))
-                    : controller.statusRequest == StatusRequest.success
-                        ? ListView.builder(
+                controller.keyword.text.isEmpty
+                    ? controller.searchHistory.isEmpty
+                        ? Container()
+                        : Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Search History',
+                                      style: TextStyle(
+                                        color: Colors.black.withOpacity(0.9),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    crossAxisSpacing: 8.0,
+                                    mainAxisSpacing: 8.0,
+                                    mainAxisExtent: 30,
+                                  ),
+                                  itemCount: controller.searchHistory.length,
+                                  itemBuilder: (context, index) =>
+                                      GestureDetector(
+                                    onTap: () {
+                                      controller.keyword.text =
+                                          controller.searchHistory[index];
+                                      controller
+                                          .search(controller.keyword.text);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 4, vertical: 2),
+                                      decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.05),
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
+                                      child: Text(
+                                        controller.searchHistory[index],
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: Colors.black.withOpacity(0.8),
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                    : switch (controller.statusRequest) {
+                        StatusRequest.loading => const Center(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Loading...'),
+                              SizedBox(width: 8),
+                              SizedBox(
+                                height: 18,
+                                width: 18,
+                                child: CircularProgressIndicator(
+                                  color: Colors.teal,
+                                  strokeWidth: 3,
+                                ),
+                              )
+                            ],
+                          )),
+                        StatusRequest.failure => Center(
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: Get.height - 200,
+                              width: 250,
+                              child: Text(
+                                'No product found, Please enter another keyword.',
+                                style: TextStyle(
+                                    color: Colors.black.withOpacity(0.6),
+                                    fontWeight: FontWeight.w400),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        StatusRequest.success => ListView.builder(
                             shrinkWrap: true,
                             itemCount: controller.searchList.length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                onTap: () => controller.goToItemDetails(
-                                  {
-                                    "items_id":
-                                        controller.searchList[index].itemsId,
-                                    "items_name_en": controller
-                                        .searchList[index].itemsNameEn,
-                                    "items_name_ar": controller
-                                        .searchList[index].itemsNameAr,
-                                    "items_name_fr": controller
-                                        .searchList[index].itemsNameFr,
-                                    "items_desc_en": controller
-                                        .searchList[index].itemsDescEn,
-                                    "items_desc_ar": controller
-                                        .searchList[index].itemsDescAr,
-                                    "items_desc_fr": controller
-                                        .searchList[index].itemsDescFr,
-                                    "items_discount": 10,
-                                    "items_count": 100,
-                                    "items_image": "hp840g1.png",
-                                    "items_price": 300,
-                                  },
-                                ),
+                                onTap: () {
+                                  controller.addToHistory(
+                                    translateDatabase(
+                                      controller.searchList[index].itemsDescAr!,
+                                      controller.searchList[index].itemsNameEn!,
+                                      controller.searchList[index].itemsDescFr!,
+                                    ),
+                                  );
+                                  controller.goToItemDetails(
+                                    {
+                                      "items_id":
+                                          controller.searchList[index].itemsId,
+                                      "items_name_en": controller
+                                          .searchList[index].itemsNameEn,
+                                      "items_name_ar": controller
+                                          .searchList[index].itemsNameAr,
+                                      "items_name_fr": controller
+                                          .searchList[index].itemsNameFr,
+                                      "items_desc_en": controller
+                                          .searchList[index].itemsDescEn,
+                                      "items_desc_ar": controller
+                                          .searchList[index].itemsDescAr,
+                                      "items_desc_fr": controller
+                                          .searchList[index].itemsDescFr,
+                                      "items_discount": controller
+                                          .searchList[index].itemsDiscount,
+                                      "items_count": controller
+                                          .searchList[index].itemsCount,
+                                      "items_image": controller
+                                          .searchList[index].itemsImage,
+                                      "items_price": controller
+                                          .searchList[index].itemsPrice,
+                                    },
+                                  );
+                                },
                                 child: SizedBox(
-                                  height: 110,
+                                  height: 90,
                                   child: Card(
                                     child: Container(
                                       padding: const EdgeInsets.only(right: 8),
@@ -91,10 +196,14 @@ class SearchPage extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          CachedNetworkImage(
-                                            imageUrl:
-                                                "${AppLink.itemsImages}/${controller.searchList[index].itemsImage}",
-                                            fit: BoxFit.fill,
+                                          SizedBox(
+                                            height: double.infinity,
+                                            width: 90,
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  "${AppLink.itemsImages}/${controller.searchList[index].itemsImage}",
+                                              fit: BoxFit.fill,
+                                            ),
                                           ),
                                           const SizedBox(width: 8),
                                           Expanded(
@@ -178,19 +287,12 @@ class SearchPage extends StatelessWidget {
                                 ),
                               );
                             },
-                          )
-                        : Center(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 100,
-                              width: 250,
-                              child:  Text(
-                                'No product found, Please enter another keyword.',
-                                style: TextStyle(color: Colors.black.withOpacity(0.6),fontWeight: FontWeight.w400),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          )
+                          ),
+                        StatusRequest.serverException => Container(),
+                        StatusRequest.offlineFailure => Container(),
+                        StatusRequest.serverFailure => Container(),
+                        StatusRequest.none => Container(),
+                      }
               ],
             ),
           ),

@@ -124,10 +124,14 @@ class CartPage extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      CachedNetworkImage(
-                                        imageUrl:
-                                            "${AppLink.itemsImages}/${controller.cartItems[index].itemsImage}",
-                                        fit: BoxFit.fill,
+                                      SizedBox(
+                                        width: 100,
+                                        height: double.infinity,
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              "${AppLink.itemsImages}/${controller.cartItems[index].itemsImage}",
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                       const SizedBox(width: 8),
                                       Expanded(
