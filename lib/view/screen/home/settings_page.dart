@@ -13,7 +13,7 @@ class SettingsPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          color: Colors.orange.shade300,
+          color: Colors.orange.withOpacity(0.4),
           width: double.infinity,
           child: Stack(
             alignment: Alignment.center,
@@ -21,13 +21,13 @@ class SettingsPage extends StatelessWidget {
               Column(
                 children: [
                   const SizedBox(height: 10),
-                  const Row(
+                  Row(
                     children: [
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       CustomTitleH1(
                         text: 'Settings',
-                        color: Colors.white,
-                        fontSize: 24,
+                        color: Colors.black.withOpacity(0.6),
+                        fontSize: 22,
                       ),
                     ],
                   ),
@@ -60,6 +60,9 @@ class SettingsPage extends StatelessWidget {
                                 trailing: Switch(
                                   value: true,
                                   onChanged: (value) {},
+                                  thumbColor: const MaterialStatePropertyAll(
+                                      Colors.white),
+                                  activeColor: Colors.teal,
                                 ),
                               ),
                               ListTile(
@@ -97,6 +100,11 @@ class SettingsPage extends StatelessWidget {
                               ),
                               ElevatedButton(
                                 onPressed: () => controller.logOut(),
+                                style: ButtonStyle(
+                                  elevation: const MaterialStatePropertyAll(0),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                      Colors.orange.withOpacity(0.5)),
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

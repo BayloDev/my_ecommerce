@@ -23,22 +23,20 @@ class CustomAppBar extends StatelessWidget {
     Get.put(SearchControllerImpl());
     return ClipPath(
       clipper: WaveClipper(),
+
       child: GetBuilder<FavoritesControllerImpl>(
         builder: (controller) => Container(
           height: 140,
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               colors: [
-                Colors.orange.withOpacity(0.9),
-                Colors.orange.withOpacity(0.8),
-                Colors.orange.withOpacity(0.7),
-                Colors.orange.withOpacity(0.6),
-                Colors.orange.withOpacity(0.5),
-                Colors.orange.withOpacity(0.4),
                 Colors.orange.withOpacity(0.3),
+                Colors.orange.withOpacity(0.4),
+                Colors.orange.withOpacity(0.5),
+                Colors.orange.withOpacity(0.6),
               ],
             ),
           ),
@@ -47,22 +45,24 @@ class CustomAppBar extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  
                   title == 'Categories'
                       ? GestureDetector(
                           onTap: back,
-                          child: const Icon(
+                          child:  Icon(
                             Icons.arrow_back_outlined,
-                            color: Colors.white,
+                            color: Colors.black.withOpacity(0.6),
+                            size: 22,
                           ),
                         )
                       : Container(),
                   const SizedBox(width: 8),
                   Text(
                     title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
+                    style:  TextStyle(
+                      color: Colors.black.withOpacity(0.6),
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],

@@ -19,11 +19,10 @@ class CartPage extends StatelessWidget {
         builder: (controller) => Scaffold(
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.black.withOpacity(0.01),
+            backgroundColor: Colors.white,
             leading: Container(),
             toolbarHeight: 140,
-            flexibleSpace:
-                CustomAppBar(title: 'Cart(${controller.cartItems.length})'),
+            flexibleSpace: CustomAppBar(title: 'Cart(${controller.cartItems.length})'),
           ),
           body: HandlingDataView(
             statusRequest: controller.statusRequest,
@@ -41,9 +40,7 @@ class CartPage extends StatelessWidget {
                           value: controller.onAllCheck,
                           checkColor: Colors.white,
                           fillColor: MaterialStatePropertyAll(
-                            controller.onAllCheck
-                                ? Colors.teal
-                                : Colors.white,
+                            controller.onAllCheck ? Colors.teal : Colors.white,
                           ),
                           onChanged: (newVal) => controller.checkAll(),
                         ),

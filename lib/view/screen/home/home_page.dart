@@ -8,7 +8,6 @@ import '../../../controller/homeController/home_page_controller.dart';
 import '../../../core/class/handling_data_view.dart';
 import '../../widget/CustomWidgets/custom_appbar.dart';
 import '../../widget/CustomWidgets/custom_title_h1.dart';
-import '../../widget/CustomWidgets/custom_title_h2.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -31,16 +30,12 @@ class HomePage extends StatelessWidget {
                       bottomRight: Radius.circular(40),
                     ),
                     gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                       colors: [
-                        Colors.orange.withOpacity(0.9),
-                        Colors.orange.withOpacity(0.8),
-                        Colors.orange.withOpacity(0.7),
-                        Colors.orange.withOpacity(0.6),
-                        Colors.orange.withOpacity(0.5),
-                        Colors.orange.withOpacity(0.4),
-                        Colors.orange.withOpacity(0.3),
+                        Colors.white,
+                        Colors.white,
+                        Colors.orange.withOpacity(0.2),
                       ],
                     ),
                   ),
@@ -48,16 +43,16 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 16.0, left: 30),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0, left: 30),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Spacer(),
+                            const Spacer(),
                             CustomTitleH1(
                               text: 'New Year\'s Discount',
-                              color: Colors.white,
-                              fontSize: 24,
+                              color: Colors.black.withOpacity(0.6),
+                              fontSize: 20,
                             ),
                           ],
                         ),
@@ -88,15 +83,19 @@ class HomePage extends StatelessWidget {
                   controller.categories.isNotEmpty
                       ? Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: CustomTitleH2(
-                            text: 'Categories',
-                            color: Colors.black.withOpacity(0.7),
+                          child: Text(
+                            'Categories',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.6),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         )
                       : Container(),
                   controller.categories.isNotEmpty
                       ? SizedBox(
-                          height: 112,
+                          height: 120,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: ListView.separated(
@@ -147,12 +146,17 @@ class HomePage extends StatelessWidget {
                           ),
                         )
                       : Container(),
+
                   controller.items.isNotEmpty
                       ? Padding(
-                          padding: const EdgeInsets.only(left: 12, bottom: 12),
-                          child: CustomTitleH2(
-                            text: 'Products for you',
-                            color: Colors.black.withOpacity(0.7),
+                          padding: const EdgeInsets.only(left: 12, bottom: 14),
+                          child: Text(
+                            'Products for you',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.6),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         )
                       : Container(),

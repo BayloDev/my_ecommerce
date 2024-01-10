@@ -18,8 +18,11 @@ class HomeScreen extends StatelessWidget {
       builder: (controller) => SafeArea(
         child: Scaffold(
           body: Center(
-            child: homeScreenController
-                .widgetOptions[homeScreenController.selectedIndex],
+            child: Container(
+              color: Colors.white.withOpacity(0.3),
+              child: homeScreenController
+                  .widgetOptions[homeScreenController.selectedIndex],
+            ),
           ),
           bottomNavigationBar: Container(
             decoration: BoxDecoration(

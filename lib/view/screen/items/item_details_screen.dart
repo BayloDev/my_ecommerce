@@ -22,85 +22,42 @@ class ItemsDetails extends StatelessWidget {
           builder: (controller) => HandlingDataView(
             statusRequest: controller.statusRequest,
             widget: Container(
-              color: Colors.black.withOpacity(0.02),
+              color: Colors.orange.withOpacity(0.3),
               child: Stack(
                 children: [
-                  Container(
-                    height: Get.height / 4.5,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30),
-                      ),
-                      color: Colors.orange.withOpacity(0.5),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () => Get.back(),
-                              child: const Icon(
-                                Icons.arrow_back_outlined,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            const CustomTitleH1(
-                              text: 'Product Details',
-                              color: Colors.white,
-                              fontSize: 24,
-                            ),
-                          ],
-                        ),
-                        Hero(
-                          tag: controller.itemDetails['items_id'],
-                          child: Container(
-                            margin: const EdgeInsets.all(20),
-                            height: Get.height / 4,
-                            width: Get.width / 1.4,
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(50),
-                                bottomRight: Radius.circular(50),
-                              ),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    '${AppLink.itemsImages}/${controller.itemDetails['items_image']}',
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        margin: const EdgeInsets.all(16),
-                        padding: const EdgeInsets.all(16),
+                        height: 160,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 10,
-                              blurStyle: BlurStyle.normal,
-                              //spreadRadius: 0.1,
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(40),
+                            bottomRight: Radius.circular(40),
+                          ),
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              Colors.orange.withOpacity(0.5),
+                              Colors.orange.withOpacity(0.4),
+                              Colors.orange.withOpacity(0.3),
+                              Colors.orange.withOpacity(0.2),
+                              Colors.orange.withOpacity(0.1),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Container(
+                        padding: const EdgeInsets.all(14),
+                        margin: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.white.withOpacity(0.8),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             SizedBox(
                               height: 26,
@@ -125,74 +82,97 @@ class ItemsDetails extends StatelessWidget {
                                     softWrap: true,
                                     '${controller.itemDetails['items_price']}\$',
                                     style: TextStyle(
-                                        fontSize: 22,
-                                        color: Colors.orange.shade600,
-                                        fontWeight: FontWeight.bold,
-                                        inherit: false,
-                                        height: 1.3),
+                                      fontSize: 18,
+                                      color: Colors.orange.shade600,
+                                      fontWeight: FontWeight.bold,
+                                      inherit: false,
+                                      height: 1.3,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 6),
-                            Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.star,
-                                        size: 18,
-                                        color: Colors.orange.withOpacity(0.9)),
-                                    Icon(Icons.star,
-                                        size: 18,
-                                        color: Colors.orange.withOpacity(0.9)),
-                                    Icon(Icons.star,
-                                        size: 18,
-                                        color: Colors.orange.withOpacity(0.9)),
-                                    Icon(Icons.star_half,
-                                        size: 18,
-                                        color: Colors.orange.withOpacity(0.9)),
-                                    Icon(Icons.star_border_outlined,
-                                        size: 18,
-                                        color: Colors.orange.withOpacity(0.9)),
-                                  ],
-                                ),
-                              ],
+                            const SizedBox(height: 8),
+                            SizedBox(
+                              height: 18,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.star,
+                                      size: 18,
+                                      color: Colors.orange.withOpacity(0.9)),
+                                  Icon(Icons.star,
+                                      size: 18,
+                                      color: Colors.orange.withOpacity(0.9)),
+                                  Icon(Icons.star,
+                                      size: 18,
+                                      color: Colors.orange.withOpacity(0.9)),
+                                  Icon(Icons.star_half,
+                                      size: 18,
+                                      color: Colors.orange.withOpacity(0.9)),
+                                  Icon(Icons.star_border_outlined,
+                                      size: 18,
+                                      color: Colors.orange.withOpacity(0.9)),
+                                  const Spacer(),
+                                  Text(
+                                    '-${controller.itemDetails['items_discount']}%',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black.withOpacity(0.5),
+                                      inherit: false,
+                                      height: 1.4,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            const SizedBox(height: 6),
-                            Row(
-                              children: [
-                                Text(
-                                  'Sold : ',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black.withOpacity(0.6),
+                            const SizedBox(height: 8),
+                            SizedBox(
+                              height: 18,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Sold : ',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black.withOpacity(0.6),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  '${controller.itemDetails['items_count']}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black.withOpacity(0.5),
-                                    inherit: false,
-                                    height: 1.4,
+                                  Text(
+                                    '${controller.itemDetails['items_count']}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black.withOpacity(0.5),
+                                      inherit: false,
+                                      height: 1.4,
+                                    ),
                                   ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            SizedBox(
+                              height: 20,
+                              child: Text(
+                                'Description :',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black.withOpacity(0.6),
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              ],
+                              ),
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Description :',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black.withOpacity(0.6),
-                                fontWeight: FontWeight.bold,
-                              ),
+                              '${controller.size.width / (Get.width - 10)}',
                             ),
-                            const SizedBox(height: 6),
-                            SizedBox(
-                              height: 80,
+                            Container(
+                              color: Colors.white.withOpacity(0.6),
+                              height: Get.height * 0.2,
+                              margin: const EdgeInsets.symmetric(horizontal: 6),
+                              padding: const EdgeInsets.all(4),
                               child: ListView(
                                 children: [
                                   Text(
@@ -209,21 +189,21 @@ class ItemsDetails extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 8),
                             controller.itemDetails['items_color'] != null
                                 ? Text(
                                     'Color :',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       color: Colors.black.withOpacity(0.6),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   )
                                 : Container(),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 8),
                             controller.itemDetails['items_color'] != null
                                 ? SizedBox(
-                                    height: 40,
+                                    height: 22,
                                     child: ListView.builder(
                                       itemCount: controller
                                           .itemDetails['items_color'].length,
@@ -231,15 +211,24 @@ class ItemsDetails extends StatelessWidget {
                                       shrinkWrap: true,
                                       itemBuilder: (context, index) =>
                                           Container(
-                                        margin: const EdgeInsets.all(4),
+                                        margin: const EdgeInsets.only(right: 6),
                                         child: ElevatedButton(
                                           style: ButtonStyle(
+                                            shadowColor:
+                                                const MaterialStatePropertyAll(
+                                              Colors.white,
+                                            ),
+                                            padding:
+                                                const MaterialStatePropertyAll(
+                                              EdgeInsets.symmetric(
+                                                horizontal: 4,
+                                              ),
+                                            ),
                                             backgroundColor:
                                                 MaterialStateProperty.all(
                                               index == controller.selectedColor
                                                   ? Colors.teal
-                                                  : Colors.white
-                                                      .withOpacity(0.95),
+                                                  : Colors.white,
                                             ),
                                             shape: MaterialStateProperty.all(
                                               RoundedRectangleBorder(
@@ -248,15 +237,15 @@ class ItemsDetails extends StatelessWidget {
                                                 side: BorderSide(
                                                   width: 1,
                                                   color: Colors.black
-                                                      .withOpacity(0.1),
+                                                      .withOpacity(0.05),
                                                 ),
                                               ),
                                             ),
                                             elevation:
-                                                MaterialStateProperty.all(4),
+                                                MaterialStateProperty.all(0.2),
                                             overlayColor:
                                                 MaterialStateProperty.all(
-                                              Colors.black.withOpacity(0.3),
+                                              Colors.black.withOpacity(0.2),
                                             ),
                                           ),
                                           onPressed: () => controller
@@ -266,13 +255,13 @@ class ItemsDetails extends StatelessWidget {
                                                     .itemDetails['items_color']
                                                 [index],
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               color: index ==
                                                       controller.selectedColor
                                                   ? Colors.white
                                                       .withOpacity(0.95)
                                                   : Colors.black
-                                                      .withOpacity(0.6),
+                                                      .withOpacity(0.5),
                                             ),
                                           ),
                                         ),
@@ -281,77 +270,167 @@ class ItemsDetails extends StatelessWidget {
                                   )
                                 : Container(),
                             const SizedBox(height: 20),
-                            SizedBox(
-                              height: 35,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    onPressed: () => controller.countMinus(),
-                                    icon: Icon(
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 28,
+                                  height: 28,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      padding: const MaterialStatePropertyAll(
+                                        EdgeInsets.all(0),
+                                      ),
+                                      backgroundColor:
+                                          const MaterialStatePropertyAll(
+                                        Colors.white,
+                                      ),
+                                      shape: MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      overlayColor: MaterialStateProperty.all(
+                                        Colors.black.withOpacity(0.2),
+                                      ),
+                                    ),
+                                    child: Icon(
                                       Icons.remove,
                                       color: Colors.black.withOpacity(0.5),
-                                      size: 22,
+                                      size: 18,
                                     ),
+                                    onPressed: () => controller.countMinus(),
                                   ),
-                                  Text(
-                                    '${controller.count}',
-                                    style: const TextStyle(
-                                      fontSize: 25,
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.bold,
-                                      textBaseline: TextBaseline.ideographic,
-                                      inherit: false,
-                                      height: 1.4,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  '${controller.count}',
+                                  style: const TextStyle(
+                                    fontSize: 26,
+                                    color: Colors.orange,
+                                    fontWeight: FontWeight.w500,
+                                    textBaseline: TextBaseline.ideographic,
+                                    inherit: false,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                SizedBox(
+                                  width: 28,
+                                  height: 28,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      padding: const MaterialStatePropertyAll(
+                                        EdgeInsets.all(0),
+                                      ),
+                                      backgroundColor:
+                                          const MaterialStatePropertyAll(
+                                        Colors.white,
+                                      ),
+                                      shape: MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      overlayColor: MaterialStateProperty.all(
+                                        Colors.black.withOpacity(0.2),
+                                      ),
                                     ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () => controller.countPlus(),
-                                    icon: Icon(
+                                    child: Icon(
                                       Icons.add,
                                       color: Colors.black.withOpacity(0.5),
-                                      size: 22,
+                                      size: 18,
                                     ),
+                                    onPressed: () => controller.countPlus(),
                                   ),
-                                  const Spacer(),
-                                  SizedBox(
-                                    height: 40,
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.orange.shade400),
+                                ),
+                                const Spacer(),
+                                SizedBox(
+                                  height: 32,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                        Colors.orange.shade400,
                                       ),
-                                      onPressed: () => controller.addItemToCart(
-                                        controller.itemDetails['items_id'],
-                                      ),
-                                      child: const Row(
-                                        children: [
-                                          Text(
-                                            'Add To Cart',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          SizedBox(width: 2),
-                                          Icon(
-                                            size: 20,
-                                            Icons.arrow_forward_rounded,
+                                      padding: const MaterialStatePropertyAll(
+                                          EdgeInsets.symmetric(horizontal: 10)),
+                                    ),
+                                    onPressed: () => controller.addItemToCart(
+                                      controller.itemDetails['items_id'],
+                                    ),
+                                    child: const Row(
+                                      children: [
+                                        Text(
+                                          'Add To Cart',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(width: 4),
+                                        Icon(
+                                          size: 20,
+                                          Icons.arrow_forward_rounded,
+                                          color: Colors.white,
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
                     ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () => Get.back(),
+                              child: Icon(
+                                Icons.arrow_back_outlined,
+                                color: Colors.black.withOpacity(0.6),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            CustomTitleH1(
+                              text: 'Product Details',
+                              color: Colors.black.withOpacity(0.6),
+                              fontSize: 24,
+                            ),
+                          ],
+                        ),
+                        Hero(
+                          tag: controller.itemDetails['items_id'],
+                          child: Container(
+                            margin: const EdgeInsets.all(20),
+                            height: 180,
+                            width: Get.width / 1.4,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(50),
+                                bottomRight: Radius.circular(50),
+                              ),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    '${AppLink.itemsImages}/${controller.itemDetails['items_image']}',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

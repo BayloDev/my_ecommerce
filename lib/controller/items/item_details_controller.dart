@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_ecommerce/controller/homeController/cart_controller.dart';
 import 'package:my_ecommerce/data/data_source/remote/items/items_data.dart';
@@ -21,10 +22,14 @@ class ItemsDetailsControllerImpl extends ItemsDetailsController {
   MyServices myServices = Get.find();
   int? userId;
   int count = 1;
+  late final Size size;
   CartControllerImpl cartController = Get.put(CartControllerImpl());
   @override
   void onInit() {
     itemDetails = Get.arguments['item'];
+    size = calcTextSize(
+        itemDetails['items_desc_en'], const TextStyle(fontSize: 14));
+
     itemDetails['items_color'] = [
       'Yellow',
       'Black',
@@ -35,6 +40,15 @@ class ItemsDetailsControllerImpl extends ItemsDetailsController {
     ];
     userId = myServices.sharedPreferences.getInt('id')!;
     super.onInit();
+  }
+
+  Size calcTextSize(String text, TextStyle style) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: TextDirection.ltr,
+      textScaler: TextScaler.noScaling,
+    )..layout();
+    return textPainter.size;
   }
 
   @override
