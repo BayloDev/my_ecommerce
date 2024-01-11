@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_ecommerce/core/constant/colors.dart';
 import 'package:my_ecommerce/core/constant/routes.dart';
 import 'package:my_ecommerce/data/model/item_model.dart';
 
@@ -48,7 +49,7 @@ class CustomItemCard extends StatelessWidget {
       },
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Stack(
           alignment: Alignment.center,
@@ -62,14 +63,14 @@ class CustomItemCard extends StatelessWidget {
                     width: double.infinity,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12),
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8),
                       ),
                     ),
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12),
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8),
                       ),
                       child: Hero(
                         tag: data[index].itemsId!,
@@ -85,12 +86,12 @@ class CustomItemCard extends StatelessWidget {
                 const SizedBox(height: 20),
                 Container(
                   width: double.infinity,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(12),
-                      bottomRight: Radius.circular(12),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
                     ),
-                    color: Color.fromARGB(255, 93, 187, 164),
+                    color: AppColor.secondaryColor.withOpacity(0.4),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -108,7 +109,7 @@ class CustomItemCard extends StatelessWidget {
                           ),
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -124,7 +125,7 @@ class CustomItemCard extends StatelessWidget {
                             const Text(
                               'Sold : ',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -132,7 +133,7 @@ class CustomItemCard extends StatelessWidget {
                             Text(
                               '${data[index].itemsCount}',
                               style: const TextStyle(
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                                 height: 1.2,
@@ -151,77 +152,94 @@ class CustomItemCard extends StatelessWidget {
               left: 0,
               child: data[index].itemsDiscount != 0
                   ? Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 4,
-                        vertical: 1,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.orange.withOpacity(0.9),
-                        borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(10),
-                          topLeft: Radius.circular(10),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(8),
+                          topLeft: Radius.circular(8),
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          Text(
-                            '-${data[index].itemsDiscount!}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              height: 1,
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 1,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.orange.withOpacity(0.7),
+                            borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(8),
+                              topLeft: Radius.circular(8),
                             ),
                           ),
-                          const Text(
-                            '%',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ))
+                          child: Row(
+                            children: [
+                              Text(
+                                '-${data[index].itemsDiscount!}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const Text(
+                                '%',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          )),
+                    )
                   : Container(),
             ),
             Positioned(
               bottom: 0,
               right: 0,
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 4,
-                  vertical: 1,
-                ),
                 decoration: const BoxDecoration(
-                  color: Colors.orange,
+                  color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(10),
-                    topLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(8),
+                    topLeft: Radius.circular(8),
                   ),
                 ),
-                child: Row(
-                  children: [
-                    Text(
-                      '${data[index].itemsPrice}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        height: 1,
-                      ),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 1,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.orange.withOpacity(0.7),
+                    borderRadius: const BorderRadius.only(
+                      bottomRight: Radius.circular(8),
+                      topLeft: Radius.circular(8),
                     ),
-                    const Text(
-                      '\$',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        inherit: false,
-                        height: 1.4,
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        '${data[index].itemsPrice}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          height: 1,
+                        ),
                       ),
-                    ),
-                  ],
+                      const Text(
+                        '\$',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          inherit: false,
+                          height: 1.6,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

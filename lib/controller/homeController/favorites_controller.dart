@@ -60,7 +60,7 @@ class FavoritesControllerImpl extends FavoritesController {
       if (response["status"] == 'success') {
         myFavoritesList.removeWhere(
           (element) {
-            return element.favorite == favoritesId;
+            return element.favoritesId == favoritesId;
           },
         );
         update();
