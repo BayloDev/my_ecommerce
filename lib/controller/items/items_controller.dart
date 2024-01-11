@@ -3,6 +3,7 @@ import 'package:my_ecommerce/core/constant/routes.dart';
 import 'package:my_ecommerce/core/functions/custom_snackbar.dart';
 import 'package:my_ecommerce/core/services/services.dart';
 import 'package:my_ecommerce/data/data_source/remote/items/items_data.dart';
+import 'package:my_ecommerce/data/model/item_model.dart';
 
 import '../../core/class/status_request.dart';
 import '../../data/data_source/remote/homeScreen/favorites_data.dart';
@@ -16,7 +17,7 @@ abstract class ItemsController extends GetxController {
 
 class ItemsControllerImpl extends ItemsController {
   late List categories;
-  List items = [];
+  List<ItemModel> items = [];
   int selectedIndex = 0;
   StatusRequest statusRequest = StatusRequest.none;
   ItemsData itemsData = ItemsData(crud: Get.find());
@@ -75,10 +76,9 @@ class ItemsControllerImpl extends ItemsController {
         items.clear();
         favorites.clear();
         List data = response["data"];
-        items.addAll(data);
-      //  items.addAll(data.map((e) => ItemModel.fromJson(e)));
+        items.addAll(data.map((e) => ItemModel.fromJson(e)));
         for (var i = 0; i < items.length; i++) {
-          favorites[i] = items[i]['favorite']!;
+          favorites[i] = items[i].favorite!;
         }
       } else {
         statusRequest = StatusRequest.failure;

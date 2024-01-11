@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:my_ecommerce/core/functions/custom_dialog.dart';
 import 'package:my_ecommerce/core/services/services.dart';
 import 'package:my_ecommerce/data/data_source/remote/homeScreen/favorites_data.dart';
+import 'package:my_ecommerce/data/model/item_model.dart';
 
 import '../../core/class/status_request.dart';
 import '../../core/constant/routes.dart';
@@ -15,7 +16,7 @@ abstract class FavoritesController extends GetxController {
 }
 
 class FavoritesControllerImpl extends FavoritesController {
-  List myFavoritesList = [];
+  List<ItemModel> myFavoritesList = [];
   StatusRequest statusRequest = StatusRequest.none;
   FavoritesData favoritesData = FavoritesData(crud: Get.find());
   MyServices myServices = Get.find();
@@ -36,7 +37,8 @@ class FavoritesControllerImpl extends FavoritesController {
     if (response is! StatusRequest) {
       if (response["status"] == "success") {
         statusRequest = StatusRequest.success;
-        myFavoritesList = response["data"];
+        List data = response["data"];
+        myFavoritesList.addAll(data.map((e) => ItemModel.fromJson(e)));
       } else {
         statusRequest = StatusRequest.failure;
         customDialog(
@@ -58,7 +60,7 @@ class FavoritesControllerImpl extends FavoritesController {
       if (response["status"] == 'success') {
         myFavoritesList.removeWhere(
           (element) {
-            return element['favorites_id'] == favoritesId;
+            return element.favorite == favoritesId;
           },
         );
         update();

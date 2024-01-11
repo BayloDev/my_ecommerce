@@ -2,12 +2,14 @@ import 'package:get/get.dart';
 import 'package:my_ecommerce/core/class/status_request.dart';
 import 'package:my_ecommerce/core/constant/routes.dart';
 import 'package:my_ecommerce/data/data_source/remote/homeScreen/home_data.dart';
+import 'package:my_ecommerce/data/model/item_model.dart';
 
 import '../../core/services/services.dart';
 
 abstract class HomeController extends GetxController {
   getData();
   goToItems(List items, int selectedIndex);
+  goToItemDetails(Map itemsDetails);
 }
 
 class HomeControllerImpl extends HomeController {
@@ -19,7 +21,7 @@ class HomeControllerImpl extends HomeController {
   String? email;
   String? token;
   List categories = [];
-  List items = [];
+  List<ItemModel> items = [];
 
   @override
   void onInit() {
@@ -45,7 +47,8 @@ class HomeControllerImpl extends HomeController {
         }
         if (response["items"] != null) {
           items.clear();
-          items.addAll(response["items"]);
+          List data = response['items'];
+          items.addAll(data.map((e) => ItemModel.fromJson(e)));
         }
       } else {
         statusRequest = StatusRequest.failure;
@@ -53,8 +56,13 @@ class HomeControllerImpl extends HomeController {
     } else {
       statusRequest = response;
     }
-    
+
     update();
+  }
+
+  @override
+  goToItemDetails(itemsDetails) {
+    Get.toNamed(AppRoutes.itemDetails, arguments: {'item': itemsDetails});
   }
 
   @override

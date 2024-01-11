@@ -11,5 +11,5 @@ class AppColor {
   static Color greenLight = Colors.green.withOpacity(0.1);
   static const Color white = Colors.white;
   static const Color primaryColor = Colors.orange;
-  static Color secondaryColor = const Color.fromARGB(80, 14, 173, 41);
+  static Color secondaryColor = const Color.fromARGB(160, 10, 100, 81);
 }

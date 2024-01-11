@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
                       colors: [
                         Colors.white,
                         Colors.white,
-                        Colors.orange.withOpacity(0.2),
+                        Colors.orange.withOpacity(0.25),
                       ],
                     ),
                   ),
@@ -116,7 +116,7 @@ class HomePage extends StatelessWidget {
                                       width: 90,
                                       padding: const EdgeInsets.all(14),
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: Colors.black.withOpacity(0.05),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: SvgPicture.network(
@@ -134,8 +134,8 @@ class HomePage extends StatelessWidget {
                                             ['categories_name_fr'],
                                       ),
                                       style: TextStyle(
-                                        color: Colors.black.withOpacity(0.8),
-                                        fontSize: 14,
+                                        color: Colors.black.withOpacity(0.7),
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     )
@@ -146,7 +146,6 @@ class HomePage extends StatelessWidget {
                           ),
                         )
                       : Container(),
-
                   controller.items.isNotEmpty
                       ? Padding(
                           padding: const EdgeInsets.only(left: 12, bottom: 14),
@@ -173,76 +172,124 @@ class HomePage extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) => Stack(
                                 children: [
-                                  Container(
-                                    width: 120,
-                                    decoration: BoxDecoration(
-                                      color: Colors.orange.withOpacity(0.7),
-                                      borderRadius: BorderRadius.circular(10),
+                                  GestureDetector(
+                                    onTap: () => controller.goToItemDetails(
+                                      {
+                                        "items_id":
+                                            controller.items[index].itemsId,
+                                        "items_name": translateDatabase(
+                                          controller.items[index].itemsNameAr!,
+                                          controller.items[index].itemsNameEn!,
+                                          controller.items[index].itemsNameFr!,
+                                        ),
+                                        "items_desc": translateDatabase(
+                                          controller.items[index].itemsDescAr!,
+                                          controller.items[index].itemsDescEn!,
+                                          controller.items[index].itemsDescFr!,
+                                        ),
+                                        "items_discount": controller
+                                            .items[index].itemsDiscount,
+                                        "items_count":
+                                            controller.items[index].itemsCount,
+                                        "items_image":
+                                            controller.items[index].itemsImage,
+                                        "items_price":
+                                            controller.items[index].itemsPrice,
+                                      },
                                     ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            width: 120,
-                                            decoration: const BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
+                                    child: Container(
+                                      width: 120,
+                                      decoration: BoxDecoration(
+                                        color: Colors.orange.withOpacity(0.3),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                color: Colors.black
+                                                    .withOpacity(0.6),
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                ),
                                               ),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                              ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    '${AppLink.itemsImages}/${controller.items[index]['items_image']}',
-                                                fit: BoxFit.fill,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                ),
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      '${AppLink.itemsImages}/${controller.items[index].itemsImage}',
+                                                  fit: BoxFit.fill,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 6),
-                                          child: Text(
-                                            translateDatabase(
-                                              controller.items[index]
-                                                  ['items_name_ar'],
-                                              controller.items[index]
-                                                  ['items_name_en'],
-                                              controller.items[index]
-                                                  ['items_name_fr'],
-                                            ),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 6, bottom: 2),
-                                          child: Text(
-                                            'Sold: ${controller.items[index]['items_count']}',
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              overflow: TextOverflow.ellipsis,
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 6),
+                                            child: Text(
+                                              translateDatabase(
+                                                controller
+                                                    .items[index].itemsNameAr!,
+                                                controller
+                                                    .items[index].itemsNameEn!,
+                                                controller
+                                                    .items[index].itemsNameFr!,
+                                              ),
+                                              style: TextStyle(
+                                                color: Colors.black
+                                                    .withOpacity(0.7),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 6,
+                                              bottom: 2,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'Sold: ',
+                                                  style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.7),
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${controller.items[index].itemsCount}',
+                                                  style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.7),
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    inherit: false,
+                                                    height: 1.5,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Positioned(
@@ -261,11 +308,12 @@ class HomePage extends StatelessWidget {
                                         ),
                                       ),
                                       child: Text(
-                                        '-${controller.items[index]['items_discount']}%',
+                                        '-${controller.items[index].itemsDiscount}%',
                                         style: const TextStyle(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 14,
+                                          inherit: false,
                                         ),
                                       ),
                                     ),
@@ -284,11 +332,12 @@ class HomePage extends StatelessWidget {
                                         ),
                                       ),
                                       child: Text(
-                                        '${controller.items[index]['items_price']} \$',
+                                        '${controller.items[index].itemsPrice} \$',
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14,
+                                          inherit: false,
                                         ),
                                       ),
                                     ),

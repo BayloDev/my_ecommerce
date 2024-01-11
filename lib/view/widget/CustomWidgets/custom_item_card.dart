@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_ecommerce/core/constant/routes.dart';
+import 'package:my_ecommerce/data/model/item_model.dart';
 
 import '../../../core/functions/translate_database.dart';
 import '../../../link_api.dart';
@@ -7,7 +10,7 @@ import '../../../link_api.dart';
 class CustomItemCard extends StatelessWidget {
   final dynamic controller;
   final int index;
-  final List data;
+  final List<ItemModel> data;
   final Map<int, int> favorites;
   final Widget removeOrFavorite;
   const CustomItemCard({
@@ -22,7 +25,27 @@ class CustomItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => controller.goToItemDetails(data[index]),
+      onTap: () {
+        Get.toNamed(AppRoutes.itemDetails, arguments: {
+          'item': {
+            "items_id": data[index].itemsId,
+            "items_name": translateDatabase(
+              data[index].itemsNameAr!,
+              data[index].itemsNameEn!,
+              data[index].itemsNameFr!,
+            ),
+            "items_desc": translateDatabase(
+              data[index].itemsDescAr!,
+              data[index].itemsDescEn!,
+              data[index].itemsDescFr!,
+            ),
+            "items_discount": data[index].itemsDiscount,
+            "items_count": data[index].itemsCount,
+            "items_image": data[index].itemsImage,
+            "items_price": data[index].itemsPrice,
+          },
+        });
+      },
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -49,10 +72,10 @@ class CustomItemCard extends StatelessWidget {
                         topRight: Radius.circular(12),
                       ),
                       child: Hero(
-                        tag: data[index]['items_id'],
+                        tag: data[index].itemsId!,
                         child: CachedNetworkImage(
                           imageUrl:
-                              '${AppLink.itemsImages}/${data[index]['items_image']}',
+                              '${AppLink.itemsImages}/${data[index].itemsImage}',
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -79,9 +102,9 @@ class CustomItemCard extends StatelessWidget {
                         ),
                         child: Text(
                           translateDatabase(
-                            data[index]['items_name_ar'],
-                            data[index]['items_name_en'],
-                            data[index]['items_name_fr'],
+                            data[index].itemsNameAr!,
+                            data[index].itemsNameEn!,
+                            data[index].itemsNameFr!,
                           ),
                           style: const TextStyle(
                             color: Colors.white,
@@ -107,7 +130,7 @@ class CustomItemCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${data[index]['items_count']}',
+                              '${data[index].itemsCount}',
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -126,7 +149,7 @@ class CustomItemCard extends StatelessWidget {
             Positioned(
               top: 0,
               left: 0,
-              child: data[index]['items_discount'] != 0
+              child: data[index].itemsDiscount != 0
                   ? Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 4,
@@ -142,7 +165,7 @@ class CustomItemCard extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            '-${data[index]['items_discount']}',
+                            '-${data[index].itemsDiscount!}',
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -180,7 +203,7 @@ class CustomItemCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      '${data[index]['items_price']}',
+                      '${data[index].itemsPrice}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

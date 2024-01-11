@@ -55,8 +55,7 @@ class FavoritesPage extends StatelessWidget {
                             ),
                             child: GestureDetector(
                               onTap: () => controller.removeFavoriteCart(
-                                controller.myFavoritesList[index]
-                                    ['favorites_id'],
+                                controller.myFavoritesList[index].favorite!,
                               ),
                               child: Icon(
                                 Icons.delete_outline_outlined,

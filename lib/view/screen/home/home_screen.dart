@@ -6,6 +6,8 @@ import 'package:my_ecommerce/controller/homeController/favorites_controller.dart
 import 'package:my_ecommerce/controller/homeController/home_page_controller.dart';
 import 'package:my_ecommerce/controller/homeController/home_screen_controller.dart';
 
+import '../../../core/constant/colors.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -26,7 +28,7 @@ class HomeScreen extends StatelessWidget {
           ),
           bottomNavigationBar: Container(
             decoration: BoxDecoration(
-              color: Colors.teal.shade400,
+              color: AppColor.secondaryColor,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -54,7 +56,9 @@ class HomeScreen extends StatelessWidget {
                     Colors.orange.shade500,
                     Colors.orange.shade400,
                     Colors.orange.shade300,
+                    Colors.orange.shade200,
                     Colors.orange.shade100,
+                    
                   ],
                 ),
                 tabs: [

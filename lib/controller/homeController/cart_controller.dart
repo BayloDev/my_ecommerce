@@ -56,7 +56,6 @@ class CartControllerImpl extends CartController {
         List dataResponse = response['data'];
         cartItems.addAll(dataResponse.map((e) {
           checkBoxList.add(true);
-          //  cartIds.add(e['cart_id']);
           price = price + e['total_price'];
           return CartModel.fromJson(e);
         }));

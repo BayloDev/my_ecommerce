@@ -90,7 +90,7 @@ class ItemsScreen extends StatelessWidget {
                                 onTap: () {
                                   controller.changeFavorite(
                                     index,
-                                    controller.items[index]['items_id']!,
+                                    controller.items[index].itemsId!,
                                   );
                                 },
                                 child: Icon(

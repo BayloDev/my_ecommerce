@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:my_ecommerce/controller/homeController/cart_controller.dart';
 import 'package:my_ecommerce/controller/items/item_details_controller.dart';
 import 'package:my_ecommerce/core/class/handling_data_view.dart';
-import 'package:my_ecommerce/core/functions/translate_database.dart';
 
+import '../../../core/constant/colors.dart';
 import '../../../link_api.dart';
 import '../../widget/CustomWidgets/custom_title_h1.dart';
 
@@ -22,7 +22,7 @@ class ItemsDetails extends StatelessWidget {
           builder: (controller) => HandlingDataView(
             statusRequest: controller.statusRequest,
             widget: Container(
-              color: Colors.orange.withOpacity(0.3),
+              color: Colors.orange.withOpacity(0.2),
               child: Stack(
                 children: [
                   Column(
@@ -35,14 +35,14 @@ class ItemsDetails extends StatelessWidget {
                             bottomRight: Radius.circular(40),
                           ),
                           gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
                             colors: [
-                              Colors.orange.withOpacity(0.5),
-                              Colors.orange.withOpacity(0.4),
-                              Colors.orange.withOpacity(0.3),
-                              Colors.orange.withOpacity(0.2),
+                              Colors.orange.withOpacity(0.01),
                               Colors.orange.withOpacity(0.1),
+                              Colors.orange.withOpacity(0.3),
+                              Colors.orange.withOpacity(0.5),
+                              Colors.orange.withOpacity(0.7),
                             ],
                           ),
                         ),
@@ -65,15 +65,11 @@ class ItemsDetails extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    translateDatabase(
-                                      controller.itemDetails['items_name_ar'],
-                                      controller.itemDetails['items_name_en'],
-                                      controller.itemDetails['items_name_fr'],
-                                    ),
-                                    style: const TextStyle(
+                                    '${controller.itemDetails['items_name']}',
+                                    style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.teal,
+                                      color: AppColor.secondaryColor,
                                     ),
                                   ),
                                   const Spacer(),
@@ -83,7 +79,7 @@ class ItemsDetails extends StatelessWidget {
                                     '${controller.itemDetails['items_price']}\$',
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.orange.shade600,
+                                      color: AppColor.secondaryColor,
                                       fontWeight: FontWeight.bold,
                                       inherit: false,
                                       height: 1.3,
@@ -97,32 +93,44 @@ class ItemsDetails extends StatelessWidget {
                               height: 18,
                               child: Row(
                                 children: [
-                                  Icon(Icons.star,
-                                      size: 18,
-                                      color: Colors.orange.withOpacity(0.9)),
-                                  Icon(Icons.star,
-                                      size: 18,
-                                      color: Colors.orange.withOpacity(0.9)),
-                                  Icon(Icons.star,
-                                      size: 18,
-                                      color: Colors.orange.withOpacity(0.9)),
-                                  Icon(Icons.star_half,
-                                      size: 18,
-                                      color: Colors.orange.withOpacity(0.9)),
-                                  Icon(Icons.star_border_outlined,
-                                      size: 18,
-                                      color: Colors.orange.withOpacity(0.9)),
-                                  const Spacer(),
-                                  Text(
-                                    '-${controller.itemDetails['items_discount']}%',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black.withOpacity(0.5),
-                                      inherit: false,
-                                      height: 1.4,
-                                    ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 18,
+                                    color: Colors.orange.withOpacity(0.9),
                                   ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 18,
+                                    color: Colors.orange.withOpacity(0.9),
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 18,
+                                    color: Colors.orange.withOpacity(0.9),
+                                  ),
+                                  Icon(
+                                    Icons.star_half,
+                                    size: 18,
+                                    color: Colors.orange.withOpacity(0.9),
+                                  ),
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    size: 18,
+                                    color: Colors.orange.withOpacity(0.9),
+                                  ),
+                                  const Spacer(),
+                                  controller.itemDetails['items_discount'] != 0
+                                      ? Text(
+                                          '-${controller.itemDetails['items_discount']}%',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.orange.shade600,
+                                            inherit: false,
+                                            height: 1.4,
+                                          ),
+                                        )
+                                      : Container(),
                                 ],
                               ),
                             ),
@@ -176,11 +184,7 @@ class ItemsDetails extends StatelessWidget {
                               child: ListView(
                                 children: [
                                   Text(
-                                    translateDatabase(
-                                      controller.itemDetails['items_desc_ar'],
-                                      controller.itemDetails['items_desc_en'],
-                                      controller.itemDetails['items_desc_fr'],
-                                    ),
+                                    controller.itemDetails['items_desc'],
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black.withOpacity(0.7),
@@ -227,7 +231,7 @@ class ItemsDetails extends StatelessWidget {
                                             backgroundColor:
                                                 MaterialStateProperty.all(
                                               index == controller.selectedColor
-                                                  ? Colors.teal
+                                                  ? AppColor.secondaryColor
                                                   : Colors.white,
                                             ),
                                             shape: MaterialStateProperty.all(

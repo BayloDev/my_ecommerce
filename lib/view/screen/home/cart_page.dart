@@ -7,6 +7,7 @@ import 'package:my_ecommerce/link_api.dart';
 import 'package:my_ecommerce/view/widget/CustomWidgets/custom_appbar.dart';
 
 import '../../../controller/homeController/cart_controller.dart';
+import '../../../core/constant/colors.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -22,7 +23,8 @@ class CartPage extends StatelessWidget {
             backgroundColor: Colors.white,
             leading: Container(),
             toolbarHeight: 140,
-            flexibleSpace: CustomAppBar(title: 'Cart(${controller.cartItems.length})'),
+            flexibleSpace:
+                CustomAppBar(title: 'Cart(${controller.cartItems.length})'),
           ),
           body: HandlingDataView(
             statusRequest: controller.statusRequest,
@@ -40,7 +42,9 @@ class CartPage extends StatelessWidget {
                           value: controller.onAllCheck,
                           checkColor: Colors.white,
                           fillColor: MaterialStatePropertyAll(
-                            controller.onAllCheck ? Colors.teal : Colors.white,
+                            controller.onAllCheck
+                                ? AppColor.secondaryColor
+                                : Colors.white,
                           ),
                           onChanged: (newVal) => controller.checkAll(),
                         ),
@@ -95,22 +99,20 @@ class CartPage extends StatelessWidget {
                             onTap: () => controller.goToItemDetails(
                               {
                                 "items_id": controller.cartItems[index].itemsId,
-                                "items_name_en":
-                                    controller.cartItems[index].itemsNameEn,
-                                "items_name_ar":
-                                    controller.cartItems[index].itemsNameAr,
-                                "items_name_fr":
-                                    controller.cartItems[index].itemsNameFr,
-                                "items_desc_en":
-                                    controller.cartItems[index].itemsDescEn,
-                                "items_desc_ar":
-                                    controller.cartItems[index].itemsDescAr,
-                                "items_desc_fr":
-                                    controller.cartItems[index].itemsDescFr,
-                                "items_discount": 10,
-                                "items_count": 100,
-                                "items_image": "hp840g1.png",
-                                "items_price": 300,
+                                "items_name": translateDatabase(
+                                  controller.cartItems[index].itemsNameAr!,
+                                  controller.cartItems[index].itemsNameEn!,
+                                  controller.cartItems[index].itemsNameFr!,
+                                ),
+                                "items_desc": translateDatabase(
+                                  controller.cartItems[index].itemsDescAr!,
+                                  controller.cartItems[index].itemsDescEn!,
+                                  controller.cartItems[index].itemsDescFr!,
+                                ),
+                                "items_discount": controller.cartItems[index].itemsDiscount,
+                                "items_count": controller.cartItems[index].itemsCount,
+                                "items_image": controller.cartItems[index].itemsImage,
+                                "items_price": controller.cartItems[index].itemsPrice,
                               },
                             ),
                             child: SizedBox(
@@ -174,7 +176,8 @@ class CartPage extends StatelessWidget {
                                                                   index] ==
                                                               false
                                                           ? Colors.white
-                                                          : Colors.teal,
+                                                          : AppColor
+                                                              .secondaryColor,
                                                     ),
                                                     onChanged: (newVal) =>
                                                         controller
