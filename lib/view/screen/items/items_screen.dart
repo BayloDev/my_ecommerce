@@ -73,12 +73,11 @@ class ItemsScreen extends StatelessWidget {
                             childAspectRatio: 0.88,
                           ),
                           itemBuilder: (context, index) => CustomItemCard(
-                            controller: controller,
                             index: index,
                             data: controller.items,
                             favorites: controller.favorites,
                             removeOrFavorite: Container(
-                              padding: const EdgeInsets.all(2),
+                              padding: const EdgeInsets.all(0),
                               decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(12),
@@ -97,11 +96,12 @@ class ItemsScreen extends StatelessWidget {
                                   controller.favorites[index] == 1
                                       ? Icons.favorite
                                       : Icons.favorite_border,
-                                  color: Colors.orange.withOpacity(0.9),
-                                  size: 28,
+                                  color: Colors.red.withOpacity(0.9),
+                                  size: 26,
                                 ),
                               ),
                             ),
+                            isHome: false,
                           ),
                         ),
                       ),

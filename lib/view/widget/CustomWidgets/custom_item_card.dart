@@ -9,18 +9,18 @@ import '../../../core/functions/translate_database.dart';
 import '../../../link_api.dart';
 
 class CustomItemCard extends StatelessWidget {
-  final dynamic controller;
   final int index;
   final List<ItemModel> data;
-  final Map<int, int> favorites;
-  final Widget removeOrFavorite;
+  final Map<int, int>? favorites;
+  final Widget? removeOrFavorite;
+  final bool isHome;
   const CustomItemCard({
     super.key,
-    required this.controller,
     required this.index,
     required this.data,
-    required this.favorites,
-    required this.removeOrFavorite,
+    required this.isHome,
+    this.favorites,
+    this.removeOrFavorite,
   });
 
   @override
@@ -48,239 +48,217 @@ class CustomItemCard extends StatelessWidget {
         });
       },
       child: Card(
+        color: Colors.white,
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8),
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8),
-                      ),
-                      child: Hero(
-                        tag: data[index].itemsId!,
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              '${AppLink.itemsImages}/${data[index].itemsImage}',
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(8),
-                      bottomRight: Radius.circular(8),
-                    ),
-                    color: AppColor.secondaryColor.withOpacity(0.4),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 6,
-                        ),
-                        child: Text(
-                          translateDatabase(
-                            data[index].itemsNameAr!,
-                            data[index].itemsNameEn!,
-                            data[index].itemsNameFr!,
-                          ),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 6,
-                          bottom: 2,
-                        ),
-                        child: Row(
-                          children: [
-                            const Text(
-                              'Sold : ',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              '${data[index].itemsCount}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                height: 1.2,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Positioned(
-              top: 0,
-              left: 0,
-              child: data[index].itemsDiscount != 0
-                  ? Container(
+        child: SizedBox(
+          height: 200,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
                       decoration: const BoxDecoration(
-                        color: Colors.white,
                         borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(8),
                           topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8),
                         ),
                       ),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8),
+                        ),
+                        child: Hero(
+                          tag: data[index].itemsId!,
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                '${AppLink.itemsImages}/${data[index].itemsImage}',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: !isHome ? 15 : 12,
+                    color: Colors.black.withOpacity(0.05),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(8),
+                        bottomRight: Radius.circular(8),
+                      ),
+                      color: AppColor.secondaryColor.withOpacity(0.4),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: Text(
+                            translateDatabase(
+                              data[index].itemsNameAr!,
+                              data[index].itemsNameEn!,
+                              data[index].itemsNameFr!,
+                            ),
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.5),
+                              fontSize: !isHome ? 12 : 11,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Sold: ',
+                                style: TextStyle(
+                                  fontSize: !isHome ? 12 : 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black.withOpacity(0.5),
+                                ),
+                              ),
+                              Text(
+                                '${data[index].itemsCount}',
+                                style: TextStyle(
+                                  fontSize: !isHome ? 12 : 11,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black.withOpacity(0.5),
+                                  inherit: false,
+                                  height: !isHome ? 1.7 : 1.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              data[index].itemsDiscount != 0
+                  ? Positioned(
+                      top: 0,
+                      left: 0,
                       child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(8),
+                            topLeft: Radius.circular(8),
+                          ),
+                        ),
+                        child: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 4,
                             vertical: 1,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.orange.withOpacity(0.7),
+                            color: Colors.orange.withOpacity(0.5),
                             borderRadius: const BorderRadius.only(
                               bottomRight: Radius.circular(8),
                               topLeft: Radius.circular(8),
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Text(
-                                '-${data[index].itemsDiscount!}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              const Text(
-                                '%',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          )),
+                          child: Text(
+                            '-${data[index].itemsDiscount}%',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.5),
+                              fontWeight: FontWeight.w600,
+                              fontSize: !isHome ? 12 : 11,
+                              inherit: false,
+                            ),
+                          ),
+                        ),
+                      ),
                     )
                   : Container(),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(8),
-                    topLeft: Radius.circular(8),
-                  ),
-                ),
+              Positioned(
+                bottom: 0,
+                right: 0,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4,
-                    vertical: 1,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.orange.withOpacity(0.7),
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(8),
                       topLeft: Radius.circular(8),
                     ),
                   ),
-                  child: Row(
-                    children: [
-                      Text(
-                        '${data[index].itemsPrice}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          height: 1,
-                        ),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.withOpacity(0.5),
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(8),
+                        topLeft: Radius.circular(8),
                       ),
-                      const Text(
-                        '\$',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          inherit: false,
-                          height: 1.6,
-                        ),
+                    ),
+                    child: Text(
+                      '${data[index].itemsPrice} \$',
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.5),
+                        fontWeight: FontWeight.bold,
+                        fontSize: !isHome ? 12 : 11,
+                        inherit: false,
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              top: 0,
-              right: 0,
-              child: removeOrFavorite,
-            ),
-            Positioned(
-              bottom: 48,
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.star,
-                    size: 18,
-                    color: Colors.black.withOpacity(0.7),
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 18,
-                    color: Colors.black.withOpacity(0.7),
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 18,
-                    color: Colors.black.withOpacity(0.7),
-                  ),
-                  Icon(
-                    Icons.star_half,
-                    size: 18,
-                    color: Colors.black.withOpacity(0.7),
-                  ),
-                  Icon(
-                    Icons.star_border_outlined,
-                    size: 18,
-                    color: Colors.black.withOpacity(0.7),
-                  ),
-                ],
+              Positioned(
+                top: 0,
+                right: 0,
+                child: removeOrFavorite ?? Container(),
               ),
-            ),
-          ],
+              Positioned(
+                bottom: !isHome ? 37 : 33,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.star,
+                      size: !isHome ? 15 : 13,
+                      color: Colors.black.withOpacity(0.7),
+                    ),
+                    Icon(
+                      Icons.star,
+                      size: !isHome ? 15 : 13,
+                      color: Colors.black.withOpacity(0.7),
+                    ),
+                    Icon(
+                      Icons.star,
+                      size: !isHome ? 15 : 13,
+                      color: Colors.black.withOpacity(0.7),
+                    ),
+                    Icon(
+                      Icons.star_half,
+                      size: !isHome ? 15 : 13,
+                      color: Colors.black.withOpacity(0.7),
+                    ),
+                    Icon(
+                      Icons.star_border_outlined,
+                      size: !isHome ? 15 : 13,
+                      color: Colors.black.withOpacity(0.7),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

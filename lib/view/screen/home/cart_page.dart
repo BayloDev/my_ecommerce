@@ -109,10 +109,14 @@ class CartPage extends StatelessWidget {
                                   controller.cartItems[index].itemsDescEn!,
                                   controller.cartItems[index].itemsDescFr!,
                                 ),
-                                "items_discount": controller.cartItems[index].itemsDiscount,
-                                "items_count": controller.cartItems[index].itemsCount,
-                                "items_image": controller.cartItems[index].itemsImage,
-                                "items_price": controller.cartItems[index].itemsPrice,
+                                "items_discount":
+                                    controller.cartItems[index].itemsDiscount,
+                                "items_count":
+                                    controller.cartItems[index].itemsCount,
+                                "items_image":
+                                    controller.cartItems[index].itemsImage,
+                                "items_price":
+                                    controller.cartItems[index].itemsPrice,
                               },
                             ),
                             child: SizedBox(
@@ -205,8 +209,22 @@ class CartPage extends StatelessWidget {
                                               children: [
                                                 Text(
                                                   controller.cartItems[index]
-                                                      .itemsPrice
-                                                      .toString(),
+                                                              .itemsDiscount !=
+                                                          0
+                                                      ? (controller
+                                                                  .cartItems[
+                                                                      index]
+                                                                  .itemsPrice! *
+                                                              controller
+                                                                  .cartItems[
+                                                                      index]
+                                                                  .itemsDiscount! /
+                                                              100)
+                                                          .toString()
+                                                      : controller
+                                                          .cartItems[index]
+                                                          .itemsPrice
+                                                          .toString(),
                                                   style: const TextStyle(
                                                     fontSize: 16,
                                                     color: Colors.orange,

@@ -174,7 +174,7 @@ class ItemsDetails extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              '${controller.size.width / (Get.width - 10)}',
+                              '${controller.size.width / (Get.width )}',
                             ),
                             Container(
                               color: Colors.white.withOpacity(0.6),

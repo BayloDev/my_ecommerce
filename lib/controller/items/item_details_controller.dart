@@ -28,7 +28,7 @@ class ItemsDetailsControllerImpl extends ItemsDetailsController {
   void onInit() {
     itemDetails = Get.arguments['item'];
     size = calcTextSize(
-        itemDetails['items_desc'], const TextStyle(fontSize: 14));
+        itemDetails['items_desc'], const TextStyle(fontSize: 20));
 
     itemDetails['items_color'] = [
       'Yellow',

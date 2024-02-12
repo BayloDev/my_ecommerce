@@ -16,7 +16,7 @@ dependencies:
   get: ^4.6.5
   shared_preferences: ^2.0.18
   flutter_otp_text_field: ^1.1.1
-  lottie: ^2.6.0
+  lottie: ^3.0.0
   dartz: ^0.10.1
   http: ^1.1.0
   flutter_svg: ^2.0.3

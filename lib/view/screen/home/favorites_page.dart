@@ -37,19 +37,18 @@ class FavoritesPage extends StatelessWidget {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 0.88,
+                          childAspectRatio: 0.9,
                         ),
                         itemBuilder: (context, index) => CustomItemCard(
-                          controller: controller,
                           index: index,
                           data: controller.myFavoritesList,
                           favorites: const {},
                           removeOrFavorite: Container(
-                            padding: const EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(0),
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(12),
-                                bottomLeft: Radius.circular(12),
+                                topRight: Radius.circular(8),
+                                bottomLeft: Radius.circular(8),
                               ),
                               color: Colors.white,
                             ),
@@ -60,10 +59,11 @@ class FavoritesPage extends StatelessWidget {
                               child: Icon(
                                 Icons.delete_forever_sharp,
                                 color: Colors.red.withOpacity(0.9),
-                                size: 28,
+                                size: 26,
                               ),
                             ),
                           ),
+                          isHome: false,
                         ),
                       ),
                     ),
