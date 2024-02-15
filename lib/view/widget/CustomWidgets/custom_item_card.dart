@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_ecommerce/core/constant/colors.dart';
 import 'package:my_ecommerce/core/constant/routes.dart';
 import 'package:my_ecommerce/data/model/item_model.dart';
 
+import '../../../core/constant/colors.dart';
 import '../../../core/functions/translate_database.dart';
 import '../../../link_api.dart';
 
@@ -89,16 +89,16 @@ class CustomItemCard extends StatelessWidget {
                   ),
                   Container(
                     height: !isHome ? 15 : 12,
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.white,
                   ),
                   Container(
                     width: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration:   BoxDecoration(
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(8),
                         bottomRight: Radius.circular(8),
                       ),
-                      color: AppColor.secondaryColor.withOpacity(0.4),
+                      color:Colors.black.withOpacity(0.03),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -167,8 +167,8 @@ class CustomItemCard extends StatelessWidget {
                             horizontal: 4,
                             vertical: 1,
                           ),
-                          decoration: BoxDecoration(
-                            color: Colors.orange.withOpacity(0.5),
+                          decoration:  BoxDecoration(
+                            color: Colors.red.withOpacity(0.9),
                             borderRadius: const BorderRadius.only(
                               bottomRight: Radius.circular(8),
                               topLeft: Radius.circular(8),
@@ -177,7 +177,7 @@ class CustomItemCard extends StatelessWidget {
                           child: Text(
                             '-${data[index].itemsDiscount}%',
                             style: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
+                              color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontSize: !isHome ? 12 : 11,
                               inherit: false,
@@ -202,7 +202,7 @@ class CustomItemCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                     decoration: BoxDecoration(
-                      color: Colors.orange.withOpacity(0.5),
+                      color: AppColor.secondaryColor,
                       borderRadius: const BorderRadius.only(
                         bottomRight: Radius.circular(8),
                         topLeft: Radius.circular(8),
@@ -211,7 +211,7 @@ class CustomItemCard extends StatelessWidget {
                     child: Text(
                       '${data[index].itemsPrice} \$',
                       style: TextStyle(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: !isHome ? 12 : 11,
                         inherit: false,

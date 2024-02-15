@@ -17,7 +17,7 @@ class FavoritesPage extends StatelessWidget {
         builder: (controller) => Scaffold(
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.black.withOpacity(0.01),
+            backgroundColor: Colors.orange.shade50,
             leading: Container(),
             toolbarHeight: 140,
             flexibleSpace: CustomAppBar(
@@ -27,7 +27,7 @@ class FavoritesPage extends StatelessWidget {
           body: HandlingDataView(
             statusRequest: controller.statusRequest,
             widget: Container(
-              color: Colors.black.withOpacity(0.01),
+              color: Colors.orange.shade50,
               child: controller.myFavoritesList.isEmpty
                   ? const Center(child: CustomTitleH1(text: 'No Data'))
                   : Padding(

@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
     Get.put(HomeControllerImpl());
     return GetBuilder<HomeControllerImpl>(
       builder: (controller) => Container(
-        color: Colors.black.withOpacity(0.02),
+        color: Colors.orange.shade50,
         child: ListView(
           children: [
             Stack(
@@ -116,7 +116,7 @@ class HomePage extends StatelessWidget {
                                       width: 90,
                                       padding: const EdgeInsets.all(14),
                                       decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.05),
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: SvgPicture.network(

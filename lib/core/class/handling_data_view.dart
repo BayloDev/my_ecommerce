@@ -18,14 +18,23 @@ class HandlingDataView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return statusRequest == StatusRequest.loading
-        ? Center(
-            child: Lottie.asset(AppImageAsset.loading, height: 200, width: 300))
+        ? Container(
+            color: Colors.orange.shade50,
+            child: Center(
+              child: Container(
+                color: Colors.orange.shade50,
+                child: Lottie.asset(
+                  AppImageAsset.loading,
+                ),
+              ),
+            ),
+          )
         : statusRequest == StatusRequest.failure ||
                 statusRequest == StatusRequest.serverException ||
                 statusRequest == StatusRequest.serverFailure ||
                 statusRequest == StatusRequest.offlineFailure
-            ? SizedBox(
-                height: Get.height / 2,
+            ? Container(
+                color: Colors.orange.shade50,
                 width: Get.width,
                 child: const Center(
                     child: CustomTitleH1(

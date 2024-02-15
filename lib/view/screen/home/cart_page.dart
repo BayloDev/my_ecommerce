@@ -20,7 +20,7 @@ class CartPage extends StatelessWidget {
         builder: (controller) => Scaffold(
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.orange.shade50,
             leading: Container(),
             toolbarHeight: 140,
             flexibleSpace:
@@ -29,7 +29,7 @@ class CartPage extends StatelessWidget {
           body: HandlingDataView(
             statusRequest: controller.statusRequest,
             widget: Container(
-              color: Colors.black.withOpacity(0.01),
+              color: Colors.orange.shade50,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
@@ -119,206 +119,200 @@ class CartPage extends StatelessWidget {
                                     controller.cartItems[index].itemsPrice,
                               },
                             ),
-                            child: SizedBox(
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 1.5),
                               height: 110,
-                              child: Card(
-                                child: Container(
-                                  padding: const EdgeInsets.only(right: 8),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 100,
-                                        height: double.infinity,
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              "${AppLink.itemsImages}/${controller.cartItems[index].itemsImage}",
-                                          fit: BoxFit.fill,
-                                        ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    height: double.infinity,
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(8),
+                                        topLeft: Radius.circular(8),
                                       ),
-                                      const SizedBox(width: 8),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              height: 25,
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    translateDatabase(
-                                                      controller
-                                                          .cartItems[index]
-                                                          .itemsNameAr!,
-                                                      controller
-                                                          .cartItems[index]
-                                                          .itemsNameEn!,
-                                                      controller
-                                                          .cartItems[index]
-                                                          .itemsNameFr!,
-                                                    ),
-                                                    style: const TextStyle(
-                                                      fontSize: 18,
-                                                    ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                  const Spacer(),
-                                                  Checkbox(
-                                                    materialTapTargetSize:
-                                                        MaterialTapTargetSize
-                                                            .shrinkWrap,
-                                                    value: controller
-                                                        .checkBoxList[index],
-                                                    checkColor: Colors.white,
-                                                    fillColor:
-                                                        MaterialStatePropertyAll(
-                                                      controller.checkBoxList[
-                                                                  index] ==
-                                                              false
-                                                          ? Colors.white
-                                                          : AppColor
-                                                              .secondaryColor,
-                                                    ),
-                                                    onChanged: (newVal) =>
-                                                        controller
-                                                            .onCheckBoxtap(
-                                                                index),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Text(
-                                              translateDatabase(
-                                                controller.cartItems[index]
-                                                    .itemsDescAr!,
-                                                controller.cartItems[index]
-                                                    .itemsDescEn!,
-                                                controller.cartItems[index]
-                                                    .itemsDescFr!,
-                                              ),
-                                              style:
-                                                  const TextStyle(fontSize: 14),
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            "${AppLink.itemsImages}/${controller.cartItems[index].itemsImage}",
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 25,
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                translateDatabase(
                                                   controller.cartItems[index]
-                                                              .itemsDiscount !=
-                                                          0
-                                                      ? (controller
-                                                                  .cartItems[
-                                                                      index]
-                                                                  .itemsPrice! *
-                                                              controller
-                                                                  .cartItems[
-                                                                      index]
-                                                                  .itemsDiscount! /
-                                                              100)
-                                                          .toString()
-                                                      : controller
-                                                          .cartItems[index]
-                                                          .itemsPrice
-                                                          .toString(),
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.orange,
-                                                    inherit: false,
+                                                      .itemsNameAr!,
+                                                  controller.cartItems[index]
+                                                      .itemsNameEn!,
+                                                  controller.cartItems[index]
+                                                      .itemsNameFr!,
+                                                ),
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              const Spacer(),
+                                              Checkbox(
+                                                materialTapTargetSize:
+                                                    MaterialTapTargetSize
+                                                        .shrinkWrap,
+                                                value: controller
+                                                    .checkBoxList[index],
+                                                checkColor: Colors.white,
+                                                fillColor:
+                                                    MaterialStatePropertyAll(
+                                                  controller.checkBoxList[
+                                                              index] ==
+                                                          false
+                                                      ? Colors.white
+                                                      : AppColor.secondaryColor,
+                                                ),
+                                                onChanged: (newVal) =>
+                                                    controller
+                                                        .onCheckBoxtap(index),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Text(
+                                          translateDatabase(
+                                            controller
+                                                .cartItems[index].itemsDescAr!,
+                                            controller
+                                                .cartItems[index].itemsDescEn!,
+                                            controller
+                                                .cartItems[index].itemsDescFr!,
+                                          ),
+                                          style: const TextStyle(fontSize: 14),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              controller.cartItems[index]
+                                                          .itemsDiscount !=
+                                                      0
+                                                  ? (controller.cartItems[index]
+                                                              .itemsPrice! *
+                                                          controller
+                                                              .cartItems[index]
+                                                              .itemsDiscount! /
+                                                          100)
+                                                      .toString()
+                                                  : controller.cartItems[index]
+                                                      .itemsPrice
+                                                      .toString(),
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.orange,
+                                                inherit: false,
+                                              ),
+                                            ),
+                                            const Text(
+                                              '\$',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                inherit: false,
+                                                height: 1.2,
+                                                color: Colors.orange,
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            SizedBox(
+                                              width: 30,
+                                              height: 22,
+                                              child: ElevatedButton(
+                                                style: ButtonStyle(
+                                                  padding:
+                                                      const MaterialStatePropertyAll(
+                                                    EdgeInsets.all(0),
+                                                  ),
+                                                  backgroundColor:
+                                                      MaterialStatePropertyAll(
+                                                    Colors.white
+                                                        .withOpacity(0.8),
                                                   ),
                                                 ),
-                                                const Text(
-                                                  '\$',
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    inherit: false,
-                                                    height: 1.2,
-                                                    color: Colors.orange,
+                                                child: Icon(
+                                                  Icons.remove,
+                                                  color: Colors.black
+                                                      .withOpacity(0.3),
+                                                  size: 18,
+                                                ),
+                                                onPressed: () =>
+                                                    controller.countMinus(
+                                                  controller
+                                                      .cartItems[index].cartId!,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 6),
+                                            Text(
+                                              '${controller.cartItems[index].cartItemNumber}',
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.orange,
+                                                fontWeight: FontWeight.w500,
+                                                inherit: false,
+                                                height: 1.3,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 6),
+                                            SizedBox(
+                                              width: 30,
+                                              height: 22,
+                                              child: ElevatedButton(
+                                                style: ButtonStyle(
+                                                  padding:
+                                                      const MaterialStatePropertyAll(
+                                                    EdgeInsets.all(0),
+                                                  ),
+                                                  backgroundColor:
+                                                      MaterialStatePropertyAll(
+                                                    Colors.white
+                                                        .withOpacity(0.8),
                                                   ),
                                                 ),
-                                                const Spacer(),
-                                                SizedBox(
-                                                  width: 30,
-                                                  height: 22,
-                                                  child: ElevatedButton(
-                                                    style: ButtonStyle(
-                                                      padding:
-                                                          const MaterialStatePropertyAll(
-                                                        EdgeInsets.all(0),
-                                                      ),
-                                                      backgroundColor:
-                                                          MaterialStatePropertyAll(
-                                                        Colors.white
-                                                            .withOpacity(0.8),
-                                                      ),
-                                                    ),
-                                                    child: Icon(
-                                                      Icons.remove,
-                                                      color: Colors.black
-                                                          .withOpacity(0.3),
-                                                      size: 18,
-                                                    ),
-                                                    onPressed: () =>
-                                                        controller.countMinus(
-                                                      controller
-                                                          .cartItems[index]
-                                                          .cartId!,
-                                                    ),
-                                                  ),
+                                                child: Icon(
+                                                  Icons.add,
+                                                  color: Colors.black
+                                                      .withOpacity(0.3),
+                                                  size: 18,
                                                 ),
-                                                const SizedBox(width: 6),
-                                                Text(
-                                                  '${controller.cartItems[index].cartItemNumber}',
-                                                  style: const TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.orange,
-                                                    fontWeight: FontWeight.w500,
-                                                    inherit: false,
-                                                    height: 1.3,
-                                                  ),
+                                                onPressed: () =>
+                                                    controller.countPlus(
+                                                  controller
+                                                      .cartItems[index].cartId!,
                                                 ),
-                                                const SizedBox(width: 6),
-                                                SizedBox(
-                                                  width: 30,
-                                                  height: 22,
-                                                  child: ElevatedButton(
-                                                    style: ButtonStyle(
-                                                      padding:
-                                                          const MaterialStatePropertyAll(
-                                                        EdgeInsets.all(0),
-                                                      ),
-                                                      backgroundColor:
-                                                          MaterialStatePropertyAll(
-                                                        Colors.white
-                                                            .withOpacity(0.8),
-                                                      ),
-                                                    ),
-                                                    child: Icon(
-                                                      Icons.add,
-                                                      color: Colors.black
-                                                          .withOpacity(0.3),
-                                                      size: 18,
-                                                    ),
-                                                    onPressed: () =>
-                                                        controller.countPlus(
-                                                      controller
-                                                          .cartItems[index]
-                                                          .cartId!,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
                           );
